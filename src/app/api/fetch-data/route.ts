@@ -16,9 +16,9 @@ export async function GET(request: Request): Promise<Response> {
   await dbConnect();
 
   try {
-    console.log("username " , session.user.username)
+   
     const user = await UserModel.findOne({ username: session.user.username });
-    console.log("user ",user)
+ 
     if (!user) {
       return new Response(JSON.stringify({
         success: false,

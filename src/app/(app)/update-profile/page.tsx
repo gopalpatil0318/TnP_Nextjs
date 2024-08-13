@@ -57,7 +57,7 @@ const page = () => {
     const { userData, fetchUserData } = useUserContext();
 
 
-
+    console.log("Create profile ",userData);
 
     useEffect(() => {
 
@@ -160,6 +160,7 @@ const page = () => {
         setIsSubmitting(true);
         try {
             const response = await axios.post<ApiResponse>('/api/update-student-profile/', data);
+            fetchUserData();
             toast({
                 title: 'Success',
                 description: response.data.message,

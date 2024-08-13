@@ -6,18 +6,21 @@ import { cn } from "@/lib/utils";
 import SideBar from "@/components/SideBar"
 import { useSession } from 'next-auth/react';
 import { BackgroundGradient } from "@/components/ui/background-gradient";
+import { useUserContext } from "@/context/AppContext";
 
 const page = () => {
 
     const { data: session } = useSession();
+   
+
 
     return (
         <div
-    className={cn(
-      "rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-full flex-1 mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden",
-      "h-screen "
-    )}
-  >
+            className={cn(
+                "rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-full flex-1 mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden",
+                "h-screen "
+            )}
+        >
             <SideBar />
             <Dashboard />
         </div>
@@ -144,6 +147,8 @@ const page = () => {
 // };
 
 const Dashboard = () => {
+    const { userData, fetchUserData } = useUserContext();
+
     return (
         <div className="flex flex-1">
             <div className="p-2 md:p-3 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-black flex flex-col gap-3 flex-1 w-full h-full">
@@ -167,7 +172,7 @@ const Dashboard = () => {
                             {/* Background Image or Color */}
                             <div className="mb-4 h-32 bg-blue-500 rounded-lg relative">
                                 <img
-                                    src="https://assets.aceternity.com/manu.png" 
+                                    src="https://assets.aceternity.com/manu.png"
                                     alt="Profile Background"
                                     className="absolute inset-0 w-full h-full object-cover rounded-lg opacity-50"
                                 />
@@ -176,21 +181,20 @@ const Dashboard = () => {
                             {/* Profile Photo */}
                             <div className="flex justify-center">
                                 <img
-                                    src="https://assets.aceternity.com/manu.png" // Replace with the student's profile photo URL
+                                    src="https://assets.aceternity.com/manu.png" 
                                     alt="Profile"
                                     className="h-24 w-24 rounded-full border-4 border-white shadow-lg z-10 relative -mt-16"
                                 />
                             </div>
 
-                            {/* Name and Summary */}
                             <div className="text-center mt-6">
-                                <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">Name of Student</h2>
-                                <p className="text-gray-600 dark:text-gray-400">Full Stack Developer</p>
+                                <h2 className="text-2xl font-semibold text-gray-800 dark:text-gray-200">{userData?.firstName} {userData?.middleName} {userData?.lastName}</h2>
+                                <p className="text-gray-600 dark:text-gray-400">{userData?.areaOfInterest}</p>
                                 <p className="text-gray-500 dark:text-gray-400 mt-2">
-                                    A brief summary about the student in one or two sentences. This should highlight their skills and experiences.
+                                   {userData?.aboutYou}
                                 </p>
                                 <p className="text-gray-500 dark:text-gray-400 mt-2">
-                                    Branch: <span className="font-bold">Computer Engineering</span>
+                                    Branch: <span className="font-bold">{userData?.department}</span>
                                 </p>
                             </div>
 
@@ -222,8 +226,8 @@ const Dashboard = () => {
                         <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-4">
                             <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Personal Information:</h3>
                             <ul className="list-disc list-inside mt-2">
-                                <li>Email: <span className="font-bold">your.email@example.com</span></li>
-                                <li>Phone Number: <span className="font-bold">+1234567890</span></li>
+                                <li>Email: <span className="font-bold">{userData?.email}</span></li>
+                                <li>Phone Number: <span className="font-bold">{userData?.mobileNumber}</span></li>
                                 <li>Resume: <a href="/path/to/resume.pdf" className="text-blue-500 hover:underline">Download PDF</a></li>
                             </ul>
                         </div>
@@ -232,15 +236,15 @@ const Dashboard = () => {
                         <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-4 mt-2">
                             <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Links:</h3>
                             <div className="flex flex-col mt-2">
-                                <a href="https://yourportfolio.com" className="text-blue-500 hover:underline">Portfolio</a>
-                                <a href="https://github.com/yourusername" className="text-blue-500 hover:underline">GitHub</a>
-                                <a href="https://linkedin.com/in/yourusername" className="text-blue-500 hover:underline">LinkedIn</a>
-                                <a href="https://instagram.com/yourusername" className="text-blue-500 hover:underline">Instagram</a>
-                                <a href="https://twitter.com/yourusername" className="text-blue-500 hover:underline">Twitter</a>
-                                <a href="https://leetcode.com/yourusername" className="text-blue-500 hover:underline">LeetCode</a>
-                                <a href="https://geeksforgeeks.org/yourusername" className="text-blue-500 hover:underline">GeeksforGeeks</a>
-                                <a href="https://codechef.com/users/yourusername" className="text-blue-500 hover:underline">CodeChef</a>
-                                <a href="https://hackerrank.com/yourusername" className="text-blue-500 hover:underline">HackerRank</a>
+                                <a href={userData?.personalPortfolioLink} className="text-blue-500 hover:underline">Portfolio</a>
+                                <a href={userData?.githubLink} className="text-blue-500 hover:underline">GitHub</a>
+                                <a href={userData?.linkedinLink} className="text-blue-500 hover:underline">LinkedIn</a>
+                                <a href={userData?.instagramLink} className="text-blue-500 hover:underline">Instagram</a>
+                                <a href={userData?.twitterLink} className="text-blue-500 hover:underline">Twitter</a>
+                                <a href={userData?.leetcodeLink} className="text-blue-500 hover:underline">LeetCode</a>
+                                <a href={userData?.geeksForGeeksLink} className="text-blue-500 hover:underline">GeeksforGeeks</a>
+                                <a href={userData?.codechefLink} className="text-blue-500 hover:underline">CodeChef</a>
+                                <a href={userData?.hackerRankLink} className="text-blue-500 hover:underline">HackerRank</a>
                             </div>
                         </div>
 
