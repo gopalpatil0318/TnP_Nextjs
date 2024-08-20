@@ -66,7 +66,7 @@ export async function POST(request: Request) {
         )
 
 
-        console.log(emailResponse.success)
+        
         
         if (!emailResponse.success) {
             return Response.json({

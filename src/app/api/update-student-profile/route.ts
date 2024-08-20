@@ -5,7 +5,7 @@ import UserModel from "@/model/User";
 
 export async function POST(request: Request): Promise<Response> {
     const session = await getServerSession(authOptions);
-    
+
     if (!session || !session.user) {
         return new Response(JSON.stringify({
             success: false,
@@ -17,9 +17,9 @@ export async function POST(request: Request): Promise<Response> {
 
     try {
         const { username, email, ...otherDetails } = await request.json();
-        console.log('Username:', username);
-        console.log('Email:', email);
-        console.log('Other details:', otherDetails);
+        // console.log('Username:', username);
+        // console.log('Email:', email);
+        // console.log('Other details:', otherDetails);
 
         const updatedUser = await UserModel.findOneAndUpdate(
             { username, isVerified: true },
@@ -39,7 +39,7 @@ export async function POST(request: Request): Promise<Response> {
             message: "Profile updated successfully",
             user: updatedUser
         }), { status: 200 });
-        
+
     } catch (error) {
         console.error('Error updating user profile:', error);
         return new Response(JSON.stringify({

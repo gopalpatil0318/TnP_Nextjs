@@ -16,10 +16,8 @@ const page = () => {
 
     return (
         <div
-            className={cn(
-                "rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-full flex-1 mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden",
-                "h-screen "
-            )}
+            className={"rounded-md flex flex-col md:flex-row bg-gray-100 dark:bg-neutral-800 w-full flex-1 mx-auto border border-neutral-200 dark:border-neutral-700 overflow-hidden"
+            }
         >
             <SideBar />
             <Dashboard />
@@ -155,7 +153,7 @@ const Dashboard = () => {
                 <div className="flex gap-2">
                     <div
                         key={"first"}
-                        className="h-20 w-full rounded-lg bg-gray-100 dark:bg-neutral-800 animate-pulse flex items-center justify-center"
+                        className="h-20 w-full rounded-lg bg-gray-100 dark:bg-neutral-800 flex items-center justify-center"
                     >
                         <h1 className="text-4xl font-normal text-neutral-600 dark:text-neutral-400">Profile</h1>
                     </div>
@@ -165,25 +163,18 @@ const Dashboard = () => {
                     {/* First child div with the student profile card */}
                     <div
                         key={"first"}
-                        className="h-full w-full md:w-1/2 rounded-lg bg-gray-300 dark:bg-neutral-800 animate-pulse p-4"
+                        className="bg-gradient-to-br from-[#000000] via-[#404040] to-[#000000] h-full w-full md:w-[30%] rounded-lg dark:bg-neutral-800 p-4 pt-[150px]"
                     >
                         {/* Profile Card */}
-                        <div className="bg-white dark:bg-gray-900 p-4 rounded-lg shadow-md relative overflow-hidden">
+                        <div className="bg-white dark:bg-gray-900 p-4 rounded-lg shadow-md">
                             {/* Background Image or Color */}
-                            <div className="mb-4 h-32 bg-blue-500 rounded-lg relative">
-                                <img
-                                    src="https://assets.aceternity.com/manu.png"
-                                    alt="Profile Background"
-                                    className="absolute inset-0 w-full h-full object-cover rounded-lg opacity-50"
-                                />
-                            </div>
-
+                           
                             {/* Profile Photo */}
                             <div className="flex justify-center">
                                 <img
                                     src="https://assets.aceternity.com/manu.png" 
                                     alt="Profile"
-                                    className="h-24 w-24 rounded-full border-4 border-white shadow-lg z-10 relative -mt-16"
+                                    className="h-auto w-[300px] rounded-2xl border-4 border-white shadow-lg relative -mt-[150px]"
                                 />
                             </div>
 
@@ -220,10 +211,10 @@ const Dashboard = () => {
                     {/* Second child div with Personal Information and Links */}
                     <div
                         key={"profile-card"}
-                        className="h-full w-full md:w-1/2 rounded-lg bg-gray-300 dark:bg-neutral-800 animate-pulse flex flex-col gap-2 p-4"
+                        className="h-full w-full md:w-[70%] rounded-lg dark:bg-neutral-800 flex flex-col gap-2 p-4"
                     >
                         {/* Personal Information Section */}
-                        <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-4">
+                        <div className="bg-white dark:bg-gray-900 rounded-lg shadow-xl p-4">
                             <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Personal Information:</h3>
                             <ul className="list-disc list-inside mt-2">
                                 <li>Email: <span className="font-bold">{userData?.email}</span></li>
@@ -233,7 +224,7 @@ const Dashboard = () => {
                         </div>
 
                         {/* Links Section */}
-                        <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-4 mt-2">
+                        <div className="bg-white dark:bg-gray-900 rounded-lg shadow-xl p-4 mt-2">
                             <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Links:</h3>
                             <div className="flex flex-col mt-2">
                                 <a href={userData?.personalPortfolioLink} className="text-blue-500 hover:underline">Portfolio</a>
@@ -249,7 +240,7 @@ const Dashboard = () => {
                         </div>
 
                         {/* Projects Section */}
-                        <div className="bg-white dark:bg-gray-900 rounded-lg shadow-md p-4 mt-2">
+                        <div className="bg-white dark:bg-gray-900 rounded-lg shadow-xl p-4 mt-2">
                             <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Projects:</h3>
                             <div className="flex flex-col gap-2 mt-2">
                                 {/* Project 1 */}

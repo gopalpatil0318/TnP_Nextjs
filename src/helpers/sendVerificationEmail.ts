@@ -75,13 +75,13 @@ export async function sendVerificationEmail(
 
 
     await transporter.sendMail({
-      from: '"Mystry message" <maddison53@ethereal.email>',
+      from: 'Gopal Patil',
       to: email,
-      subject: 'Mystry message | Verification code',
+      subject: 'RCPIT TRAINING DEPARTMENT Verification code',
       html: emailHtml,
     });
 
-    console.log("fgfgfg",email);
+    
     
     return { success: true, message: 'Verification email sent successfully using node mailer' };
   } catch (emailError) {

@@ -29,7 +29,7 @@ export async function middleware(request: NextRequest) {
       url.pathname.startsWith('/update-profile') || 
       url.pathname.startsWith('/createprofile')
     ) {
-      console.log('Redirecting to /sign-in'); // Debugging line
+      console.log('Redirecting to /sign-in'); 
       return NextResponse.redirect(new URL('/sign-in', request.url));
     }
     return NextResponse.next();
