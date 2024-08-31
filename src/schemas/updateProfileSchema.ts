@@ -70,10 +70,11 @@ export const updateProfileSchema = z.object({
     hackerRankLink: z.string().optional(),
     firstName: z.string().optional(),
     middleName: z.string().optional(),
+   
     lastName: z.string().optional(),
     isProfileComplete: z.boolean().optional().default(false), // Correct usage of boolean
-    // picture: z
-    //     .any()
+    image: z
+        .any()
     //     .refine((file) => file?.length == 1, "File is required.")
     //     .refine(
     //         (file) =>

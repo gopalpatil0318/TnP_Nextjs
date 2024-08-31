@@ -81,7 +81,7 @@ export interface User extends Document {
     geeksForGeeksLink: string;
     codechefLink: string;
     hackerRankLink: string; 
-    profileImage?: Buffer; 
+    image:string;
 
 }
 
@@ -395,8 +395,8 @@ const UserSchema: Schema<User> = new Schema({
         type: String,
         required: false,
     },
-    profileImage: {
-        type: Buffer,
+    image: {
+        type: String,
     },
  
 });

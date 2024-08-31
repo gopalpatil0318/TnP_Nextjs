@@ -57,10 +57,10 @@ const page = () => {
     const { userData, fetchUserData } = useUserContext();
 
 
-    console.log("Create profile ",userData);
+    
 
     useEffect(() => {
-
+        
         if (userData) {
             form.reset({
                 ...userData,
@@ -155,10 +155,32 @@ const page = () => {
     });
 
 
+    const uploadImage = async (file: File): Promise<string> => {
+        const formData = new FormData();
+        formData.append('file', file);
+        formData.append('upload_preset', 'gopaluploadpreset'); // Replace with your actual upload preset
+        formData.append('cloud_name', 'dae4fjmsn'); // Replace with your actual cloud name
+
+        try {
+            const response = await axios.post('https://api.cloudinary.com/v1_1/dae4fjmsn/image/upload', formData);
+            return response.data.url; // Return the URL of the uploaded image
+        } catch (error) {
+            throw new Error('Image upload failed');
+        }
+    };
+
+
 
     const onSubmit = async (data: z.infer<typeof updateProfileSchema>) => {
         setIsSubmitting(true);
         try {
+            console.log("before: ",data.image)
+            if (data.image) {
+                const imageUrl = await uploadImage(data.image);
+                data = { ...data, image:imageUrl }; 
+            }
+            console.log("after: ",data.image)
+
             const response = await axios.post<ApiResponse>('/api/update-student-profile/', data);
             fetchUserData();
             toast({
@@ -184,7 +206,7 @@ const page = () => {
 
 
     const [date, setDate] = useState<Date | undefined>(); // Ensure state is initialized as undefined
-    console.log(date)
+   
     const handleDateChange = (newDate: Date | undefined) => {
         setDate(newDate); // Update local state
         form.setValue('birthDate', newDate);
@@ -771,7 +793,7 @@ const page = () => {
                                                 <FormItem>
                                                     <FormLabel>Passout Year</FormLabel>
                                                     <FormControl>
-                                                        <Input placeholder="Passout Year"  type='number'
+                                                        <Input placeholder="Passout Year" type='number'
                                                             {...field}
                                                             onChange={(e) => field.onChange(Number(e.target.value))} />
                                                     </FormControl>
@@ -821,9 +843,9 @@ const page = () => {
                                                 <FormItem>
                                                     <FormLabel>Sem 1 CGPA</FormLabel>
                                                     <FormControl>
-                                                        <Input placeholder="Sem 1 CGPA"  type='number'
+                                                        <Input placeholder="Sem 1 CGPA" type='number'
                                                             {...field}
-                                                            onChange={(e) => field.onChange(Number(e.target.value))}/>
+                                                            onChange={(e) => field.onChange(Number(e.target.value))} />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
@@ -865,7 +887,7 @@ const page = () => {
                                                 <FormItem>
                                                     <FormLabel>Sem 2 SGPA</FormLabel>
                                                     <FormControl>
-                                                        <Input placeholder="Sem 2 SGPA"  type='number'
+                                                        <Input placeholder="Sem 2 SGPA" type='number'
                                                             {...field}
                                                             onChange={(e) => field.onChange(Number(e.target.value))} />
                                                     </FormControl>
@@ -881,9 +903,9 @@ const page = () => {
                                                 <FormItem>
                                                     <FormLabel>Sem 2 CGPA</FormLabel>
                                                     <FormControl>
-                                                        <Input placeholder="Sem 2 CGPA"  type='number'
+                                                        <Input placeholder="Sem 2 CGPA" type='number'
                                                             {...field}
-                                                            onChange={(e) => field.onChange(Number(e.target.value))}/>
+                                                            onChange={(e) => field.onChange(Number(e.target.value))} />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
@@ -924,7 +946,7 @@ const page = () => {
                                                 <FormItem>
                                                     <FormLabel>Sem 3 SGPA</FormLabel>
                                                     <FormControl>
-                                                        <Input placeholder="Sem 3 SGPA"  type='number'
+                                                        <Input placeholder="Sem 3 SGPA" type='number'
                                                             {...field}
                                                             onChange={(e) => field.onChange(Number(e.target.value))} />
                                                     </FormControl>
@@ -940,7 +962,7 @@ const page = () => {
                                                 <FormItem>
                                                     <FormLabel>Sem 3 CGPA</FormLabel>
                                                     <FormControl>
-                                                        <Input placeholder="Sem 3 CGPA"  type='number'
+                                                        <Input placeholder="Sem 3 CGPA" type='number'
                                                             {...field}
                                                             onChange={(e) => field.onChange(Number(e.target.value))} />
                                                     </FormControl>
@@ -985,9 +1007,9 @@ const page = () => {
                                                 <FormItem>
                                                     <FormLabel>Sem 4 SGPA</FormLabel>
                                                     <FormControl>
-                                                        <Input placeholder="Sem 4 SGPA"  type='number'
+                                                        <Input placeholder="Sem 4 SGPA" type='number'
                                                             {...field}
-                                                            onChange={(e) => field.onChange(Number(e.target.value))}/>
+                                                            onChange={(e) => field.onChange(Number(e.target.value))} />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
@@ -1000,7 +1022,7 @@ const page = () => {
                                                 <FormItem>
                                                     <FormLabel>Sem 4 CGPA</FormLabel>
                                                     <FormControl>
-                                                        <Input placeholder="Sem 4 CGPA"  type='number'
+                                                        <Input placeholder="Sem 4 CGPA" type='number'
                                                             {...field}
                                                             onChange={(e) => field.onChange(Number(e.target.value))} />
                                                     </FormControl>
@@ -1043,9 +1065,9 @@ const page = () => {
                                                 <FormItem>
                                                     <FormLabel>Sem 5 SGPA</FormLabel>
                                                     <FormControl>
-                                                        <Input placeholder="Sem 5 SGPA"  type='number'
+                                                        <Input placeholder="Sem 5 SGPA" type='number'
                                                             {...field}
-                                                            onChange={(e) => field.onChange(Number(e.target.value))}/>
+                                                            onChange={(e) => field.onChange(Number(e.target.value))} />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
@@ -1058,7 +1080,7 @@ const page = () => {
                                                 <FormItem>
                                                     <FormLabel>Sem 5 CGPA</FormLabel>
                                                     <FormControl>
-                                                        <Input placeholder="Sem 5 CGPA"  type='number'
+                                                        <Input placeholder="Sem 5 CGPA" type='number'
                                                             {...field}
                                                             onChange={(e) => field.onChange(Number(e.target.value))} />
                                                     </FormControl>
@@ -1101,7 +1123,7 @@ const page = () => {
                                                 <FormItem>
                                                     <FormLabel>Sem 6 SGPA</FormLabel>
                                                     <FormControl>
-                                                        <Input placeholder="Sem 6 SGPA"  type='number'
+                                                        <Input placeholder="Sem 6 SGPA" type='number'
                                                             {...field}
                                                             onChange={(e) => field.onChange(Number(e.target.value))} />
                                                     </FormControl>
@@ -1116,7 +1138,7 @@ const page = () => {
                                                 <FormItem>
                                                     <FormLabel>Sem 6 CGPA</FormLabel>
                                                     <FormControl>
-                                                        <Input placeholder="Sem 6 CGPA"  type='number'
+                                                        <Input placeholder="Sem 6 CGPA" type='number'
                                                             {...field}
                                                             onChange={(e) => field.onChange(Number(e.target.value))} />
                                                     </FormControl>
@@ -1161,7 +1183,7 @@ const page = () => {
                                                     <FormControl>
                                                         <Input placeholder="Overall CGPA" type='number'
                                                             {...field}
-                                                            onChange={(e) => field.onChange(Number(e.target.value))}/>
+                                                            onChange={(e) => field.onChange(Number(e.target.value))} />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
@@ -1482,6 +1504,21 @@ const page = () => {
                                                 </FormItem>
                                             )}
                                         />
+
+                                        <FormField
+                                            control={form.control}
+                                            name="image"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Upload Image</FormLabel>
+                                                    <FormControl>
+                                                        <input type="file" accept="image/*" onChange={(e) => field.onChange(e.target.files?.[0])} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+
 
                                     </div>
                                     <div className="flex justify-center mt-4">
