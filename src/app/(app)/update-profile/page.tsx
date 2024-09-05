@@ -45,7 +45,7 @@ import {
     gapOptions
 } from '@/data/options';
 
-const page = () => {
+const Page = () => {
 
 
 
@@ -222,7 +222,7 @@ const page = () => {
                 birthDate,
             });
         }
-    }, [userData]);
+    }, [userData,form]);
 
 
     return (
@@ -1547,4 +1547,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default Page;

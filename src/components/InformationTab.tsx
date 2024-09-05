@@ -232,7 +232,7 @@ const InformationTab = ({ userData }: any) => {
                                         <TableCell className="font-semibold">{userData.overallCGPA}</TableCell>
                                     </TableRow>
                                     <TableRow>
-                                        <TableCell >Live KT's:</TableCell>
+                                        <TableCell >Live KT&apos;s:</TableCell>
                                         <TableCell className="font-semibold">{userData.anyLiveKTs}</TableCell>
                                     </TableRow>
                                     <TableRow>
@@ -243,7 +243,7 @@ const InformationTab = ({ userData }: any) => {
 
                             </Table>
                             <Table className="min-w-full text-sm md:text-lg relative z-10 ">
-                              
+
                                 <TableFooter>
                                     {
                                         userData.anyGapDuringEducation === "Yes" ? (<TableRow>
@@ -261,114 +261,18 @@ const InformationTab = ({ userData }: any) => {
                 </div>
             ),
         },
-        // {
-        //     title: "Skills",
-        //     value: "Skills",
-        //     content: (
-        //         <div className="w-full  overflow-hidden relative h-max rounded-2xl p-5 md:p-10 text-lg md:text-2xl lg:text-4xl font-bold text-black bg-gradient-to-br from-gray-100 to-gray-200">
-        //             <p>Personal Information</p>
-        //             <div className="flex flex-col md:flex-row justify-evenly bg-slate-200 mt-2 md:mt-5 p-2 md:p-4 rounded-lg">
-        //                 <div className="flex-1 mb-4 md:mb-0">
-        //                     <Table className="min-w-full text-sm md:text-lg relative z-10">
-        //                         <TableBody>
-        //                             <TableRow>
-        //                                 <TableCell className="font-medium">Name:</TableCell>
-        //                                 <TableCell className="font-bold">
-        //                                     {userData.firstName} {userData.middleName} {userData.lastName}
-        //                                 </TableCell>
-        //                             </TableRow>
-        //                             <TableRow>
-        //                                 <TableCell className="font-medium">Email:</TableCell>
-        //                                 <TableCell className="font-bold">{userData.email}</TableCell>
-        //                             </TableRow>
-        //                             <TableRow>
-        //                                 <TableCell className="font-medium">Mobile Number:</TableCell>
-        //                                 <TableCell className="font-bold">{userData.mobileNumber}</TableCell>
-        //                             </TableRow>
-        //                             <TableRow>
-        //                                 <TableCell className="font-medium">BirthDate:</TableCell>
-        //                                 <TableCell className="font-bold">{userData.BirthDate}</TableCell>
-        //                             </TableRow>
-        //                             <TableRow>
-        //                                 <TableCell className="font-medium">Gender:</TableCell>
-        //                                 <TableCell className="font-bold">{userData.gender}</TableCell>
-        //                             </TableRow>
-        //                             <TableRow>
-        //                                 <TableCell className="font-medium">Aadhar Number:</TableCell>
-        //                                 <TableCell className="font-bold">{userData.adharNumber}</TableCell>
-        //                             </TableRow>
-        //                             <TableRow>
-        //                                 <TableCell className="font-medium">Cast:</TableCell>
-        //                                 <TableCell className="font-bold">{userData.cast}</TableCell>
-        //                             </TableRow>
-        //                             <TableRow>
-        //                                 <TableCell className="font-medium">Blood Group:</TableCell>
-        //                                 <TableCell className="font-bold">{userData.bloodGroup}</TableCell>
-        //                             </TableRow>
-        //                             <TableRow>
-        //                                 <TableCell className="font-medium">Father Name:</TableCell>
-        //                                 <TableCell className="font-bold">{userData.fatherName}</TableCell>
-        //                             </TableRow>
-        //                             <TableRow>
-        //                                 <TableCell className="font-medium">Father Mobile Number:</TableCell>
-        //                                 <TableCell className="font-bold">{userData.fatherMobileNumber}</TableCell>
-        //                             </TableRow>
-        //                             <TableRow>
-        //                                 <TableCell className="font-medium">Father Occupation:</TableCell>
-        //                                 <TableCell className="font-bold">{userData.fatherOccupation}</TableCell>
-        //                             </TableRow>
-
-        //                         </TableBody>
-        //                     </Table>
-
-        //                 </div>
-        //                 <div className="flex-1">
-        //                     <Table className="min-w-full text-sm md:text-lg">
-        //                         <TableBody>
-        //                             <TableRow>
-        //                                 <TableCell className="font-medium">Mother Name:</TableCell>
-        //                                 <TableCell className="font-bold">{userData.motherName}</TableCell>
-        //                             </TableRow>
-        //                             <TableRow>
-        //                                 <TableCell className="font-medium">Mother Mobile Number:</TableCell>
-        //                                 <TableCell className="font-bold">{userData.motherMobileNumber}</TableCell>
-        //                             </TableRow>
-        //                             <TableRow>
-        //                                 <TableCell className="font-medium">Mother Occupation:</TableCell>
-        //                                 <TableCell className="font-bold">{userData.motherOccupation}</TableCell>
-        //                             </TableRow>
-        //                             <TableRow>
-        //                                 <TableCell className="font-medium">City:</TableCell>
-        //                                 <TableCell className="font-bold">{userData.city}</TableCell>
-        //                             </TableRow>
-        //                             <TableRow>
-        //                                 <TableCell className="font-medium">District:</TableCell>
-        //                                 <TableCell className="font-bold">{userData.district}</TableCell>
-        //                             </TableRow>
-        //                             <TableRow>
-        //                                 <TableCell className="font-medium">State:</TableCell>
-        //                                 <TableCell className="font-bold">{userData.state}</TableCell>
-        //                             </TableRow>
-        //                             <TableRow>
-        //                                 <TableCell className="font-medium">Pincode:</TableCell>
-        //                                 <TableCell className="font-bold">{userData.pincode}</TableCell>
-        //                             </TableRow>
-        //                             <TableRow>
-        //                                 <TableCell className="font-medium">Local Address:</TableCell>
-        //                                 <TableCell className="font-bold">{userData.localAddress}</TableCell>
-        //                             </TableRow>
-        //                         </TableBody>
-        //                     </Table>
-        //                 </div>
-        //             </div>
-        //         </div>
-        //     ),
-        // },
+       
     ];
 
     return (
         <div className="h-[20rem] md:h-[40rem] [perspective:1000px] relative flex flex-col max-w-full mx-auto w-full items-start justify-start my-10">
-            <Tabs tabs={tabs} />
+            <Tabs
+                tabs={tabs}  // Pass the tabs array here
+                containerClassName="your-container-class"
+                activeTabClassName="your-active-tab-class"
+                tabClassName="your-tab-class"
+                contentClassName="your-content-class"
+            />
         </div>
     );
 };

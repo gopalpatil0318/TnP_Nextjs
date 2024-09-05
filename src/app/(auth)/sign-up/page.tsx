@@ -18,7 +18,7 @@ import { Loader2 } from "lucide-react"
 
 
 
-const page = () => {
+const Page = () => {
     const [username, setUsername] = useState('')
     const [usernameMessage, setUsernameMessage] = useState('')
     const [isCheckingUsername, setIsCheckingUsername] = useState(false)
@@ -107,7 +107,7 @@ const page = () => {
                             name="username"
                             render={({ field }) => (
                                 <FormItem>
-                                    <FormLabel>Username</FormLabel>
+                                    <FormLabel>Username(PRN)</FormLabel>
                                     <FormControl>
                                         <Input placeholder="username" {...field}
                                             onChange={(e) => {
@@ -117,7 +117,7 @@ const page = () => {
                                         />
                                     </FormControl>
                                     {isCheckingUsername && <Loader2 className="animate-spin" />}
-                                    <p className={`text-sm ${usernameMessage === 'Username is already taken' ? 'text-red-500' : 'text-green-500'}`}>
+                                    <p className={`text-sm ${usernameMessage === 'Username is unique' ?  'text-green-500' : 'text-red-500' }`}>
                                         {usernameMessage}
                                     </p>
                                     <FormMessage />
@@ -184,4 +184,4 @@ const page = () => {
     )
 }
 
-export default page
+export default Page

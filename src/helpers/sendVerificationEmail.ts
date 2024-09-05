@@ -60,30 +60,26 @@ export async function sendVerificationEmail(
               </div>
               <div class="content">
                   <h2>Hello ${username},</h2>
-                  <p>Thank you for registering. Please use the following verification code to complete your registration:</p>
+                  <p>Welcome to the Training and Placement Department at R C Patel Institute of Technology, Shirpur. Please use the following verification code to complete your registration:</p>
                   <p class="otp">${verifyCode}</p>
                   <p>If you did not request this code, please ignore this email.</p>
               </div>
               <div class="footer">
-                  <p>&copy; ${new Date().getFullYear()} Mystry Message. All rights reserved.</p>
+                  <p>&copy; ${new Date().getFullYear()} R C Patel Institute of Technology, Shirpur. All rights reserved.</p>
               </div>
           </div>
       </body>
       </html>
     `;
 
-
-
     await transporter.sendMail({
-      from: 'Gopal Patil',
+      from: 'RCPIT Training and Placement Department',
       to: email,
-      subject: 'RCPIT TRAINING DEPARTMENT Verification code',
+      subject: 'RCPIT Training and Placement Verification Code',
       html: emailHtml,
     });
 
-    
-    
-    return { success: true, message: 'Verification email sent successfully using node mailer' };
+    return { success: true, message: 'Verification email sent successfully using nodemailer' };
   } catch (emailError) {
     console.error("Error sending verification email", emailError);
     return { success: false, message: 'Failed to send verification email' };

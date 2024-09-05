@@ -47,7 +47,7 @@ import {
 } from '@/data/options';
 import { IconArrowLeft } from '@tabler/icons-react';
 
-const page = () => {
+const Page = () => {
 
 
     const { data: session } = useSession();
@@ -154,11 +154,11 @@ const page = () => {
             
             toast({
                 title: 'Success',
-                description: response.data.message,
+                description: "Profile Created SuccessFully",
             });
     
             await signIn('credentials', { redirect: false });
-          
+            signOut();
             router.replace(`/dashboard`);
         } catch (error) {
             console.error('Error updating user profile', error);
@@ -181,7 +181,8 @@ const page = () => {
         form.setValue('prnNumber', username);
         form.setValue('username', username);
         form.setValue('email', email);
-    }, [username, email]);
+    }, [username, email, form]);
+    
 
     const [date, setDate] = useState<Date>();
 
@@ -1492,4 +1493,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default Page;

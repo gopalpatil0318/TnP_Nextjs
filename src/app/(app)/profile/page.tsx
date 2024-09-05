@@ -16,9 +16,11 @@ import { SiLeetcode, SiGeeksforgeeks, SiCodechef, SiHackerrank } from "react-ico
 import { MdOutlineMail } from "react-icons/md";
 import { TiPhoneOutline } from "react-icons/ti";
 import { BsPostcard } from "react-icons/bs";
+import Image from 'next/image';
 
 
-const page = () => {
+
+const Page = () => {
 
     const { data: session } = useSession();
 
@@ -57,19 +59,23 @@ const Dashboard = () => {
                     {/* First child div with the student profile card */}
                     <div
                         key={"first"}
-                        className="bg-gray-200 shadow-md h-full w-full md:w-[30%] rounded-lg dark:bg-neutral-800 p-4 pt-[150px]"
-                    >
+                        className="bg-gray-200 shadow-md h-full w-full md:w-[30%] rounded-lg dark:bg-neutral-800 p-4 pt-[150px]">
                         {/* Profile Card */}
                         <div className="bg-white dark:bg-gray-900 p-4 rounded-lg shadow-md">
                             {/* Background Image or Color */}
 
                             {/* Profile Photo */}
                             <div className="flex justify-center">
-                                <img
-                                    src={userData?.image}
-                                    alt="Profile"
-                                    className="h-auto w-[300px] rounded-2xl border-4 border-white shadow-lg relative -mt-[150px]"
-                                />
+                                <div className="relative w-72 h-72 -mt-[150px]"> {/* Setting fixed square dimensions */}
+                                    <Image
+                                        src={userData?.image || "/image.png"}
+                                        alt="Profile"
+                                        className="rounded-2xl border-4 border-white shadow-lg"
+                                        layout="fill" 
+                                        objectFit="cover"
+                                        priority={false}
+                                    />
+                                </div>
                             </div>
 
                             <div className="text-center mt-6">
@@ -166,26 +172,42 @@ const Dashboard = () => {
                                 {/* Project 1 */}
                                 <div className="w-full md:w-1/2 flex flex-col items-center p-4 border border-gray-200 rounded-lg shadow-sm bg-gray-50 dark:bg-gray-800">
                                     <div className="w-full">
-                                        <img src="https://corporate-assets.lucid.co/chart/09255df0-f147-42b4-805e-163ad3001feb.png?v=1707845547429" alt="Project 1" className="w-full h-40 object-cover rounded-md" />
+                                        <Image
+                                            src="https://corporate-assets.lucid.co/chart/09255df0-f147-42b4-805e-163ad3001feb.png?v=1707845547429"
+                                            alt="Project 1"
+                                            className="w-full h-40 object-cover rounded-md"
+                                            layout="responsive"
+                                            width={800} // Adjust width as needed
+                                            height={300} // Adjust height as needed
+                                            priority={false} // Set to true if you want to preload the image
+                                        />
                                     </div>
                                     <div className="w-full flex flex-col items-start mt-4">
-                                        <h4 className="text-xl font-semibold text-gray-800 dark:text-gray-200">Project Name 1</h4>
-                                        <p className="text-gray-600 dark:text-gray-400 mt-2">This is a brief description of Project 1.</p>
+                                        <h4 className="text-xl font-semibold text-gray-800 dark:text-gray-200">{userData?.projectTitle1}</h4>
+                                        <p className="text-gray-600 dark:text-gray-400 mt-2">{userData?.projectDescription1}</p>
                                         <div className="mt-4 w-full">
-                                            <a href="https://liveproject1.com" className="inline-block px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">Explore</a>
+                                            <a href={userData?.projectLink1} target="_blank" rel="noopener noreferrer" className="inline-block px-4 py-2 text-gray-800  bg-gray-200 rounded hover:bg-gray-300">Explore</a>
                                         </div>
                                     </div>
                                 </div>
                                 {/* Project 2 */}
                                 <div className="w-full md:w-1/2 flex flex-col items-center p-4 border border-gray-200 rounded-lg shadow-sm bg-gray-50 dark:bg-gray-800">
                                     <div className="w-full">
-                                        <img src="https://s3-ap-south-1.amazonaws.com/static.awfis.com/wp-content/uploads/2017/07/07184649/ProjectManagement.jpg" alt="Project 2" className="w-full h-40 object-cover rounded-md" />
+                                        <Image
+                                            src="https://s3-ap-south-1.amazonaws.com/static.awfis.com/wp-content/uploads/2017/07/07184649/ProjectManagement.jpg"
+                                            alt="Project 2"
+                                            className="w-full h-40 object-cover rounded-md"
+                                            layout="responsive"
+                                            width={800} // Adjust width as needed
+                                            height={300} // Adjust height as needed
+                                            priority={false} // Set to true if you want to preload the image
+                                        />
                                     </div>
                                     <div className="w-full flex flex-col items-start mt-4">
-                                        <h4 className="text-xl font-semibold text-gray-800 dark:text-gray-200">Project Name 2</h4>
-                                        <p className="text-gray-600 dark:text-gray-400 mt-2">This is a brief description of Project 2.</p>
+                                        <h4 className="text-xl font-semibold text-gray-800 dark:text-gray-200">{userData?.projectTitle2}</h4>
+                                        <p className="text-gray-600 dark:text-gray-400 mt-2">{userData?.projectDescription1}</p>
                                         <div className="mt-4 w-full">
-                                            <a href="https://liveproject2.com" className="inline-block px-4 py-2 text-white bg-blue-500 rounded hover:bg-blue-600">Explore</a>
+                                            <a href={userData?.projectLink1} target="_blank" rel="noopener noreferrer" className="inline-block px-4 py-2 text-gray-800 bg-gray-200 rounded hover:bg-gray-300">Explore</a>
                                         </div>
                                     </div>
                                 </div>
@@ -201,6 +223,8 @@ const Dashboard = () => {
 
                     </div>
                 </div>
+
+
                 <div className="flex gap-2 mb-20">
                     {userData ? (<InformationTab userData={userData} />) : (<div>Loading</div>)}
                 </div>
@@ -218,4 +242,4 @@ const Dashboard = () => {
 
 
 
-export default page
+export default Page
