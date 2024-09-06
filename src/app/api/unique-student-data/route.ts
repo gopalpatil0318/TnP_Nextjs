@@ -1,40 +1,48 @@
-import dbConnect from '@/lib/dbConnect';
-import UserModel from '@/model/User';
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/options";
+import dbConnect from "@/lib/dbConnect";
+import UserModel from "@/model/User";
 import { NextRequest, NextResponse } from 'next/server';
 
-export async function POST(request: NextRequest) {
-    await dbConnect(); // Establish the database connection
+export async function POST(request: NextRequest): Promise<NextResponse> {
+    const session = await getServerSession(authOptions);
+
+    if (!session || !session.user) {
+        return NextResponse.json({
+            success: false,
+            message: "Not Authenticated"
+        }, { status: 401 });
+    }
+
+    await dbConnect();
 
     try {
-        // Extract the username from the request body
-        const { username } = await request.json();
+        const { username, email, ...otherDetails } = await request.json();
+        
+        const updatedUser = await UserModel.findOneAndUpdate(
+            { username, isVerified: true },
+            { $set: otherDetails },
+            { new: true }
+        );
 
-        // Decode the username (to handle URL encoding)
-        const decodedUsername = decodeURIComponent(username);
-
-        // Find the user with case-insensitive matching and projection to only return required fields
-        const user = await UserModel.findOne({ username: new RegExp(`^${decodedUsername}$`, 'i') })
-            .select('firstName lastName email mobileNumber image department areaOfInterest aboutYou githubLink linkedinLink leetcodeLink personalPortfolioLink instagramLink twitterLink hackerRankLink codechefLink geeksForGeeksLink projectTitle1 projectLink1 projectDescription1 projectTitle2 projectLink2 projectDescription2'); // Projection: select only required fields
-
-        if (!user) {
+        if (!updatedUser) {
             return NextResponse.json({
                 success: false,
-                message: "User not found"
-            }, { status: 404 });
+                message: "User Not Found"
+            }, { status: 400 });
         }
 
-        // Return the student data with selected fields
         return NextResponse.json({
             success: true,
-            data: user
+            message: "Profile updated successfully",
+            user: updatedUser
         }, { status: 200 });
 
     } catch (error) {
-        console.error('Error fetching student data:', error);
-
+        console.error('Error updating user profile:', error);
         return NextResponse.json({
             success: false,
-            message: "Error fetching student data"
+            message: "Error updating user profile"
         }, { status: 500 });
     }
 }
