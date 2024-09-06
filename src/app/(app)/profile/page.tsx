@@ -41,7 +41,7 @@ const Page = () => {
 
 const Dashboard = () => {
     const { userData, fetchUserData } = useUserContext();
-    console.log("User data in : ", userData?.firstName)
+
 
     return (
         <div className="flex flex-1">
@@ -71,7 +71,7 @@ const Dashboard = () => {
                                         src={userData?.image || "/image.png"}
                                         alt="Profile"
                                         className="rounded-2xl border-4 border-white shadow-lg"
-                                        layout="fill" 
+                                        layout="fill"
                                         objectFit="cover"
                                         priority={false}
                                     />
@@ -134,33 +134,87 @@ const Dashboard = () => {
                         <div className="bg-white dark:bg-gray-900 rounded-lg shadow-xl p-4 mt-2">
                             <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Links:</h3>
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
-                                <a href={userData?.personalPortfolioLink} className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2 hover:bg-gray-300">
-                                    <FaRegAddressCard className="mr-2" /> Portfolio
-                                </a>
-                                <a href={userData?.githubLink} className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2 hover:bg-gray-300">
-                                    <FaGithub className="mr-2" /> GitHub
-                                </a>
-                                <a href={userData?.linkedinLink} className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2 hover:bg-gray-300">
-                                    <FaLinkedin className="mr-2" /> LinkedIn
-                                </a>
-                                <a href={userData?.instagramLink} className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2 hover:bg-gray-300">
-                                    <FaSquareInstagram className="mr-2" /> Instagram
-                                </a>
-                                <a href={userData?.twitterLink} className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2 hover:bg-gray-300">
-                                    <FaXTwitter className="mr-2" /> Twitter
-                                </a>
-                                <a href={userData?.leetcodeLink} className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2 hover:bg-gray-300">
-                                    <SiLeetcode className="mr-2" /> LeetCode
-                                </a>
-                                <a href={userData?.geeksForGeeksLink} className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2 hover:bg-gray-300">
-                                    <SiGeeksforgeeks className="mr-2" /> GeeksforGeeks
-                                </a>
-                                <a href={userData?.codechefLink} className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2 hover:bg-gray-300">
-                                    <SiCodechef className="mr-2" /> CodeChef
-                                </a>
-                                <a href={userData?.hackerRankLink} className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2 hover:bg-gray-300">
-                                    <SiHackerrank className="mr-2" /> HackerRank
-                                </a>
+                                {userData?.personalPortfolioLink ? (
+                                    <a href={userData.personalPortfolioLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2 hover:bg-gray-300">
+                                        <FaRegAddressCard className="mr-2 text-blue-600" /> Portfolio
+                                    </a>
+                                ) : (
+                                    <div className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2">
+                                        <FaRegAddressCard className="mr-2 text-gray-400" /> Portfolio
+                                    </div>
+                                )}
+                                {userData?.githubLink ? (
+                                    <a href={userData.githubLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2 hover:bg-gray-300">
+                                        <FaGithub className="mr-2 text-black" /> GitHub
+                                    </a>
+                                ) : (
+                                    <div className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2">
+                                        <FaGithub className="mr-2 text-gray-400" /> GitHub
+                                    </div>
+                                )}
+                                {userData?.linkedinLink ? (
+                                    <a href={userData.linkedinLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2 hover:bg-gray-300">
+                                        <FaLinkedin className="mr-2 text-blue-700" /> LinkedIn
+                                    </a>
+                                ) : (
+                                    <div className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2">
+                                        <FaLinkedin className="mr-2 text-gray-400" /> LinkedIn
+                                    </div>
+                                )}
+                                {userData?.instagramLink ? (
+                                    <a href={userData.instagramLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2 hover:bg-gray-300">
+                                        <FaSquareInstagram className="mr-2 text-pink-500" /> Instagram
+                                    </a>
+                                ) : (
+                                    <div className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2">
+                                        <FaSquareInstagram className="mr-2 text-gray-400" /> Instagram
+                                    </div>
+                                )}
+                                {userData?.twitterLink ? (
+                                    <a href={userData.twitterLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2 hover:bg-gray-300">
+                                        <FaXTwitter className="mr-2 text-blue-500" /> Twitter
+                                    </a>
+                                ) : (
+                                    <div className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2">
+                                        <FaXTwitter className="mr-2 text-gray-400" /> Twitter
+                                    </div>
+                                )}
+                                {userData?.leetcodeLink ? (
+                                    <a href={userData.leetcodeLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2 hover:bg-gray-300">
+                                        <SiLeetcode className="mr-2 text-yellow-500" /> LeetCode
+                                    </a>
+                                ) : (
+                                    <div className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2">
+                                        <SiLeetcode className="mr-2 text-gray-400" /> LeetCode
+                                    </div>
+                                )}
+                                {userData?.hackerRankLink ? (
+                                    <a href={userData.hackerRankLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2 hover:bg-gray-300">
+                                        <SiHackerrank className="mr-2 text-green-500" /> HackerRank
+                                    </a>
+                                ) : (
+                                    <div className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2">
+                                        <SiHackerrank className="mr-2 text-gray-400" /> HackerRank
+                                    </div>
+                                )}
+                                {userData?.codechefLink ? (
+                                    <a href={userData.codechefLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2 hover:bg-gray-300">
+                                        <SiCodechef className="mr-2 text-purple-600" /> CodeChef
+                                    </a>
+                                ) : (
+                                    <div className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2">
+                                        <SiCodechef className="mr-2 text-gray-400" /> CodeChef
+                                    </div>
+                                )}
+                                {userData?.geeksForGeeksLink ? (
+                                    <a href={userData.geeksForGeeksLink} target="_blank" rel="noopener noreferrer" className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2 hover:bg-gray-300">
+                                        <SiGeeksforgeeks className="mr-2 text-green-500" /> GeeksforGeeks
+                                    </a>
+                                ) : (
+                                    <div className="flex items-center justify-center text-gray-800 bg-gray-200 rounded p-2">
+                                        <SiGeeksforgeeks className="mr-2 text-gray-400" /> GeeksforGeeks
+                                    </div>
+                                )}
                             </div>
                         </div>
 
@@ -171,14 +225,12 @@ const Dashboard = () => {
                             <div className="flex flex-wrap md:flex-nowrap gap-4 mt-4">
                                 {/* Project 1 */}
                                 <div className="w-full md:w-1/2 flex flex-col items-center p-4 border border-gray-200 rounded-lg shadow-sm bg-gray-50 dark:bg-gray-800">
-                                    <div className="w-full">
+                                    <div className="w-full h-40 relative">
                                         <Image
                                             src="https://corporate-assets.lucid.co/chart/09255df0-f147-42b4-805e-163ad3001feb.png?v=1707845547429"
                                             alt="Project 1"
-                                            className="w-full h-40 object-cover rounded-md"
-                                            layout="responsive"
-                                            width={800} // Adjust width as needed
-                                            height={300} // Adjust height as needed
+                                            className="object-cover rounded-md"
+                                            layout="fill"
                                             priority={false} // Set to true if you want to preload the image
                                         />
                                     </div>
@@ -186,28 +238,26 @@ const Dashboard = () => {
                                         <h4 className="text-xl font-semibold text-gray-800 dark:text-gray-200">{userData?.projectTitle1}</h4>
                                         <p className="text-gray-600 dark:text-gray-400 mt-2">{userData?.projectDescription1}</p>
                                         <div className="mt-4 w-full">
-                                            <a href={userData?.projectLink1} target="_blank" rel="noopener noreferrer" className="inline-block px-4 py-2 text-gray-800  bg-gray-200 rounded hover:bg-gray-300">Explore</a>
+                                            <a href={userData?.projectLink1} target="_blank" rel="noopener noreferrer" className="inline-block px-4 py-2 text-gray-800 bg-gray-200 rounded hover:bg-gray-300">Explore</a>
                                         </div>
                                     </div>
                                 </div>
                                 {/* Project 2 */}
                                 <div className="w-full md:w-1/2 flex flex-col items-center p-4 border border-gray-200 rounded-lg shadow-sm bg-gray-50 dark:bg-gray-800">
-                                    <div className="w-full">
+                                    <div className="w-full h-40 relative">
                                         <Image
                                             src="https://s3-ap-south-1.amazonaws.com/static.awfis.com/wp-content/uploads/2017/07/07184649/ProjectManagement.jpg"
                                             alt="Project 2"
-                                            className="w-full h-40 object-cover rounded-md"
-                                            layout="responsive"
-                                            width={800} // Adjust width as needed
-                                            height={300} // Adjust height as needed
+                                            className="object-cover rounded-md"
+                                            layout="fill"
                                             priority={false} // Set to true if you want to preload the image
                                         />
                                     </div>
                                     <div className="w-full flex flex-col items-start mt-4">
                                         <h4 className="text-xl font-semibold text-gray-800 dark:text-gray-200">{userData?.projectTitle2}</h4>
-                                        <p className="text-gray-600 dark:text-gray-400 mt-2">{userData?.projectDescription1}</p>
+                                        <p className="text-gray-600 dark:text-gray-400 mt-2">{userData?.projectDescription2}</p>
                                         <div className="mt-4 w-full">
-                                            <a href={userData?.projectLink1} target="_blank" rel="noopener noreferrer" className="inline-block px-4 py-2 text-gray-800 bg-gray-200 rounded hover:bg-gray-300">Explore</a>
+                                            <a href={userData?.projectLink2} target="_blank" rel="noopener noreferrer" className="inline-block px-4 py-2 text-gray-800 bg-gray-200 rounded hover:bg-gray-300">Explore</a>
                                         </div>
                                     </div>
                                 </div>

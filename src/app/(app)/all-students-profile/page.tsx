@@ -27,7 +27,7 @@ const Page: React.FC = () => {
 
 const Dashboard: React.FC = () => {
   interface Student {
-    id: number;
+    username: string;
     firstName: string;
     lastName: string;
     image: string;
@@ -116,7 +116,7 @@ const Dashboard: React.FC = () => {
               <p className="text-red-500">{error}</p>
             ) : (
               filteredStudents.map((student) => (
-                <StudentsCards key={student.id} student={student} />
+                <StudentsCards key={student.username} student={student} />
               ))
             )}
           </div>

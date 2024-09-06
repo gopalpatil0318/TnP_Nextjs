@@ -13,6 +13,7 @@ export const config = {
     '/createprofile/:path*',
     '/update-profile/:path*', 
     '/all-students-profile/:path*', 
+    '/other-student-profile/:path*', 
   ],
 };
 
@@ -29,7 +30,8 @@ export async function middleware(request: NextRequest) {
       url.pathname.startsWith('/profile') || 
       url.pathname.startsWith('/update-profile') || 
       url.pathname.startsWith('/createprofile') ||
-      url.pathname.startsWith('/all-students-profile')
+      url.pathname.startsWith('/all-students-profile') ||
+      url.pathname.startsWith('/other-student-profile')
     ) {
       console.log('Redirecting to /sign-in'); 
       return NextResponse.redirect(new URL('/sign-in', request.url));

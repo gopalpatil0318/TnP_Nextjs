@@ -180,9 +180,11 @@ const Page = () => {
                 data = { ...data, image:imageUrl }; 
             }
             console.log("after: ",data.image)
-
+            console.log("responseresponse", data)
             const response = await axios.post<ApiResponse>('/api/update-student-profile/', data);
+            console.log("response", response)
             fetchUserData();
+
             toast({
                 title: 'Success',
                 description: response.data.message,

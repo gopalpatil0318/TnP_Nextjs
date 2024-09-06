@@ -13,11 +13,9 @@ import Image from "next/image";
 import { Tabs } from "@/components/ui/tabs";
 
 const InformationTab = ({ userData }: any) => {
-    console.log("Userdata: ", userData);
-    console.log("BirthDate: ", userData.BirthDate);
-    const birthDate = userData.birthDate ? new Date(userData.birthDate) : undefined;
-    console.log("first:", birthDate)
-
+  
+   
+  
     const tabs = [
         {
             title: "Personal",

@@ -1,10 +1,11 @@
 import React from "react";
 import Image from "next/image";
+import { useRouter } from "next/navigation"; 
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 import { SiLeetcode } from "react-icons/si";
 
 interface Student {
-  id: number;
+  username: string;
   firstName: string;
   lastName: string;
   image: string;
@@ -21,6 +22,13 @@ interface StudentsCardsProps {
 }
 
 export function StudentsCards({ student }: StudentsCardsProps) {
+  const router = useRouter(); 
+
+  const handleVisitProfile = () => {
+   console.log(student)
+    router.replace(`/other-student-profile/${student.username}`);
+  };
+
   return (
     <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg p-4 shadow-md transform transition-all hover:scale-105 flex flex-col items-center gap-3 h-96">
       <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-[#0057e7]">
@@ -29,7 +37,7 @@ export function StudentsCards({ student }: StudentsCardsProps) {
           alt={`${student.firstName} ${student.lastName}'s profile`}
           width={96}
           height={96}
-          className="rounded-full object-cover "
+          className="rounded-full object-cover"
         />
       </div>
 
@@ -67,7 +75,10 @@ export function StudentsCards({ student }: StudentsCardsProps) {
         )}
       </div>
 
-      <button className="mt-2 px-4 py-2 bg-[#d62d20] text-white rounded-full font-semibold text-sm hover:bg-[#ffa700] transition">
+      <button
+        onClick={handleVisitProfile}
+        className="mt-2 px-4 py-2 bg-[#d62d20] text-white rounded-full font-semibold text-sm hover:bg-[#ffa700] transition"
+      >
         Visit Profile
       </button>
     </div>
