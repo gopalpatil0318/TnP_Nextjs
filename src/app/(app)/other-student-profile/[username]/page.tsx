@@ -34,9 +34,9 @@ const StudentProfilePage = () => {
         }
     }, [params.username]); 
 
-    if (!studentData) {
-        return <div>Loading...</div>;
-    }
+    // if (!studentData) {
+    //     return <div>Loading...</div>;
+    // }
 
     return (
         <div
