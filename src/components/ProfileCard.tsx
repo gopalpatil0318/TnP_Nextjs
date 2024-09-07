@@ -16,10 +16,13 @@ const ProfileCard = ({ studentData }: { studentData: any }) => {
                             src={studentData?.image || "/image.png"}
                             alt="Profile"
                             className="rounded-2xl border-4 border-white shadow-lg"
-                            layout="fill"
-                            objectFit="cover"
+                            fill
                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                            style={{ objectFit: 'cover' }}
+                            priority // Add this prop to preload the image
                         />
+
+
                     </div>
                 </div>
 
@@ -42,12 +45,12 @@ const ProfileCard = ({ studentData }: { studentData: any }) => {
                 <div className="mt-4">
                     <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Skills:</h3>
                     <div className="flex flex-wrap gap-2 mt-2">
-                                    {['Java', 'JavaScript', 'React', 'Node.js', 'Express', 'MongoDB', 'HTML', 'CSS', 'Git', 'TypeScript'].map(skill => (
-                                        <span key={skill} className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full px-3 py-1 text-sm">
-                                            {skill}
-                                        </span>
-                                    ))}
-                                </div>
+                        {['Java', 'JavaScript', 'React', 'Node.js', 'Express', 'MongoDB', 'HTML', 'CSS', 'Git', 'TypeScript'].map(skill => (
+                            <span key={skill} className="bg-gray-200 dark:bg-gray-700 text-gray-800 dark:text-gray-200 rounded-full px-3 py-1 text-sm">
+                                {skill}
+                            </span>
+                        ))}
+                    </div>
                 </div>
             </div>
         </div>

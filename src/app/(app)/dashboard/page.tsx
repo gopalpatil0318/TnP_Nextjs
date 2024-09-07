@@ -1,15 +1,19 @@
 "use client";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Boxes } from "@/components/ui/background-boxes";
 import { User } from 'next-auth';
 import { cn } from "@/lib/utils";
 import SideBar from "@/components/SideBar"
 import { useSession } from 'next-auth/react';
 import { BackgroundGradient } from "@/components/ui/background-gradient";
+import { useUserContext } from "@/context/AppContext";
 
 const Page = () => {
 
     const { data: session } = useSession();
+    const { userData, fetchUserData } = useUserContext();
+    
+   
 
     return (
         <div

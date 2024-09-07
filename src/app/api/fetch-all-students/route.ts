@@ -17,8 +17,24 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
   await dbConnect();
 
   try {
-    // Fetch all users
-    const users = await UserModel.aggregate([{ $sample: { size: await UserModel.countDocuments() } }]);
+    // Fetch all users, projecting only specific fields
+    const users = await UserModel.aggregate([
+      { $sample: { size: await UserModel.countDocuments() } },
+      { 
+        $project: { 
+          username: 1,
+          firstName: 1,
+          lastName: 1,
+          image: 1,
+          linkedinLink: 1,
+          githubLink: 1,
+          leetcodeLink: 1,
+          areaOfInterest: 1,
+          department: 1,
+          passoutYear: 1
+        } 
+      }
+    ]);
 
     if (!users || users.length === 0) {
       return NextResponse.json({

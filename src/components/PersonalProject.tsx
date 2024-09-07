@@ -17,10 +17,12 @@ const PersonalProject = ({ studentData }: { studentData: any }) => {
                         <Image
                             src="https://corporate-assets.lucid.co/chart/09255df0-f147-42b4-805e-163ad3001feb.png?v=1707845547429"
                             alt="Project 1"
-                            className="object-cover rounded-md"
-                            layout="fill"
-                            priority={false} // Set to true if you want to preload the image
+                            className="rounded-md object-cover"
+                            fill
+                            priority={false}
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         />
+
                     </div>
                     <div className="w-full flex flex-col items-start mt-4">
                         <h4 className="text-xl font-semibold text-gray-800 dark:text-gray-200">{studentData?.projectTitle1}</h4>
@@ -37,9 +39,11 @@ const PersonalProject = ({ studentData }: { studentData: any }) => {
                             src="https://s3-ap-south-1.amazonaws.com/static.awfis.com/wp-content/uploads/2017/07/07184649/ProjectManagement.jpg"
                             alt="Project 2"
                             className="object-cover rounded-md"
-                            layout="fill"
-                            priority={false} // Set to true if you want to preload the image
+                            fill  
+                            priority={false} 
+                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" 
                         />
+
                     </div>
                     <div className="w-full flex flex-col items-start mt-4">
                         <h4 className="text-xl font-semibold text-gray-800 dark:text-gray-200">{studentData?.projectTitle2}</h4>

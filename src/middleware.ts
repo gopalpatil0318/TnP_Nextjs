@@ -21,8 +21,8 @@ export async function middleware(request: NextRequest) {
   const token = await getToken({ req: request });
   const url = request.nextUrl;
 
-  console.log('Token:', token); // Debugging line
-  console.log('Request URL:', url.pathname); // Debugging line
+  console.log('Token:', token); 
+  console.log('Request URL:', url.pathname); 
 
   if (!token) {
     if (
@@ -45,7 +45,7 @@ export async function middleware(request: NextRequest) {
     url.pathname.startsWith('/verify') ||
     url.pathname === '/'
   ) {
-    console.log('Redirecting to /dashboard'); // Debugging line
+    console.log('Redirecting to /dashboard'); 
     return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 
@@ -58,8 +58,6 @@ export async function middleware(request: NextRequest) {
     console.log('Redirecting to /createprofile'); 
     return NextResponse.redirect(new URL('/createprofile', request.url));
   }
-
-  
 
   return NextResponse.next();
 }

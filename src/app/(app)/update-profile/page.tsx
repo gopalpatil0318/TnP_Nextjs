@@ -52,22 +52,20 @@ const Page = () => {
 
     const { data: session } = useSession();
     const user: User = session?.user as User;
-    // const username: string = user?.username || "Loading...";
-    // const email: string = user?.email || "Loading..."
     const { userData, fetchUserData } = useUserContext();
 
 
     
 
     useEffect(() => {
-        
+     
         if (userData) {
             form.reset({
                 ...userData,
             });
         }
         form.setValue('prnNumber', userData?.username);
-    }, [userData]);
+    }, []);
 
 
 
@@ -157,13 +155,14 @@ const Page = () => {
 
     const uploadImage = async (file: File): Promise<string> => {
         const formData = new FormData();
+        console.log("my name is chanfsnf1234567890")
         formData.append('file', file);
-        formData.append('upload_preset', 'gopaluploadpreset'); // Replace with your actual upload preset
-        formData.append('cloud_name', 'dae4fjmsn'); // Replace with your actual cloud name
+        formData.append('upload_preset', 'gopaluploadpreset'); 
+        formData.append('cloud_name', 'dae4fjmsn'); 
 
         try {
-            const response = await axios.post('https://api.cloudinary.com/v1_1/dae4fjmsn/image/upload', formData);
-            return response.data.url; // Return the URL of the uploaded image
+            const response = await axios.post('https://api.cloudinary.com/v1_1/dae4fjmsn/image/upload/rcpit', formData);
+            return response.data.url; 
         } catch (error) {
             throw new Error('Image upload failed');
         }
@@ -175,8 +174,9 @@ const Page = () => {
         setIsSubmitting(true);
         try {
             console.log("before: ",data.image)
-            if (data.image) {
+            if (data.image instanceof File) {
                 const imageUrl = await uploadImage(data.image);
+                console.log("my name is chanfsnf")
                 data = { ...data, image:imageUrl }; 
             }
             console.log("after: ",data.image)

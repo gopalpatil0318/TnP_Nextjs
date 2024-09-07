@@ -2,13 +2,14 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import axios from 'axios';
 import { User } from "@/model/User";
+import { useSession } from 'next-auth/react';
 
 interface UserContextProps {
     userData: User | null;
     setUserData: React.Dispatch<React.SetStateAction<User | null>>;
     fetchUserData: () => void;
-    loading: boolean; // Add loading state
-    logout: () => void; // Add logout function
+    loading: boolean;
+    logout: () => void;
 }
 
 interface UserProviderProps {
@@ -20,12 +21,13 @@ const UserContext = createContext<UserContextProps | undefined>(undefined);
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     const [userData, setUserData] = useState<User | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
+    const { data: session } = useSession();
 
     const fetchUserData = async () => {
-        setLoading(true); // Start loading
+        setLoading(true);
         try {
             const response = await axios.get('/api/fetch-data'); 
-            setUserData(response.data?.user || null); // Use optional chaining
+            setUserData(response.data?.user || null); 
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 console.error('Error fetching user data', {
@@ -39,20 +41,22 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
                 console.error('Unexpected error', error);
             }
         } finally {
-            setLoading(false); 
+            setLoading(false);
         }
     };
 
     const logout = () => {
-        setUserData(null); 
+        setUserData(null);
     };
 
     useEffect(() => {
-        fetchUserData();
-    }, []);
+        if (session?.user) {
+            fetchUserData();
+        }
+    }, [session]); 
 
-    // console.log("context api ", userData);
-    
+    console.log("context api ", userData);
+
     return (
         <UserContext.Provider value={{ userData, setUserData, fetchUserData, loading, logout }}>
             {children}

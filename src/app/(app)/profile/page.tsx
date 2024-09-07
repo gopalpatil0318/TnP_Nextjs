@@ -1,6 +1,6 @@
 "use client";
 import { Tabs } from "@/components/ui/tabs";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Boxes } from "@/components/ui/background-boxes";
 import { User } from 'next-auth';
 import { cn } from "@/lib/utils";
@@ -41,7 +41,7 @@ const Page = () => {
 
 const Dashboard = () => {
     const { userData, fetchUserData } = useUserContext();
-
+  
 
     return (
         <div className="flex flex-1">
@@ -56,25 +56,27 @@ const Dashboard = () => {
                 </div>
 
                 <div className="flex flex-col md:flex-row gap-2 flex-1">
-                    {/* First child div with the student profile card */}
+
                     <div
                         key={"first"}
                         className="bg-gray-200 shadow-md h-full w-full md:w-[30%] rounded-lg dark:bg-neutral-800 p-4 pt-[150px]">
-                        {/* Profile Card */}
-                        <div className="bg-white dark:bg-gray-900 p-4 rounded-lg shadow-md">
-                            {/* Background Image or Color */}
 
-                            {/* Profile Photo */}
+                        <div className="bg-white dark:bg-gray-900 p-4 rounded-lg shadow-md">
+
                             <div className="flex justify-center">
-                                <div className="relative w-72 h-72 -mt-[150px]"> {/* Setting fixed square dimensions */}
+                                <div className="relative w-72 h-72 -mt-[150px]">
                                     <Image
                                         src={userData?.image || "/image.png"}
                                         alt="Profile"
                                         className="rounded-2xl border-4 border-white shadow-lg"
-                                        layout="fill"
-                                        objectFit="cover"
-                                        priority={false}
+                                        fill
+                                        style={{ objectFit: 'cover' }}
+                                        priority={true}
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Adjust sizes based on your layout
                                     />
+
+
+
                                 </div>
                             </div>
 
@@ -89,7 +91,7 @@ const Dashboard = () => {
                                 </p>
                             </div>
 
-                            {/* Skills Section */}
+
                             <div className="mt-4">
                                 <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Skills:</h3>
                                 <div className="flex flex-wrap gap-2 mt-2">
@@ -106,7 +108,7 @@ const Dashboard = () => {
                         </div>
                     </div>
 
-                    {/* Second child div with Personal Information and Links */}
+
                     <div
                         key={"profile-card"}
                         className="h-full w-full md:w-[70%] rounded-lg bg-gray-200 dark:bg-neutral-800 flex flex-col gap-2 p-4"
@@ -130,7 +132,7 @@ const Dashboard = () => {
                             </ul>
                         </div>
 
-                        {/* Links Section */}
+
                         <div className="bg-white dark:bg-gray-900 rounded-lg shadow-xl p-4 mt-2">
                             <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-200">Links:</h3>
                             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
@@ -229,10 +231,14 @@ const Dashboard = () => {
                                         <Image
                                             src="https://corporate-assets.lucid.co/chart/09255df0-f147-42b4-805e-163ad3001feb.png?v=1707845547429"
                                             alt="Project 1"
-                                            className="object-cover rounded-md"
-                                            layout="fill"
-                                            priority={false} // Set to true if you want to preload the image
+                                            className="rounded-md"
+                                            fill
+                                            style={{ objectFit: 'cover' }}
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw" // Adjust this based on your layout
+                                            priority={false}
                                         />
+
+
                                     </div>
                                     <div className="w-full flex flex-col items-start mt-4">
                                         <h4 className="text-xl font-semibold text-gray-800 dark:text-gray-200">{userData?.projectTitle1}</h4>
@@ -248,10 +254,13 @@ const Dashboard = () => {
                                         <Image
                                             src="https://s3-ap-south-1.amazonaws.com/static.awfis.com/wp-content/uploads/2017/07/07184649/ProjectManagement.jpg"
                                             alt="Project 2"
-                                            className="object-cover rounded-md"
-                                            layout="fill"
-                                            priority={false} // Set to true if you want to preload the image
+                                            className="rounded-md"
+                                            fill
+                                            style={{ objectFit: 'cover' }}
+                                            priority={false}
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                         />
+
                                     </div>
                                     <div className="w-full flex flex-col items-start mt-4">
                                         <h4 className="text-xl font-semibold text-gray-800 dark:text-gray-200">{userData?.projectTitle2}</h4>
