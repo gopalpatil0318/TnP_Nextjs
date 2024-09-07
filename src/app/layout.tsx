@@ -9,6 +9,9 @@ const inter = Inter({ subsets: ['latin'] });
 export const metadata: Metadata = {
   title: 'Training and Placement',
   description: 'R C Patel Training and Placement Official Website',
+  icons: {
+    icon: '/rcpitlogo.png',
+  },
 };
 
 interface RootLayoutProps {

@@ -161,7 +161,7 @@ const Page = () => {
         formData.append('cloud_name', 'dae4fjmsn'); 
 
         try {
-            const response = await axios.post('https://api.cloudinary.com/v1_1/dae4fjmsn/image/upload/rcpit', formData);
+            const response = await axios.post('https://api.cloudinary.com/v1_1/dae4fjmsn/image/upload/', formData);
             return response.data.url; 
         } catch (error) {
             throw new Error('Image upload failed');
