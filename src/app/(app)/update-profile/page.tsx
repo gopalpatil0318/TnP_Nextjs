@@ -179,10 +179,9 @@ const Page = () => {
                 console.log("my name is chanfsnf")
                 data = { ...data, image:imageUrl }; 
             }
-            console.log("after: ",data.image)
-            console.log("responseresponse", data)
+        
             const response = await axios.post<ApiResponse>('/api/update-student-profile/', data);
-            console.log("response", response)
+       
             fetchUserData();
 
             toast({
