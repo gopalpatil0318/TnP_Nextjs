@@ -14,9 +14,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-// import { useSession } from 'next-auth/react';
 import { User } from "next-auth";
-
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -47,17 +45,13 @@ import {
 } from '@/data/options';
 import { IconArrowLeft } from '@tabler/icons-react';
 
+
+
 const Page = () => {
-
-
     const { data: session } = useSession();
     const user: User = session?.user as User;
     const username: string = user?.username || "Loading...";
     const email: string = user?.email || "Loading..."
-
-    // console.log(`${username} and ${email}`)
-
-
 
     const [gapVisible, setGapVisible] = useState(false)
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -67,79 +61,6 @@ const Page = () => {
 
     const form = useForm<z.infer<typeof updateProfileSchema>>({
         resolver: zodResolver(updateProfileSchema),
-        // defaultValues: {
-        //     username: '',
-        //     email: '',
-        //     // password: '',
-        //     mobileNumber: '',
-        //     birthDate: undefined,
-        //     gender: '',
-        //     bloodGroup: '',
-        //     adharNumber: '',
-        //     cast: '',
-        //     fatherName: '',
-        //     fatherMobileNumber: '',
-        //     fatherOccupation: '',
-        //     motherName: '',
-        //     motherMobileNumber: '',
-        //     motherOccupation: '',
-        //     localAddress: '',
-        //     city: '',
-        //     district: '',
-        //     state: '',
-        //     pincode: '',
-        //     prnNumber: '',
-        //     tenthMarks: '',
-        //     twelfthDiploma: '',
-        //     twelfthDiplomaPercentage: '',
-        //     admissionBasedOn: '',
-        //     department: '',
-        //     division: '',
-        //     passoutYear: new Date().getFullYear(),
-        //     lgName: '',
-        //     sem1SGPA: 0,
-        //     sem1CGPA: 0,
-        //     sem1Backlog: 0,
-        //     sem2SGPA: 0,
-        //     sem2CGPA: 0,
-        //     sem2Backlog: 0,
-        //     sem3SGPA: 0,
-        //     sem3CGPA: 0,
-        //     sem3Backlog: 0,
-        //     sem4SGPA: 0,
-        //     sem4CGPA: 0,
-        //     sem4Backlog: 0,
-        //     sem5SGPA: 0,
-        //     sem5CGPA: 0,
-        //     sem5Backlog: 0,
-        //     sem6SGPA: 0,
-        //     sem6CGPA: 0,
-        //     sem6Backlog: 0,
-        //     overallCGPA: 0,
-        //     anyLiveKTs: '',
-        //     anyGapDuringEducation: '',
-        //     gapReason: '',
-        //     areaOfInterest: '',
-        //     aboutYou: '',
-        //     projectTitle1: '',
-        //     projectLink1: '',
-        //     projectDescription1: '',
-        //     projectTitle2: '',
-        //     projectLink2: '',
-        //     projectDescription2: '',
-        //     personalPortfolioLink: '',
-        //     githubLink: '',
-        //     linkedinLink: '',
-        //     instagramLink: '',
-        //     twitterLink: '',
-        //     leetcodeLink: '',
-        //     geeksForGeeksLink: '',
-        //     codechefLink: '',
-        //     hackerRankLink: '',
-        //     firstName: '',
-        //     middleName: '',
-        //     lastName: ''
-        // }
     });
 
     const uploadImage = async (file: File): Promise<string> => {
