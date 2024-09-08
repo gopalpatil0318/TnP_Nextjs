@@ -120,15 +120,15 @@ const UserSchema: Schema<User> = new Schema({
     },
     mobileNumber: {
         type: String,
-        required: true,
+        required: false,
     },
     birthDate: {
         type: Date,
-        required: true,
+        required: false,
     },
     gender: {
         type: String,
-        required: true,
+        required: false,
     },
     // confirmPassword: {
     //     type: String,
@@ -136,63 +136,63 @@ const UserSchema: Schema<User> = new Schema({
     // },
     bloodGroup: {
         type: String,
-        required: true,
+        required: false,
     },
     adharNumber: {
         type: String,
-        required: true,
+        required: false,
     },
     cast: {
         type: String,
-        required: true,
+        required: false,
     },
     fatherName: {
         type: String,
-        required: true,
+        required: false,
     },
     fatherMobileNumber: {
         type: String,
-        required: true,
+        required: false,
     },
     fatherOccupation: {
         type: String,
-        required: true,
+        required: false,
     },
     motherName: {
         type: String,
-        required: true,
+        required: false,
     },
     motherMobileNumber: {
         type: String,
-        required: true,
+        required: false,
     },
     motherOccupation: {
         type: String,
-        required: true,
+        required: false,
     },
     localAddress: {
         type: String,
-        required: true,
+        required: false,
     },
     city: {
         type: String,
-        required: true,
+        required: false,
     },
     district: {
         type: String,
-        required: true,
+        required: false,
     },
     state: {
         type: String,
-        required: true,
+        required: false,
     },
     pincode: {
         type: String,
-        required: true,
+        required: false,
     },
     prnNumber: {
         type: String,
-        required: true,
+        required: false,
     },
     tenthMarks: {
         type: String,
@@ -200,7 +200,7 @@ const UserSchema: Schema<User> = new Schema({
     },
     twelfthDiploma: {
         type: String,
-        required: true,
+        required: false,
     },
     twelfthDiplomaPercentage: {
         type: String,
@@ -208,23 +208,23 @@ const UserSchema: Schema<User> = new Schema({
     },
     admissionBasedOn: {
         type: String,
-        required: true,
+        required: false,
     },
     department: {
         type: String,
-        required: true,
+        required: false,
     },
     division: {
         type: String,
-        required: true,
+        required: false,
     },
     passoutYear: {
         type: Number,
-        required: true,
+        required: false,
     },
     lgName: {
         type: String,
-        required: true,
+        required: false,
     },
     sem1SGPA: {
         type: Number,
@@ -252,104 +252,104 @@ const UserSchema: Schema<User> = new Schema({
     },
     sem3SGPA: {
         type: Number,
-        required: true,
+        required: false,
     },
     sem3CGPA: {
         type: Number,
-        required: true,
+        required: false,
     },
     sem3Backlog: {
         type: Number,
-        required: true,
+        required: false,
     },
     sem4SGPA: {
         type: Number,
-        required: true,
+        required: false,
     },
     sem4CGPA: {
         type: Number,
-        required: true,
+        required: false,
     },
     sem4Backlog: {
         type: Number,
-        required: true,
+        required: false,
     },
     sem5SGPA: {
         type: Number,
-        required: true,
+        required: false,
     },
     sem5CGPA: {
         type: Number,
-        required: true,
+        required: false,
     },
     sem5Backlog: {
         type: Number,
-        required: true,
+        required: false,
     },
     sem6SGPA: {
         type: Number,
-        required: true,
+        required: false,
     },
     sem6CGPA: {
         type: Number,
-        required: true,
+        required: false,
     },
     sem6Backlog: {
         type: Number,
-        required: true,
+        required: false,
     },
     overallCGPA: {
         type: Number,
-        required: true,
+        required: false,
     },
     anyLiveKTs: {
         type: Number,
-        required: true,
+        required: false,
     },
     anyGapDuringEducation: {
         type: String,
-        required: true,
+        required: false,
     },
     gapReason: {
         type: String,
-        required: true,
+        required: false,
     },
   
     areaOfInterest: {
         type: String,
-        required: true,
+        required: false,
     },
     aboutYou: {
         type: String,
-        required: true,
+        required: false,
     },
     projectTitle1: {
         type: String,
-        required: true,
+        required: false,
     },
     projectLink1: {
         type: String,
-        required: true,
+        required: false,
     },
     projectDescription1: {
         type: String,
-        required: true,
+        required: false,
     },
     projectTitle2: {
         type: String,
-        required: true,
+        required: false,
     },
     projectLink2: {
         type: String,
-        required: true,
+        required: false,
     },
     projectDescription2: {
         type: String,
-        required: true,
+        required: false,
     },
     personalPortfolioLink: {
         type: String,
-        required: true,
+        required: false,
     },
     githubLink: {
         type: String,
@@ -357,7 +357,7 @@ const UserSchema: Schema<User> = new Schema({
     },
     linkedinLink: {
         type: String,
-        required: true,
+        required: false,
     },
     instagramLink: {
         type: String,
@@ -385,15 +385,15 @@ const UserSchema: Schema<User> = new Schema({
     },
     firstName: {
         type: String,
-        required: true,
+        required: false,
     },
     middleName: {
         type: String,
-        required: true,
+        required: false,
     },
     lastName: {
         type: String,
-        required: true,
+        required: false,
     },
     image: {
         type: String,
