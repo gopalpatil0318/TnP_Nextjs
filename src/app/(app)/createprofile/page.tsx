@@ -28,7 +28,7 @@ import { Calendar as CalendarIcon } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Calendar } from "@/components/ui/calendar"
 import { Textarea } from "@/components/ui/textarea"
-import { Label } from '@/components/ui/label';
+
 import {
     castOptions,
     departmentOptions,
@@ -65,7 +65,6 @@ const Page = () => {
 
     const uploadImage = async (file: File): Promise<string> => {
         const formData = new FormData();
-        console.log("my name is chanfsnf1234567890")
         formData.append('file', file);
         formData.append('upload_preset', 'gopaluploadpreset');
         formData.append('cloud_name', 'dae4fjmsn');
@@ -138,7 +137,7 @@ const Page = () => {
 
     return (
         <div className="flex justify-center items-start min-h-screen bg-gray-800">
-            <div className="w-full max-w-6xl p-8 space-y-8 bg-white rounded-lg shadow-md mt-8">
+            <div className="w-full max-w-6xl p-8 space-y-8 bg-white rounded-lg shadow-md m-10">
                 <div className="text-center">
                     <h1 className="text-4xl font-extrabold tracking-tight lg:text-1xl mb-6">
                         Update Profile
@@ -169,7 +168,7 @@ const Page = () => {
                                     </FormItem>
                                 )}
                             />
-
+                            
                             <FormField
                                 control={form.control}
                                 name="middleName"
@@ -197,7 +196,6 @@ const Page = () => {
                                     </FormItem>
                                 )}
                             />
-
 
                             <FormField
                                 control={form.control}

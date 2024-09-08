@@ -97,9 +97,9 @@ const Page = () => {
               name="identifier"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email/Username</FormLabel>
+                  <FormLabel>Username(PRN)</FormLabel>
                   <FormControl>
-                    <Input placeholder="email/username" {...field}
+                    <Input placeholder="username(prn)" {...field}
                     />
                   </FormControl>
 
@@ -126,14 +126,14 @@ const Page = () => {
             />
 
             <Button type="submit" >
-              Signin
+              Sign in
             </Button>
 
           </form>
         </Form>
         <div className="text-center mt-4">
           <p>
-            Already a member?{' '}
+            Don't have an account?{' '}
             <Link href="/sign-up" className="text-blue-600 hover:text-blue-800">
               Sign up
             </Link>
