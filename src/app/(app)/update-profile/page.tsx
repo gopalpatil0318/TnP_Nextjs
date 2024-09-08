@@ -64,8 +64,8 @@ const Page = () => {
                 ...userData,
             });
         }
-        form.setValue('prnNumber', userData?.username);
-    }, []);
+        form.setValue('prnNumber', userData?.username || ' ');
+    }, [userData]);
 
 
 
@@ -209,9 +209,12 @@ const Page = () => {
     const [date, setDate] = useState<Date | undefined>(); // Ensure state is initialized as undefined
    
     const handleDateChange = (newDate: Date | undefined) => {
-        setDate(newDate); // Update local state
-        form.setValue('birthDate', newDate);
+        if (newDate) {
+            setDate(newDate); 
+            form.setValue('birthDate', newDate); 
+        }
     };
+    
 
     useEffect(() => {
         if (userData) {

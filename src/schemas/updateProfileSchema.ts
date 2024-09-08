@@ -28,10 +28,10 @@ export const updateProfileSchema = z.object({
 
 
     //Login
-    username: z.string().min(9,{message:"Invalid username Number "}).max(9,{message:"Invalid username Number"}).regex(/^\d+$/,{message:"Invalid username Number"}),
+    username: z.string().min(9,{message:"Invalid username Number "}).max(9,{message:"Invalid username Number"}),
 
     // Academic details
-    prnNumber:z.string().min(9,{message:"Invalid PRN Number "}).max(9,{message:"Invalid PRN Number"}).regex(/^\d+$/,{message:"Invalid PRN Number"}),
+    prnNumber:z.string().min(9,{message:"Invalid PRN Number "}).max(9,{message:"Invalid PRN Number"}),
     tenthMarks:z.string().min(2,{message:"Enter Valid 10 marks"}).max(6,{message:"Enter Valid 10 marks"}).regex(/^\d*\.?\d+$/,{message:"Enter Valid 10 marks"}),
     twelfthDiploma:z.string(),
     twelfthDiplomaPercentage:z.string().min(2,{message:"Enter Valid Diploma marks"}).max(6,{message:"Enter Valid Diploma marks"}).regex(/^\d*\.?\d+$/,{message:"Enter Valid Diploma marks"}).optional(),
