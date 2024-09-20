@@ -43,7 +43,7 @@ const HeroSection = () => {
           </div>
           {/* Updated text in white */}
           <span className="text-sm md:text-2xl block">
-            Shirpur Education Society's
+            Shirpur Education Society&apos;s
           </span>
           <span className="text-2xl md:text-4xl block font-semibold ">
             R. C. Patel Institute of Technology, Shirpur

@@ -7,7 +7,7 @@ const Footer = () => {
                 <div>
                     <h2 className="text-lg font-semibold mb-4">About Us</h2>
                     <p className="mb-4">
-                        Shirpur Education Society's
+                        Shirpur Education Society&apos;s
                         R. C. Patel Institute of Technology, Shirpur
 
                         Near Nimzari Naka, Shahada Road, Shirpur Dist. Dhule (M.S.) Maharashtra, India - 425405
