@@ -24,7 +24,7 @@ const StudentProfilePage = () => {
                         username: params.username,
                     });
 
-                    console.log("response.data: ",response.data.data)
+                    
                     setStudentData(response.data.data); 
                 } catch (error) {
                     console.error("Failed to fetch student data:", error);

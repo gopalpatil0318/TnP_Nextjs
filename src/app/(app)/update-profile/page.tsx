@@ -58,12 +58,13 @@ const Page = () => {
     
 
     useEffect(() => {
-     
         if (userData) {
             form.reset({
                 ...userData,
             });
         }
+        console.log(userData)
+        
         form.setValue('prnNumber', userData?.username);
     }, []);
 
@@ -368,6 +369,7 @@ const Page = () => {
                                             control={form.control}
                                             name="gender"
                                             render={({ field }) => (
+                                               
                                                 <FormItem>
                                                     <FormLabel>Gender</FormLabel>
                                                     <FormControl>

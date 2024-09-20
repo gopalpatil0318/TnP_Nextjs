@@ -1,8 +1,10 @@
 import React from "react";
 import Image from "next/image";
-import { useRouter } from "next/navigation"; 
+import { Button } from "@/components/ui/button"; // Assuming you have a Button component
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 import { SiLeetcode } from "react-icons/si";
+import { Card, CardContent } from "@/components/ui/card"
+import { useRouter } from "next/navigation"; 
 
 interface Student {
   username: string;
@@ -25,62 +27,82 @@ export function StudentsCards({ student }: StudentsCardsProps) {
   const router = useRouter(); 
 
   const handleVisitProfile = () => {
-   console.log(student)
     router.replace(`/other-student-profile/${student.username}`);
   };
 
   return (
-    <div className="bg-white dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-700 rounded-lg p-4 shadow-md transform transition-all hover:scale-105 flex flex-col items-center gap-3 h-96">
-      <div className="w-24 h-24 rounded-full overflow-hidden border-4 border-[#0057e7]">
+<Card className="w-64 bg-white shadow-lg mt-20 rounded-lg relative">
+      <div className="h-24 bg-[#20B2AA] " /> {/* Static background color */}
+     
+      {/* Student's profile image */}
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <Image
           src={student.image || "/image.png"}
           alt={`${student.firstName} ${student.lastName}'s profile`}
-          width={96}
-          height={96}
-          className="rounded-full object-cover"
+          width={120}
+          height={120}
+          className="rounded-lg border-4 border-white"
         />
       </div>
+      
+      <div className="pt-4 pb-4 px-4">
+        <h2 className="text-xl font-bold text-center mt-2 mb-1">
+          {student.firstName} {student.lastName}
+        </h2>
+        <p className="text-sm text-gray-600 text-center mb-3">
+          {student.department}
+        </p>
 
-      <h2 className="text-lg font-semibold text-neutral-800 dark:text-neutral-100">
-        {student.firstName} {student.lastName}
-      </h2>
+        <p className="text-sm text-center mb-2">
+          <span className="font-semibold">Pass out Year:</span> {student.passoutYear}
+        </p>
 
-      <p className="text-sm font-medium text-[#008744] dark:text-[#ffa700]">
-        {student.department}
-      </p>
+        <p className="text-sm text-center mb-2">
+          <span className="font-semibold">Area of Interest:</span> {student.areaOfInterest}
+        </p>
 
-      <p className="text-sm text-neutral-600 dark:text-neutral-400">
-        Pass out: <span className="font-semibold">{student.passoutYear}</span>
-      </p>
+        {/* Social Icons */}
+        <div className="flex space-x-4 mb-4 justify-center">
+          {student.linkedinLink && (
+            <a
+              href={student.linkedinLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+            >
+              <FaLinkedin className="w-6 h-6" />
+            </a>
+          )}
+          {student.githubLink && (
+            <a
+              href={student.githubLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-gray-800 hover:text-gray-600 dark:text-gray-300 dark:hover:text-gray-100"
+            >
+              <FaGithub className="w-6 h-6" />
+            </a>
+          )}
+          {student.leetcodeLink && (
+            <a
+              href={student.leetcodeLink}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-orange-600 hover:text-orange-800 dark:text-orange-400 dark:hover:text-orange-300"
+            >
+              <SiLeetcode className="w-6 h-6" />
+            </a>
+          )}
+        </div>
 
-      <p className="text-sm text-neutral-600 dark:text-neutral-400 text-center">
-        {student.areaOfInterest}
-      </p>
-
-      <div className="flex space-x-3 mt-2">
-        {student.linkedinLink && (
-          <a href={student.linkedinLink} target="_blank" rel="noopener noreferrer">
-            <FaLinkedin className="text-blue-600 text-xl" />
-          </a>
-        )}
-        {student.githubLink && (
-          <a href={student.githubLink} target="_blank" rel="noopener noreferrer">
-            <FaGithub className="text-gray-800 dark:text-white text-xl" />
-          </a>
-        )}
-        {student.leetcodeLink && (
-          <a href={student.leetcodeLink} target="_blank" rel="noopener noreferrer">
-            <SiLeetcode className="text-yellow-600 text-xl" />
-          </a>
-        )}
+        {/* Visit Full Profile Button */}
+        <Button 
+          onClick={handleVisitProfile} 
+          className="w-full transition-colors duration-300 hover:bg-primary-dark"
+        >
+          Visit Full Profile
+        </Button>
       </div>
-
-      <button
-        onClick={handleVisitProfile}
-        className="mt-2 px-4 py-2 bg-[#d62d20] text-white rounded-full font-semibold text-sm hover:bg-[#ffa700] transition"
-      >
-        Visit Profile
-      </button>
-    </div>
+    </Card>
   );
 }

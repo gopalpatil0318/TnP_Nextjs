@@ -9,8 +9,7 @@ import {
     TableHeader,
     TableRow,
 } from "@/components/ui/table";
-import Image from "next/image";
-import { Tabs } from "@/components/ui/tabs";
+import { Tabs } from "@/components/ui/tab";
 
 const InformationTab = ({ userData }: any) => {
   

@@ -44,7 +44,7 @@ const FilterSection: React.FC<FilterSectionProps> = ({
 }) => {
   const [isDepartmentOpen, setIsDepartmentOpen] = useState(false);
   const [isAreaOfInterestOpen, setIsAreaOfInterestOpen] = useState(false);
-  const [isFilterOpen, setIsFilterOpen] = useState(false);
+  const [isFilterOpen, setIsFilterOpen] = useState(true);
 
   const handleCheckboxChange = (category: "departments" | "areasOfInterest", value: string) => {
     const updatedFilters = { ...filters };

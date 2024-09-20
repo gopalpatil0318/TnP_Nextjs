@@ -6,6 +6,9 @@ import { useSession } from "next-auth/react";
 import { StudentsCards } from "@/components/StudentsCards";
 import FilterSection from "@/components/FilterSection";
 import axios from "axios";
+import { TbFilterPlus } from "react-icons/tb";
+import { LuFilterX } from "react-icons/lu";
+
 
 const Page: React.FC = () => {
   const { data: session } = useSession();
@@ -52,6 +55,7 @@ const Dashboard: React.FC = () => {
   });
   const [loading, setLoading] = useState<boolean>(true);
   const [error, setError] = useState<string | null>(null);
+  const [showFilters, setShowFilters] = useState<boolean>(false); // State to show/hide filters
 
   useEffect(() => {
     const fetchStudents = async () => {
@@ -90,39 +94,64 @@ const Dashboard: React.FC = () => {
   return (
     <div className="flex flex-1 flex-col md:flex-row h-full">
       <div className="p-2 md:p-3 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-black flex flex-col gap-3 w-full h-full">
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center justify-between">
           <div
             key={"first"}
             className="h-20 w-full rounded-lg bg-gray-100 dark:bg-neutral-800 flex items-center justify-center"
           >
             <h1 className="text-4xl font-normal text-neutral-600 dark:text-neutral-400">Students</h1>
           </div>
+
         </div>
-        <div className="flex flex-col md:flex-row gap-6 flex-1">
-          <div className="md:w-1/5">
-            <FilterSection
-              filters={filters}
-              onFilterChange={setFilters}
-              searchQuery={searchQuery}
-              setSearchQuery={setSearchQuery}
-            />
-          </div>
-          <div className="md:w-4/5 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 flex-1">
-            {loading ? (
-              <div className="col-span-4 flex justify-center items-center">
-                <p className="text-xl text-neutral-600 dark:text-neutral-400">Loading...</p>
+
+
+        <div className="flex flex-1 w-full gap-6">
+
+          <div className="flex flex-col">
+            <button
+              onClick={() => setShowFilters(!showFilters)}
+              className="flex items-center gap-2 mt-4 px-4 py-2 rounded-md bg-gray-200 dark:bg-neutral-700 text-xl text-neutral-600 dark:text-neutral-400 hover:bg-gray-300 dark:hover:bg-neutral-600 hover:text-neutral-800 dark:hover:text-neutral-200 transition-all duration-200 ease-in-out"
+            >
+              {showFilters ? <LuFilterX /> : <TbFilterPlus />}
+              <span className="text-sm text-neutral-600 dark:text-neutral-400">Filter</span>
+            </button>
+
+            {showFilters && (
+              <div className=" bg-gray-50 dark:bg-neutral-800 mt-10">
+                <FilterSection
+                  filters={filters}
+                  onFilterChange={setFilters}
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                />
               </div>
-            ) : error ? (
-              <p className="text-red-500">{error}</p>
-            ) : (
-              filteredStudents.map((student) => (
-                <StudentsCards key={student.username} student={student} />
-              ))
             )}
           </div>
+
+
+
+          <div className={`flex-1 w-full flex flex-col bg-white items-center overflow-hidden md:py-0 mb-10 ${showFilters ? 'md:w-3/4' : 'w-full'} `}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-20">
+              {loading ? (
+                <div className="col-span-4 flex justify-center items-center">
+                  <p className="text-xl text-neutral-600 dark:text-neutral-400">Loading...</p>
+                </div>
+              ) : error ? (
+                <p className="text-red-500">{error}</p>
+              ) : (
+                filteredStudents.map((student) => (
+                  <StudentsCards key={student.username} student={student} />
+                ))
+              )}
+            </div>
+          </div>
+
         </div>
+
+
       </div>
     </div>
+
   );
 };
 

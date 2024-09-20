@@ -9,6 +9,16 @@ const nextConfig = {
         },
         {
           protocol: 'https',
+          hostname: 'images.unsplash.com',
+          pathname: '**',
+        },
+        {
+          protocol: 'https',
+          hostname: 'aceternity.com',
+          pathname: '**',
+        },
+        {
+          protocol: 'https',
           hostname: 'media.licdn.com',
           pathname: '**',
         },

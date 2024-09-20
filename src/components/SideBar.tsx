@@ -57,7 +57,7 @@ export default function SideBar() {
 
     <Sidebar open={open} setOpen={setOpen}>
       <SidebarBody className="justify-between gap-10">
-        <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+        <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden fixed">
           {open ? <Logo /> : <LogoIcon />}
           <div className="mt-8 flex flex-col gap-2">
             {links.map((link, idx) => (
@@ -65,12 +65,12 @@ export default function SideBar() {
             ))}
 
           </div>
-          <div className="flex items-center gap-2 p-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md cursor-pointer" onClick={() => signOut()}>
+          <div className="mt-[390px] flex items-center gap-2 hover:bg-gray-100 dark:hover:bg-gray-800 rounded-md cursor-pointer" onClick={() => signOut()}>
             <IconArrowLeft className="text-neutral-700 dark:text-neutral-200 h-5 w-5 flex-shrink-0" />
             <span className={`transition-opacity duration-300 ${open ? "opacity-100" : "opacity-0"}`}>Logout</span>
           </div>
-        </div>
-        <div>
+
+          <div>
           <SidebarLink
             link={{
               label: userData?.firstName || "Loading..",
@@ -87,6 +87,9 @@ export default function SideBar() {
             }}
           />
         </div>
+        
+        </div>
+       
       </SidebarBody>
     </Sidebar>
 
