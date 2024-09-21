@@ -14,6 +14,8 @@ import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessa
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
 import { Loader2 } from "lucide-react"
+import { FloatingNav } from "@/components/ui/floating-navbar"
+import { navItems } from "@/data/dashboard"
 
 
 
@@ -92,6 +94,9 @@ const Page = () => {
     return (
         <div className="flex justify-center items-center min-h-screen bg-gray-800">
             <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
+            <FloatingNav
+          navItems={navItems}
+        />
                 <div className="text-center">
                     <h1 className="text-4xl font-extrabold tracking-tight lg:text-1xl mb-6">
                         R C Patel Institute Technology 

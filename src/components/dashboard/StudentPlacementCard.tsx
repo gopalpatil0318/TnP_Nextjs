@@ -6,7 +6,7 @@ interface Student {
   course: string;
   company: string;
   package: string;
-  city: string;
+  position: string;
   studentImage: string;
   companyLogo: string;
   backgroundColor: string; 
@@ -41,7 +41,6 @@ const StudentPlacementCard: React.FC<StudentPlacementCardProps> = ({ student }) 
         <div className="flex flex-col items-center mb-4">
           <p className="text-sm text-center mb-2">Placed in</p>
           
-          {/* Company logo */}
           <Image
             src={student.companyLogo} 
             alt={`${student.company} Logo`}
@@ -50,15 +49,14 @@ const StudentPlacementCard: React.FC<StudentPlacementCardProps> = ({ student }) 
             className="mb-2"
           />
           
-          {/* Company name */}
           <span className="text-sm font-semibold text-center">{student.company}</span>
         </div>
         
-        <p className="text-sm text-center mb-2">
-          <span className="font-semibold">Package:</span> {student.package}
+        <p className="text-base text-center mb-2">
+          <span className="font-semibold">Package:</span> <span className="font-bold">{student.package}</span>
         </p>
         <p className="text-sm text-center">
-          <span className="font-semibold">City:</span> {student.city}
+          <span className="font-semibold">Position:</span> {student.position}
         </p>
       </CardContent>
     </Card>

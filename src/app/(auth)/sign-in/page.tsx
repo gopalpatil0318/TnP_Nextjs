@@ -16,6 +16,8 @@ import { Button } from "@/components/ui/button"
 import { Loader2 } from "lucide-react"
 import { signInSchema } from "@/schemas/signInSchema"
 import { signIn } from "next-auth/react"
+import { FloatingNav } from "@/components/ui/floating-navbar"
+import { navItems } from "@/data/dashboard"
 
 
 
@@ -79,6 +81,9 @@ const Page = () => {
 
   return (
     <div className="flex justify-center items-center min-h-screen bg-gray-800">
+       <FloatingNav
+          navItems={navItems}
+        />
       <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
         <div className="text-center">
           <h1 className="text-4xl font-extrabold tracking-tight lg:text-1xl mb-6">
