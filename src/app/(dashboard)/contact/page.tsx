@@ -4,11 +4,7 @@ import { Label } from "@/components/ui/label_aceternity";
 import { Input } from "@/components/ui/input_aceternity";
 import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea_aceternity";
-import {
-    IconBrandGithub,
-    IconBrandGoogle,
-    IconBrandOnlyfans,
-} from "@tabler/icons-react";
+
 import Footer from "@/components/dashboard/Footer";
 import { FloatingNav } from "@/components/ui/floating-navbar";
 import { navItems } from "@/data/dashboard";

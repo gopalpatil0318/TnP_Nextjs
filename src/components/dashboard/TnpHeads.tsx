@@ -98,11 +98,15 @@ const TnpHead = () => {
   return (
     <div className="p-6 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6">
-        <div className="text-center">
-          <p className="text-3xl leading-8 font-extrabold tracking-tight mb-10 text-black sm:text-4xl">
-            About Placement Cell
-          </p>
-        </div>
+      <div className="mb-8 mt-5">
+        <h4 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-black dark:text-white">
+        Meet Our Placement Team
+        </h4>
+
+        <p className="text-sm lg:text-base  max-w-2xl  my-4 mx-auto text-neutral-500 text-center font-normal dark:text-neutral-300">
+        Our dedicated TPOs and TPCs, who are committed to guiding students towards successful placements and career development
+        </p>
+      </div>
         <StickyScroll content={content} />
       </div>
     </div>

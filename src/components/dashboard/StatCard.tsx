@@ -45,16 +45,18 @@ const YearCard: React.FC<YearCardProps> = ({ year, placed }) => (
 
 const PlacementRecord: React.FC = () => {
   return (
-    <div className="pt-16  bg-gray-100 text-black">
+    <div className="pt-16  bg-white text-black">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <motion.h2
-          initial={{ opacity: 0, y: -20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="text-4xl font-extrabold text-center mb-12 text-black"
-        >
-          Our Impressive Placement Record
-        </motion.h2>
+        <div className="mb-8">
+          <h4 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-black dark:text-white">
+            Our Remarkable Placement Journey
+          </h4>
+
+          <p className="text-sm lg:text-base  max-w-2xl  my-4 mx-auto text-neutral-500 text-center font-normal dark:text-neutral-300">
+            Explore our impressive placement record, with top companies visiting and students securing excellent packages year after year
+          </p>
+        </div>
+
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
           <StatCard icon={Building} title="Companies Visiting" value="750+" />
@@ -95,7 +97,7 @@ const PlacementRecord: React.FC = () => {
           </div>
         </motion.div>
 
-    
+
       </div>
     </div>
   )

@@ -47,7 +47,7 @@ export const StickyScroll = ({
     setBackgroundImage(content[closestBreakpointIndex].image ?? null);
   });
 
-  const backgroundColors = ["#F5F5F5", "#FFFFFF", "#E0E0E0"];
+  const backgroundColors = ["#FFFFFF"];
 
   return (
     <motion.div

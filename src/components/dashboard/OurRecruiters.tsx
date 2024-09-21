@@ -4,13 +4,18 @@ import { testimonials } from '@/data/dashboard'
 
 const OurRecruiters = () => {
   return (
-    <div className="h-auto w-full flex flex-col justify-center bg-gray-100 items-center overflow-hidden  md:py-0">
+    <div className="h-auto w-full flex flex-col justify-center bg-white items-center overflow-hidden  md:py-0">
       {/* Title Section */}
-      <div className="text-center mb-8 mt-5">
-        <p className="text-3xl leading-8 font-extrabold tracking-tight text-black sm:text-4xl">
-          Our Recruiters
+      <div className="mb-8 mt-5">
+        <h4 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-black dark:text-white">
+        Our Esteemed Recruiters
+        </h4>
+
+        <p className="text-sm lg:text-base  max-w-2xl  my-4 mx-auto text-neutral-500 text-center font-normal dark:text-neutral-300">
+        the diverse companies that visit our college, eager to connect with talented students and offer exciting career opportunities
         </p>
       </div>
+    
 
    
       <div className="w-full px-20">
