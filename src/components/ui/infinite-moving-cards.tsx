@@ -80,22 +80,21 @@ export const InfiniteMovingCards = ({
         className
       )}
       style={{
-        maskImage: "linear-gradient(to right, transparent, white 10%, white 90%, transparent)", // Mask image on both sides
-        WebkitMaskImage:
-          "linear-gradient(to right, transparent, white 10%, white 90%, transparent)", // Safari compatibility
+        maskImage: "linear-gradient(to right, transparent, white 10%, white 90%, transparent)", // Default mask for larger screens
+        WebkitMaskImage: "linear-gradient(to right, transparent, white 10%, white 90%, transparent)", // Safari compatibility
       }}
     >
       <ul
         ref={scrollerRef}
         className={cn(
-          "flex min-w-full shrink-0 gap-10 py-4 w-max flex-nowrap", // Reduced gap between items to 2px
+          "flex min-w-full shrink-0 gap-10 py-4 w-max flex-nowrap", // Reduced gap between items
           start && "animate-scroll",
           pauseOnHover && "hover:[animation-play-state:paused]"
         )}
       >
         {items.map((item, idx) => (
           <li
-            className="w-[160px] h-[160px] relative bg-white flex-shrink-0"
+            className="w-[120px] h-[120px] sm:w-[140px] sm:h-[140px] md:w-[160px] md:h-[160px] lg:w-[180px] lg:h-[180px] relative bg-white flex-shrink-0"
             key={idx}
           >
             <img

@@ -95,3 +95,23 @@
       scrollbar-width: none;  /* Firefox */
 }
 }
+
+.spin-slow {
+  animation: spin 8s linear infinite; /* Adjust the duration here */
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .scroller {
+    mask-image: linear-gradient(to right, transparent, white 5%, white 95%, transparent); /* Adjust for small screens */
+    -webkit-mask-image: linear-gradient(to right, transparent, white 5%, white 95%, transparent); /* Safari compatibility */
+  }
+}

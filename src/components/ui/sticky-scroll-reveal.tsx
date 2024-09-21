@@ -10,7 +10,6 @@ export const StickyScroll = ({
   content: {
     title: string;
     description: React.ReactNode;
-    content?: React.ReactNode;
     image?: string; // Added image property to content
   }[];
   contentClassName?: string;
@@ -47,13 +46,8 @@ export const StickyScroll = ({
     setBackgroundImage(content[closestBreakpointIndex].image ?? null);
   });
 
-  const backgroundColors = ["#FFFFFF"];
-
   return (
     <motion.div
-      animate={{
-        backgroundColor: backgroundColors[activeCard % backgroundColors.length],
-      }}
       className="h-[30rem] overflow-y-auto flex justify-center relative space-x-10 rounded-md p-10 no-scrollbar"
       ref={ref}
     >
@@ -66,16 +60,16 @@ export const StickyScroll = ({
                 animate={{
                   opacity: activeCard === index ? 1 : 0.3,
                 }}
-                className="text-2xl font-bold text-slate-900"
+                className="text-2xl font-bold text-[#244855]"
               >
                 {item.title}
               </motion.h2>
-              <motion.div // Change p to div here
+              <motion.div
                 initial={{ opacity: 0 }}
                 animate={{
                   opacity: activeCard === index ? 1 : 0.3,
                 }}
-                className="text-lg text-slate-600 max-w-sm mt-10"
+                className="text-lg text-[#874F41] max-w-sm mt-10"
               >
                 {item.description}
               </motion.div>
@@ -89,7 +83,6 @@ export const StickyScroll = ({
         style={{
           backgroundImage: backgroundImage ? `url(${backgroundImage})` : undefined,
           backgroundSize: "cover",
-          // backgroundPosition: "center",
           backgroundRepeat: "no-repeat",
         }}
         className={cn(

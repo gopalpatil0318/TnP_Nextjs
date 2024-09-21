@@ -6,8 +6,8 @@ import { cn } from "@/lib/utils";
 import { Textarea } from "@/components/ui/textarea_aceternity";
 
 import Footer from "@/components/dashboard/Footer";
-import { FloatingNav } from "@/components/ui/floating-navbar";
-import { navItems } from "@/data/dashboard";
+import Header from "@/components/dashboard/Header";
+
 
 
 const Contact = () => {
@@ -19,11 +19,9 @@ const Contact = () => {
 
     return (
         <div className='min-h-screen bg-white
-          pt-36 relative'>
-            <FloatingNav
-                navItems={navItems}
-            />
-            <div className="max-w-lg w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black mb-10">
+          relative'>
+          <Header/>
+            <div className=" mt-16 max-w-lg w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black mb-10">
                 <h2 className=" flex justify-center font-bold text-3xl text-neutral-800 dark:text-neutral-200">
                     Contact
                 </h2>

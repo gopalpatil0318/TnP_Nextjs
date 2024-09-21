@@ -5,8 +5,7 @@ import StatCard from '@/components/dashboard/StatCard';
 import OurRecruiters from '@/components/dashboard/OurRecruiters';
 import PlacementRecord from '@/components/dashboard/PlacementRecord';
 import TnpHead from '@/components/dashboard/TnpHeads';
-import { FloatingNav } from '@/components/ui/floating-navbar';
-import { navItems } from '@/data/dashboard';
+import Header from '@/components/dashboard/Header';
 
 
 export default function Home() {
@@ -15,10 +14,10 @@ export default function Home() {
     <>
 
       <main className='flex flex-1' >
+      
         <div className=" dark:border-neutral-700 flex flex-col flex-1 w-full h-full no-scrollbar">
-        <FloatingNav
-          navItems={navItems}
-        />
+        <Header/>
+     
           <HeroSection />
 
           <StatCard/>

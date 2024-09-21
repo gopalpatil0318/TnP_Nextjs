@@ -1,36 +1,23 @@
-'use client'
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import * as z from "zod"
-import Link from "next/link"
-import { useDebounceCallback } from 'usehooks-ts'
-import { useEffect, useState } from "react"
-import { useToast } from "@/components/ui/use-toast"
-import { useRouter } from "next/navigation"
-import { signUpSchema } from "@/schemas/signUpSchema"
-import axios, { AxiosError } from 'axios'
-import { ApiResponse } from "@/types/apiResponse"
-import { FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage, Form } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Button } from "@/components/ui/button"
-import { Loader2 } from "lucide-react"
-import { signInSchema } from "@/schemas/signInSchema"
-import { signIn } from "next-auth/react"
-import { FloatingNav } from "@/components/ui/floating-navbar"
-import { navItems } from "@/data/dashboard"
+'use client';
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import * as z from "zod";
+import Link from "next/link";
+import { useToast } from "@/components/ui/use-toast";
+import { useRouter } from "next/navigation";
+import { signInSchema } from "@/schemas/signInSchema";
+import { signIn } from "next-auth/react";
+import Image from "next/image";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
 
-
-
+import { Loader2 } from "lucide-react"; // Import loader icon
+import { useState } from "react";
 
 const Page = () => {
-
-  // const [isSubmitting, setIsSubmitting] = useState(false)
-  // const [value, setValue] = useState('')
-
-
-  const { toast } = useToast()
-  const router = useRouter()
-
+  const { toast } = useToast();
+  const router = useRouter();
+  const [isSubmitting, setIsSubmitting] = useState(false); 
 
   const form = useForm<z.infer<typeof signInSchema>>({
     resolver: zodResolver(signInSchema),
@@ -38,16 +25,18 @@ const Page = () => {
       identifier: '',
       password: ''
     }
-  })
-
+  });
 
   const onSubmit = async (data: z.infer<typeof signInSchema>) => {
+    setIsSubmitting(true); // Start loading
+
     const result = await signIn('credentials', {
       redirect: false,
       identifier: data.identifier,
       password: data.password
-    }
-    )
+    });
+
+    setIsSubmitting(false); // Stop loading
 
     if (result?.error) {
       if (result.error === 'CredentialsSignin') {
@@ -70,83 +59,89 @@ const Page = () => {
         description: 'Student login successfully.',
         variant: 'default',
       });
-      router.replace('/dashboard')
+      router.replace('/dashboard');
     }
-
-  }
-
-
-
-
+  };
 
   return (
-    <div className="flex justify-center items-center min-h-screen bg-gray-800">
-       <FloatingNav
-          navItems={navItems}
-        />
-      <div className="w-full max-w-md p-8 space-y-8 bg-white rounded-lg shadow-md">
-        <div className="text-center">
-          <h1 className="text-4xl font-extrabold tracking-tight lg:text-1xl mb-6">
-            R C Patel Institute Of Technology
+    <div className="min-h-screen bg-white flex flex-col md:flex-row">
+      {/* Branding Content */}
+      <div className="w-full md:w-1/2 bg-[#90AEAD] flex items-center justify-center p-12">
+        <div className="max-w-md w-full space-y-5 text-center">
+          <div className="flex justify-center">
+            <Image
+              src="/rcpitlogo.png"
+              alt="RCPIT Logo"
+              width={180}
+              height={180}
+              className="w-32 h-32"
+            />
+          </div>
+          <h2 className="text-2xl font-normal text-[#244855]">
+            Shirpur Education Society&apos;s
+          </h2>
+          <h1 className="text-3xl font-semibold tracking-tight text-[#244855]">
+            R. C. Patel Institute of Technology, Shirpur
           </h1>
-          <p className="mb-4">Sign in to start your anonymous adventure</p>
+          <div className="space-y-2">
+            <p className="text-lg text-[#244855]">
+              An Autonomous Institute
+            </p>
+            <p className="text-lg text-[#244855]">
+              Affiliated to DBATU, Lonere (M.S.)
+            </p>
+          </div>
+          <span className="text-2xl block text-[#244855] font-semibold">
+            Training and Placement Department
+          </span>
         </div>
-
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)}
-            className="space-y-6">
-
-
-            <FormField
-              control={form.control}
-              name="identifier"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email/Username</FormLabel>
-                  <FormControl>
-                    <Input placeholder="email/username" {...field}
-                    />
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="password"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Password</FormLabel>
-                  <FormControl>
-                    <Input type="password" placeholder="password" {...field}
-
-                    />
-                  </FormControl>
-
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <Button type="submit" >
-              Signin
-            </Button>
-
-          </form>
-        </Form>
-        <div className="text-center mt-4">
-          <p>
-            Already a member?{' '}
-            <Link href="/sign-up" className="text-blue-600 hover:text-blue-800">
-              Sign up
-            </Link>
-          </p>
+      </div>
+      {/* Sign In Form */}
+      <div className="w-full md:w-1/2 flex items-center justify-center bg-[#FBE9D0]">
+        <div className="max-w-md w-full space-y-8">
+          <div className="bg-white p-8 rounded-lg shadow-xl">
+            <h2 className="text-3xl font-bold mb-6 text-center text-[#244855]">Sign In</h2>
+            <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+              <div className="space-y-2">
+                <label htmlFor="identifier" className="text-sm font-medium text-[#244855]">
+                  Email/Username
+                </label>
+                <Input
+                  id="identifier"
+                  placeholder="email/username"
+                  {...form.register("identifier")}
+                  className="w-full px-3 py-2 border border-[#90AEAD] rounded-md focus:outline-none focus:ring-2 focus:ring-[#244855]"
+                />
+              </div>
+              <div className="space-y-2">
+                <label htmlFor="password" className="text-sm font-medium text-[#244855]">
+                  Password
+                </label>
+                <Input
+                  id="password"
+                  type="password"
+                  placeholder="password"
+                  {...form.register("password")}
+                  className="w-full px-3 py-2 border border-[#90AEAD] rounded-md focus:outline-none focus:ring-2 focus:ring-[#244855]"
+                />
+              </div>
+              <Button type="submit" disabled={isSubmitting} className="w-full bg-[#E64833] text-white hover:bg-[#244855] transition-colors">
+                {isSubmitting ? (<><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait</>) : 'Sign In'}
+              </Button>
+            </form>
+            <div className="text-center mt-4">
+              <p className="text-sm text-[#874F41]">
+                Don&apos;t have an account?{' '}
+                <Link href="/sign-up" className="text-[#E64833] hover:underline">
+                  Sign up
+                </Link>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Page
+export default Page;

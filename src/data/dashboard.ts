@@ -31,12 +31,6 @@ export const testimonials = [
   ];
 
 
-  export const navItems = [
-    { name: "Home", link: "/" },
-    { name: "Galley", link: "/gallery" },
-    { name: "Programs", link: "/training_program" },
-    { name: "Contact", link: "/contact" },
-  ];
 
 
  export const trainingProgramsTab1 = [
