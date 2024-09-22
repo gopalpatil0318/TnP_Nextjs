@@ -4,7 +4,7 @@ export { default } from 'next-auth/middleware';
 
 export const config = {
   matcher: [
-    '/dashboard/:path*',
+   
     '/sign-in',
     '/sign-up',
    
@@ -45,14 +45,14 @@ export async function middleware(request: NextRequest) {
     url.pathname.startsWith('/verify') 
   
   ) {
-    console.log('Redirecting to /dashboard'); 
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+    console.log('Redirecting to /'); 
+    return NextResponse.redirect(new URL('/', request.url));
   }
 
 
   if (token.isProfileComplete && url.pathname.startsWith('/createprofile')) {
-    console.log('Redirecting to /dashboard'); 
-    return NextResponse.redirect(new URL('/dashboard', request.url));
+    console.log('Redirecting to /'); 
+    return NextResponse.redirect(new URL('/', request.url));
   }
   if (!token.isProfileComplete && !url.pathname.startsWith('/createprofile')) {
     console.log('Redirecting to /createprofile'); 
