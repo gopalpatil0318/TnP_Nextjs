@@ -59,7 +59,7 @@ const Page = () => {
         description: 'Student login successfully.',
         variant: 'default',
       });
-      router.replace('/dashboard');
+      router.replace('/');
     }
   };
 

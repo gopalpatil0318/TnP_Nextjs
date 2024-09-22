@@ -7,7 +7,7 @@ export const config = {
     '/dashboard/:path*',
     '/sign-in',
     '/sign-up',
-    '/',
+   
     '/verify/:path*',
     '/profile/:path*',
     '/createprofile/:path*',
@@ -42,8 +42,8 @@ export async function middleware(request: NextRequest) {
   if (
     url.pathname.startsWith('/sign-in') ||
     url.pathname.startsWith('/sign-up') ||
-    url.pathname.startsWith('/verify') ||
-    url.pathname === '/'
+    url.pathname.startsWith('/verify') 
+  
   ) {
     console.log('Redirecting to /dashboard'); 
     return NextResponse.redirect(new URL('/dashboard', request.url));

@@ -28,7 +28,7 @@ import { Calendar as CalendarIcon } from "lucide-react"
 import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
 import { Calendar } from "@/components/ui/calendar"
 import { Textarea } from "@/components/ui/textarea"
-import SideBar from '@/components/SideBar';
+import SideBar from '@/components/student/SideBar';
 import { useUserContext } from '@/context/AppContext';
 import {
     castOptions,
@@ -234,7 +234,7 @@ const Page = () => {
                 "h-screen "
             )}
         >
-            <SideBar />
+           
             <div className="flex flex-1">
                 <div className="p-2 md:p-3 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-black flex flex-col gap-3 flex-1 w-full h-full">
                     <div className="flex justify-center items-start min-h-screen bg-white ">

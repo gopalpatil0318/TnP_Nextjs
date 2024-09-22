@@ -1,4 +1,5 @@
-import Navbar from '@/components/Navbar';
+import Footer from '@/components/dashboard/Footer';
+import Header from '@/components/dashboard/Header';
 import { UserProvider } from '@/context/AppContext'; 
 import { ReactNode } from 'react';
 
@@ -9,10 +10,11 @@ interface RootLayoutProps {
 export default function RootLayout({ children }: RootLayoutProps) {
   return (
     <UserProvider>
+     
       <div className="flex flex-col min-h-screen">
-        {/* <Navbar /> */}
         {children}
       </div>
+     
     </UserProvider>
   );
 }

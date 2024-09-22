@@ -3,8 +3,8 @@ import Image from "next/image";
 import { Button } from "@/components/ui/button"; // Assuming you have a Button component
 import { FaLinkedin, FaGithub } from "react-icons/fa";
 import { SiLeetcode } from "react-icons/si";
-import { Card, CardContent } from "@/components/ui/card"
-import { useRouter } from "next/navigation"; 
+import { Card, CardContent } from "@/components/ui/card";
+import { useRouter } from "next/navigation";
 
 interface Student {
   username: string;
@@ -24,16 +24,17 @@ interface StudentsCardsProps {
 }
 
 export function StudentsCards({ student }: StudentsCardsProps) {
-  const router = useRouter(); 
+  const router = useRouter();
 
   const handleVisitProfile = () => {
     router.replace(`/other-student-profile/${student.username}`);
   };
 
   return (
-<Card className="w-64 bg-white shadow-lg mt-20 rounded-lg relative">
-      <div className="h-24 bg-[#20B2AA] " /> {/* Static background color */}
-     
+    <Card className="w-64 bg-white shadow-lg mt-20 rounded-lg relative">
+      {/* Static background color with primary accent */}
+      <div className="h-24 bg-[#244855]" /> {/* Primary accent color */}
+
       {/* Student's profile image */}
       <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
         <Image
@@ -44,9 +45,9 @@ export function StudentsCards({ student }: StudentsCardsProps) {
           className="rounded-lg border-4 border-white"
         />
       </div>
-      
+
       <div className="pt-4 pb-4 px-4">
-        <h2 className="text-xl font-bold text-center mt-2 mb-1">
+        <h2 className="text-xl font-bold text-center mt-2 mb-1 text-[#244855] dark:text-[#FBE9D0]">
           {student.firstName} {student.lastName}
         </h2>
         <p className="text-sm text-gray-600 text-center mb-3">
@@ -68,7 +69,7 @@ export function StudentsCards({ student }: StudentsCardsProps) {
               href={student.linkedinLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-blue-600 hover:text-blue-800 dark:text-blue-400 dark:hover:text-blue-300"
+              className="text-[#244855] hover:text-[#874F41] dark:text-blue-400 dark:hover:text-blue-300"
             >
               <FaLinkedin className="w-6 h-6" />
             </a>
@@ -78,7 +79,7 @@ export function StudentsCards({ student }: StudentsCardsProps) {
               href={student.githubLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-gray-800 hover:text-gray-600 dark:text-gray-300 dark:hover:text-gray-100"
+              className="text-[#244855] hover:text-[#874F41] dark:text-gray-300 dark:hover:text-gray-100"
             >
               <FaGithub className="w-6 h-6" />
             </a>
@@ -88,7 +89,7 @@ export function StudentsCards({ student }: StudentsCardsProps) {
               href={student.leetcodeLink}
               target="_blank"
               rel="noopener noreferrer"
-              className="text-orange-600 hover:text-orange-800 dark:text-orange-400 dark:hover:text-orange-300"
+              className="text-[#E64833] hover:text-[#874F41] dark:text-orange-400 dark:hover:text-orange-300"
             >
               <SiLeetcode className="w-6 h-6" />
             </a>
@@ -98,7 +99,7 @@ export function StudentsCards({ student }: StudentsCardsProps) {
         {/* Visit Full Profile Button */}
         <Button 
           onClick={handleVisitProfile} 
-          className="w-full transition-colors duration-300 hover:bg-primary-dark"
+          className="w-full bg-[#E64833] hover:bg-[#874F41] text-white transition-colors duration-300"
         >
           Visit Full Profile
         </Button>

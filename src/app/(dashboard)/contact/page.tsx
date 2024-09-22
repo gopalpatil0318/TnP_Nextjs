@@ -8,27 +8,22 @@ import { Textarea } from "@/components/ui/textarea_aceternity";
 import Footer from "@/components/dashboard/Footer";
 import Header from "@/components/dashboard/Header";
 
-
-
 const Contact = () => {
     const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         console.log("Form submitted");
     };
 
-
     return (
-        <div className='min-h-screen bg-white
-          relative'>
-          <Header/>
-            <div className=" mt-16 max-w-lg w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white dark:bg-black mb-10">
-                <h2 className=" flex justify-center font-bold text-3xl text-neutral-800 dark:text-neutral-200">
+        <div className='min-h-screen bg-white relative'>
+           
+            <div className="mt-16 max-w-lg w-full mx-auto rounded-none md:rounded-2xl p-4 md:p-8 shadow-input bg-white mb-10">
+                <h2 className="flex justify-center font-bold text-3xl text-[#244855]">
                     Contact
                 </h2>
 
-
                 <form className="my-8" onSubmit={handleSubmit}>
-                    <LabelInputContainer className="mb-4" >
+                    <LabelInputContainer className="mb-4">
                         <Label htmlFor="firstname">Name</Label>
                         <Input id="firstname" placeholder="Gopal" type="text" />
                     </LabelInputContainer>
@@ -38,15 +33,13 @@ const Contact = () => {
                         <Input id="email" placeholder="gopalpatilrcpit@gmail.com" type="email" />
                     </LabelInputContainer>
 
-
                     <LabelInputContainer className="mb-4">
                         <Label htmlFor="description">Description</Label>
                         <Textarea id="description" placeholder="Enter your description here..." />
                     </LabelInputContainer>
 
-
                     <button
-                        className="bg-gradient-to-br relative group/btn from-black dark:from-zinc-900 dark:to-zinc-900 to-neutral-600 block dark:bg-zinc-800 w-full text-white rounded-md h-10 font-medium shadow-[0px_1px_0px_0px_#ffffff40_inset,0px_-1px_0px_0px_#ffffff40_inset] dark:shadow-[0px_1px_0px_0px_var(--zinc-800)_inset,0px_-1px_0px_0px_var(--zinc-800)_inset]"
+                        className="bg-[#E64833] hover:bg-[#d43d29] relative group/btn text-white w-full rounded-md h-10 font-medium"
                         type="submit"
                     >
                         Send Message &rarr;
@@ -54,17 +47,14 @@ const Contact = () => {
                     </button>
 
                     <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-neutral-700 to-transparent my-8 h-[1px] w-full" />
-
-
                 </form>
             </div>
-            <Footer />
+          
         </div>
     );
 }
 
 export default Contact;
-
 
 const BottomGradient = () => {
     return (

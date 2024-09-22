@@ -1,44 +1,28 @@
-"use client";
+"use client"
 import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useSession, signOut } from 'next-auth/react';
-
 import { Button } from "@/components/ui/button";
 import { Menu, X } from "lucide-react";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const { data: session } = useSession();
-
-
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
-  // Links when the user is NOT logged in
   const navLinks = [
     { href: "/", label: "Home" },
-    { href: "/training_program", label: "Training Programs" },
+    { href: "/training_program", label: "Training programs" },
     { href: "/gallery", label: "Gallery" },
     { href: "/contact", label: "Contact Us" },
-  ];
-
-  // Links when the user IS logged in
-  const loggedInLinks = [
-    { href: "/", label: "Home" },
-    { href: "/training_program", label: "Training Programs" },
-    { href: "/gallery", label: "Gallery" },
-   
-    { href: "/all-students-profile", label: "All Students Profile" },
-    { href: "/profile", label: "Profile" },
-    { href: "/update-profile", label: "Update Profile" },
-    { href: "/contact", label: "Contact Us" },
+    // { href: "/placements", label: "Placements" },
+    // { href: "/contact", label: "Contact" },
   ];
 
   return (
-    <header className="w-full bg-white shadow-md ">
+    <header className="w-full bg-white shadow-md">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-4">
           <Link href="/" className="flex items-center space-x-2">
@@ -54,9 +38,8 @@ const Header = () => {
               <span className="text-xs text-[#90AEAD]">R. C. Patel Institute of Technology, Shirpur</span>
             </div>
           </Link>
-
           <nav className="hidden md:flex items-center space-x-6">
-            {(session ? loggedInLinks : navLinks).map((link) => (
+            {navLinks.map((link) => (
               <Link
                 key={link.href}
                 className="text-sm font-medium text-[#244855] hover:text-[#E64833] transition-colors"
@@ -66,31 +49,16 @@ const Header = () => {
               </Link>
             ))}
           </nav>
-
           <div className="flex items-center space-x-4">
-            {session ? (
-              // Show logout button when the user is logged in
+            <Link href="/sign-in">
               <Button
                 variant="outline"
                 size="sm"
                 className="hidden sm:inline-flex text-[#E64833] border-[#E64833]"
-                onClick={() => signOut()}
               >
-                Logout
+                Student Login
               </Button>
-            ) : (
-              // Show login button when no user is logged in
-              <Link href="/sign-in">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="hidden sm:inline-flex text-[#E64833] border-[#E64833]"
-                >
-                  Student Login
-                </Button>
-              </Link>
-            )}
-
+            </Link>
             <Button
               variant="ghost"
               size="icon"
@@ -103,12 +71,10 @@ const Header = () => {
           </div>
         </div>
       </div>
-
-      {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="md:hidden">
           <nav className="flex flex-col items-center space-y-4 py-4 bg-[#FBE9D0]">
-            {(session ? loggedInLinks : navLinks).map((link) => (
+            {navLinks.map((link) => (
               <Link
                 key={link.href}
                 className="text-sm font-medium text-[#244855] hover:text-[#E64833] transition-colors"
@@ -117,26 +83,15 @@ const Header = () => {
                 {link.label}
               </Link>
             ))}
-            {session ? (
+            <Link href="/sign-in">
               <Button
                 variant="outline"
                 size="sm"
                 className="text-[#E64833] border-[#E64833]"
-                onClick={() => signOut()}
               >
-                Logout
+                Student Login
               </Button>
-            ) : (
-              <Link href="/sign-in">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="text-[#E64833] border-[#E64833]"
-                >
-                  Student Login
-                </Button>
-              </Link>
-            )}
+            </Link>
           </nav>
         </div>
       )}

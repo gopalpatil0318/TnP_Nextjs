@@ -10,10 +10,10 @@ const page = () => {
     return (
         <div className='flex flex-1' >
             <div className=" dark:border-neutral-700 flex flex-col flex-1 w-full h-full no-scrollbar">
-            <Header/>
+        
                 <HeroTraningProgram/>
                 <TrainingProgramTab/>
-                <Footer/>
+               
             </div>
         </div>
     )
