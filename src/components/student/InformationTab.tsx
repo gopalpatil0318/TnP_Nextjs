@@ -262,7 +262,7 @@ export default function InformationTab({ userData }: { userData: UserData }) {
                     <TableCell>{userData.overallCGPA}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableHead className="font-medium">Live KT's</TableHead>
+                    <TableHead className="font-medium">Live KT&apos;s</TableHead>
                     <TableCell>{userData.anyLiveKTs}</TableCell>
                   </TableRow>
                   <TableRow>
