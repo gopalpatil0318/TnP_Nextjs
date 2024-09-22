@@ -117,27 +117,27 @@ export default function InformationTab({ userData }: { userData: UserData }) {
                     <TableCell>{userData.bloodGroup}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableHead className="font-medium">Father's Name</TableHead>
+                    <TableHead className="font-medium">Father&apos;s Name</TableHead>
                     <TableCell>{userData.fatherName}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableHead className="font-medium">Father's Mobile</TableHead>
+                    <TableHead className="font-medium">Father&apos;s Mobile</TableHead>
                     <TableCell>{userData.fatherMobileNumber}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableHead className="font-medium">Father's Occupation</TableHead>
+                    <TableHead className="font-medium">Father&apos;s Occupation</TableHead>
                     <TableCell>{userData.fatherOccupation}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableHead className="font-medium">Mother's Name</TableHead>
+                    <TableHead className="font-medium">Mother&apos;s Name</TableHead>
                     <TableCell>{userData.motherName}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableHead className="font-medium">Mother's Mobile</TableHead>
+                    <TableHead className="font-medium">Mother&apos;s Mobile</TableHead>
                     <TableCell>{userData.motherMobileNumber}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableHead className="font-medium">Mother's Occupation</TableHead>
+                    <TableHead className="font-medium">Mother&apos;s Occupation</TableHead>
                     <TableCell>{userData.motherOccupation}</TableCell>
                   </TableRow>
                   <TableRow>
