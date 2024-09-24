@@ -82,7 +82,7 @@ export interface User extends Document {
     codechefLink: string;
     hackerRankLink: string; 
     image:string;
-
+    skills: string[];
 }
 
 const UserSchema: Schema<User> = new Schema({
@@ -397,6 +397,10 @@ const UserSchema: Schema<User> = new Schema({
     },
     image: {
         type: String,
+    },
+    skills: { 
+        type: [String], 
+        default: [] 
     },
  
 });

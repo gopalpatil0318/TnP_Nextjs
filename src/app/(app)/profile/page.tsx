@@ -61,12 +61,72 @@ export default function UserProfile() {
                         </Avatar>
                     </div>
                 </CardHeader>
+
                 <CardContent className="pt-28">
                     <div className="text-center mb-10">
                         <CardTitle className="text-4xl font-bold text-[#244855] mb-2">{userData.firstName} {userData.middleName} {userData.lastName}</CardTitle>
                         <CardDescription className="text-2xl text-[#874F41] mb-2">{userData.areaOfInterest || "Area of Interest"}</CardDescription>
                         <p className="text-xl text-muted-foreground">{userData.department || "Department"}</p>
                     </div>
+                    <CardFooter className="flex justify-center flex-wrap gap-4 mt-10">
+                    {userData.githubLink && (
+                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                            <a href={userData.githubLink} target="_blank" rel="noopener noreferrer">
+                                <FaGithub className="h-5 w-5 sm:h-6 sm:w-6 text-[#181717]" />
+                            </a>
+                        </Button>
+                    )}
+                    {userData.linkedinLink && (
+                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                            <a href={userData.linkedinLink} target="_blank" rel="noopener noreferrer">
+                                <FaLinkedin className="h-5 w-5 sm:h-6 sm:w-6 text-[#0A66C2]" />
+                            </a>
+                        </Button>
+                    )}
+                    {userData.instagramLink && (
+                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                            <a href={userData.instagramLink} target="_blank" rel="noopener noreferrer">
+                                <FaInstagram className="h-5 w-5 sm:h-6 sm:w-6 text-[#E4405F]" />
+                            </a>
+                        </Button>
+                    )}
+                    {userData.twitterLink && (
+                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                            <a href={userData.twitterLink} target="_blank" rel="noopener noreferrer">
+                                <FaTwitter className="h-5 w-5 sm:h-6 sm:w-6 text-[#1DA1F2]" />
+                            </a>
+                        </Button>
+                    )}
+                    {userData.leetcodeLink && (
+                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                            <a href={userData.leetcodeLink} target="_blank" rel="noopener noreferrer">
+                                <SiLeetcode className="h-5 w-5 sm:h-6 sm:w-6 text-[#FFA116]" />
+                            </a>
+                        </Button>
+                    )}
+                    {userData.hackerRankLink && (
+                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                            <a href={userData.hackerRankLink} target="_blank" rel="noopener noreferrer">
+                                <SiHackerrank className="h-5 w-5 sm:h-6 sm:w-6 text-[#00EA64]" />
+                            </a>
+                        </Button>
+                    )}
+                    {userData.codechefLink && (
+                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                            <a href={userData.codechefLink} target="_blank" rel="noopener noreferrer">
+                                <SiCodechef className="h-5 w-5 sm:h-6 sm:w-6 text-[#5B4638]" />
+                            </a>
+                        </Button>
+                    )}
+                    {userData.geeksForGeeksLink && (
+                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                            <a href={userData.geeksForGeeksLink} target="_blank" rel="noopener noreferrer">
+                                <SiGeeksforgeeks className="h-5 w-5 sm:h-6 sm:w-6 text-[#0F9D58]" />
+                            </a>
+                        </Button>
+                    )}
+                </CardFooter>
+                <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-[#244855] to-transparent h-[1px] my-8 w-full" />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                         <div className="space-y-8">
                             <div>
@@ -136,65 +196,8 @@ export default function UserProfile() {
                         </div>
                     </div>
                 </CardContent>
-                <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-[#244855] to-transparent h-[1px] mt-5 w-full" />
-                <CardFooter className="flex justify-center flex-wrap gap-4 mt-10">
-                    {userData.githubLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={userData.githubLink} target="_blank" rel="noopener noreferrer">
-                                <FaGithub className="h-5 w-5 sm:h-6 sm:w-6 text-[#181717]" />
-                            </a>
-                        </Button>
-                    )}
-                    {userData.linkedinLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={userData.linkedinLink} target="_blank" rel="noopener noreferrer">
-                                <FaLinkedin className="h-5 w-5 sm:h-6 sm:w-6 text-[#0A66C2]" />
-                            </a>
-                        </Button>
-                    )}
-                    {userData.instagramLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={userData.instagramLink} target="_blank" rel="noopener noreferrer">
-                                <FaInstagram className="h-5 w-5 sm:h-6 sm:w-6 text-[#E4405F]" />
-                            </a>
-                        </Button>
-                    )}
-                    {userData.twitterLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={userData.twitterLink} target="_blank" rel="noopener noreferrer">
-                                <FaTwitter className="h-5 w-5 sm:h-6 sm:w-6 text-[#1DA1F2]" />
-                            </a>
-                        </Button>
-                    )}
-                    {userData.leetcodeLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={userData.leetcodeLink} target="_blank" rel="noopener noreferrer">
-                                <SiLeetcode className="h-5 w-5 sm:h-6 sm:w-6 text-[#FFA116]" />
-                            </a>
-                        </Button>
-                    )}
-                    {userData.hackerRankLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={userData.hackerRankLink} target="_blank" rel="noopener noreferrer">
-                                <SiHackerrank className="h-5 w-5 sm:h-6 sm:w-6 text-[#00EA64]" />
-                            </a>
-                        </Button>
-                    )}
-                    {userData.codechefLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={userData.codechefLink} target="_blank" rel="noopener noreferrer">
-                                <SiCodechef className="h-5 w-5 sm:h-6 sm:w-6 text-[#5B4638]" />
-                            </a>
-                        </Button>
-                    )}
-                    {userData.geeksForGeeksLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={userData.geeksForGeeksLink} target="_blank" rel="noopener noreferrer">
-                                <SiGeeksforgeeks className="h-5 w-5 sm:h-6 sm:w-6 text-[#0F9D58]" />
-                            </a>
-                        </Button>
-                    )}
-                </CardFooter>
+              
+               
             </Card>
             <InformationTab userData={userData}/>
         </div>

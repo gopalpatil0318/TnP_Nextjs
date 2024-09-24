@@ -16,7 +16,7 @@ import { useSession } from 'next-auth/react';
 import { User } from "next-auth";
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { useForm, Controller } from "react-hook-form"
 import * as z from "zod"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage, Form } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -44,6 +44,7 @@ import {
     semBacklog,
     gapOptions
 } from '@/data/options';
+import { DayPicker } from 'react-day-picker';
 
 const Page = () => {
 
@@ -55,16 +56,17 @@ const Page = () => {
     const { userData, fetchUserData } = useUserContext();
 
 
-    
+
 
     useEffect(() => {
+        fetchUserData();
         if (userData) {
             form.reset({
                 ...userData,
             });
         }
         console.log(userData)
-        
+
         form.setValue('prnNumber', userData?.username);
     }, []);
 
@@ -78,79 +80,6 @@ const Page = () => {
 
     const form = useForm<z.infer<typeof updateProfileSchema>>({
         resolver: zodResolver(updateProfileSchema),
-        // defaultValues: {
-        //     username: '',
-        //     email: '',
-        //     // password: '',
-        //     mobileNumber: '',
-        //     birthDate: undefined,
-        //     gender: '',
-        //     bloodGroup: '',
-        //     adharNumber: '',
-        //     cast: '',
-        //     fatherName: '',
-        //     fatherMobileNumber: '',
-        //     fatherOccupation: '',
-        //     motherName: '',
-        //     motherMobileNumber: '',
-        //     motherOccupation: '',
-        //     localAddress: '',
-        //     city: '',
-        //     district: '',
-        //     state: '',
-        //     pincode: '',
-        //     prnNumber: '',
-        //     tenthMarks: '',
-        //     twelfthDiploma: '',
-        //     twelfthDiplomaPercentage: '',
-        //     admissionBasedOn: '',
-        //     department: '',
-        //     division: '',
-        //     passoutYear: new Date().getFullYear(),
-        //     lgName: '',
-        //     sem1SGPA: 0,
-        //     sem1CGPA: 0,
-        //     sem1Backlog: 0,
-        //     sem2SGPA: 0,
-        //     sem2CGPA: 0,
-        //     sem2Backlog: 0,
-        //     sem3SGPA: 0,
-        //     sem3CGPA: 0,
-        //     sem3Backlog: 0,
-        //     sem4SGPA: 0,
-        //     sem4CGPA: 0,
-        //     sem4Backlog: 0,
-        //     sem5SGPA: 0,
-        //     sem5CGPA: 0,
-        //     sem5Backlog: 0,
-        //     sem6SGPA: 0,
-        //     sem6CGPA: 0,
-        //     sem6Backlog: 0,
-        //     overallCGPA: 0,
-        //     anyLiveKTs: '',
-        //     anyGapDuringEducation: '',
-        //     gapReason: '',
-        //     areaOfInterest: '',
-        //     aboutYou: '',
-        //     projectTitle1: '',
-        //     projectLink1: '',
-        //     projectDescription1: '',
-        //     projectTitle2: '',
-        //     projectLink2: '',
-        //     projectDescription2: '',
-        //     personalPortfolioLink: '',
-        //     githubLink: '',
-        //     linkedinLink: '',
-        //     instagramLink: '',
-        //     twitterLink: '',
-        //     leetcodeLink: '',
-        //     geeksForGeeksLink: '',
-        //     codechefLink: '',
-        //     hackerRankLink: '',
-        //     firstName: '',
-        //     middleName: '',
-        //     lastName: ''
-        // }
     });
 
 
@@ -158,12 +87,12 @@ const Page = () => {
         const formData = new FormData();
         console.log("my name is chanfsnf1234567890")
         formData.append('file', file);
-        formData.append('upload_preset', 'gopaluploadpreset'); 
-        formData.append('cloud_name', 'dae4fjmsn'); 
+        formData.append('upload_preset', 'gopaluploadpreset');
+        formData.append('cloud_name', 'dae4fjmsn');
 
         try {
             const response = await axios.post('https://api.cloudinary.com/v1_1/dae4fjmsn/image/upload/', formData);
-            return response.data.url; 
+            return response.data.url;
         } catch (error) {
             throw new Error('Image upload failed');
         }
@@ -174,15 +103,15 @@ const Page = () => {
     const onSubmit = async (data: z.infer<typeof updateProfileSchema>) => {
         setIsSubmitting(true);
         try {
-            console.log("before: ",data.image)
+            console.log("before: ", data.image)
             if (data.image instanceof File) {
                 const imageUrl = await uploadImage(data.image);
                 console.log("my name is chanfsnf")
-                data = { ...data, image:imageUrl }; 
+                data = { ...data, image: imageUrl };
             }
-        
+
             const response = await axios.post<ApiResponse>('/api/update-student-profile/', data);
-       
+
             fetchUserData();
 
             toast({
@@ -203,16 +132,21 @@ const Page = () => {
             setIsSubmitting(false);
         }
     };
-
-
-
-
-    const [date, setDate] = useState<Date | undefined>(); // Ensure state is initialized as undefined
-   
-    const handleDateChange = (newDate: Date | undefined) => {
-        setDate(newDate); // Update local state
-        form.setValue('birthDate', newDate);
+    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear()); 
+    const [selectedMonth, setSelectedMonth] = useState(new Date(selectedYear, 0)); 
+  
+    const years = Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - i); 
+    const handleYearChange = (year: string) => {
+      const newYear = parseInt(year, 10);
+      setSelectedYear(newYear);
+      setSelectedMonth(new Date(newYear, 0));
     };
+  
+    const handleMonthChange = (month: Date) => {
+      setSelectedMonth(month);
+    };
+
+
 
     useEffect(() => {
         if (userData) {
@@ -224,7 +158,7 @@ const Page = () => {
                 birthDate,
             });
         }
-    }, [userData,form]);
+    }, [userData, form]);
 
 
     return (
@@ -234,7 +168,7 @@ const Page = () => {
                 "h-screen "
             )}
         >
-           
+
             <div className="flex flex-1">
                 <div className="p-2 md:p-3 rounded-tl-2xl border border-neutral-200 dark:border-neutral-700 bg-white dark:bg-black flex flex-col gap-3 flex-1 w-full h-full">
                     <div className="flex justify-center items-start min-h-screen bg-white ">
@@ -322,44 +256,61 @@ const Page = () => {
                                                 </FormItem>
                                             )}
                                         />
-                                        <FormField
-                                            control={form.control}
+                                        <Controller
                                             name="birthDate"
+                                            control={form.control}
                                             render={({ field }) => (
-                                                <FormItem>
+                                                <FormItem className="flex flex-col">
                                                     <FormLabel>Birth Date</FormLabel>
-                                                    <FormControl>
-                                                        <Popover>
-                                                            <PopoverTrigger asChild>
+                                                    <Popover>
+                                                        <PopoverTrigger asChild>
+                                                            <FormControl>
                                                                 <Button
                                                                     variant={"outline"}
-                                                                    className={cn(
-                                                                        "w-full justify-start text-left font-normal",
-                                                                        !field.value && "text-muted-foreground"
-                                                                    )}
+                                                                    className={`w-full justify-start text-left font-normal ${!field.value ? "text-muted-foreground" : ""
+                                                                        }`}
                                                                 >
                                                                     <CalendarIcon className="mr-2 h-4 w-4" />
-                                                                    {field.value ? format(new Date(field.value), "PPP") : <span>Pick a date</span>}
+                                                                    {field.value ? format(field.value, "PPP") : "Pick a date"}
                                                                 </Button>
-                                                            </PopoverTrigger>
-                                                            <PopoverContent className="w-auto p-0">
-                                                                <div className="p-2">
-                                                                    <Calendar
-                                                                        mode="single"
-                                                                        selected={field.value ? new Date(field.value) : undefined} // Ensure it's a Date object
-                                                                        onSelect={(date) => {
-                                                                            handleDateChange(date); // Handle the selected date
-                                                                        }}
-                                                                        initialFocus
-                                                                    />
-                                                                </div>
-                                                            </PopoverContent>
-                                                        </Popover>
-                                                    </FormControl>
-                                                    <FormMessage />
+                                                            </FormControl>
+                                                        </PopoverTrigger>
+                                                        <PopoverContent className="w-auto p-0" align="start">
+                                                            <div className="p-2 flex flex-col space-y-2">
+                                                                {/* Year Selector */}
+                                                                <Select onValueChange={handleYearChange} value={selectedYear.toString()}>
+                                                                    <SelectTrigger>
+                                                                        <SelectValue placeholder="Select Year" />
+                                                                    </SelectTrigger>
+                                                                    <SelectContent>
+                                                                        {years.map((year) => (
+                                                                            <SelectItem key={year} value={year.toString()}>
+                                                                                {year}
+                                                                            </SelectItem>
+                                                                        ))}
+                                                                    </SelectContent>
+                                                                </Select>
+
+                                                                {/* DayPicker with controlled navigation */}
+                                                                <DayPicker
+                                                                    mode="single"
+                                                                    selected={field.value ? field.value : undefined}
+                                                                    onSelect={(date) => field.onChange(date)}
+                                                                    month={selectedMonth} // Dynamically set month
+                                                                    onMonthChange={handleMonthChange} // Track when the user navigates between months
+                                                                    fromMonth={new Date(selectedYear, 0)} // Limit to the selected year (January)
+                                                                    toMonth={new Date(selectedYear, 11)} // Limit to the selected year (December)
+                                                                    initialFocus
+                                                                />
+                                                            </div>
+                                                        </PopoverContent>
+                                                    </Popover>
+                                                    {/* <FormMessage>{formState.errors.birthDate?.message}</FormMessage> */}
                                                 </FormItem>
                                             )}
                                         />
+
+
 
 
 
@@ -369,7 +320,7 @@ const Page = () => {
                                             control={form.control}
                                             name="gender"
                                             render={({ field }) => (
-                                               
+
                                                 <FormItem>
                                                     <FormLabel>Gender</FormLabel>
                                                     <FormControl>

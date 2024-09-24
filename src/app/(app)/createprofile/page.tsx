@@ -18,7 +18,7 @@ import {
 import { User } from "next-auth";
 
 import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
+import { Controller, useForm } from "react-hook-form"
 import * as z from "zod"
 import { FormControl, FormField, FormItem, FormLabel, FormMessage, Form } from "@/components/ui/form"
 import { Input } from "@/components/ui/input"
@@ -46,6 +46,7 @@ import {
     gapOptions
 } from '@/data/options';
 import { IconArrowLeft } from '@tabler/icons-react';
+import { DayPicker } from 'react-day-picker';
 
 const Page = () => {
 
@@ -204,15 +205,21 @@ const Page = () => {
     }, [username, email, form]);
 
 
-    const [date, setDate] = useState<Date>();
+    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+    const [selectedMonth, setSelectedMonth] = useState(new Date(selectedYear, 0));
 
-    const handleDateChange = (newDate: Date | undefined) => {
-        if (newDate) {
-            setDate(newDate);
-            console.log(newDate)
-            form.setValue('birthDate', newDate);
-        }
+    const years = Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - i);
+    const handleYearChange = (year: string) => {
+        const newYear = parseInt(year, 10);
+        setSelectedYear(newYear);
+        setSelectedMonth(new Date(newYear, 0));
     };
+
+    const handleMonthChange = (month: Date) => {
+        setSelectedMonth(month);
+    };
+
+
 
 
     return (
@@ -305,41 +312,56 @@ const Page = () => {
                                     </FormItem>
                                 )}
                             />
-                            <FormField
-                                control={form.control}
+                            <Controller
                                 name="birthDate"
+                                control={form.control}
                                 render={({ field }) => (
-                                    <FormItem>
+                                    <FormItem className="flex flex-col">
                                         <FormLabel>Birth Date</FormLabel>
-                                        <FormControl>
-                                            <Popover>
-                                                <PopoverTrigger asChild>
+                                        <Popover>
+                                            <PopoverTrigger asChild>
+                                                <FormControl>
                                                     <Button
                                                         variant={"outline"}
-                                                        className={cn(
-                                                            "w-full justify-start text-left font-normal",
-                                                            !field.value && "text-muted-foreground"
-                                                        )}
+                                                        className={`w-full justify-start text-left font-normal ${!field.value ? "text-muted-foreground" : ""
+                                                            }`}
                                                     >
                                                         <CalendarIcon className="mr-2 h-4 w-4" />
-                                                        {field.value ? format(new Date(field.value), "PPP") : <span>Pick a date</span>}
+                                                        {field.value ? format(field.value, "PPP") : "Pick a date"}
                                                     </Button>
-                                                </PopoverTrigger>
-                                                <PopoverContent className="w-auto p-0">
-                                                    <div className="p-2">
-                                                        <Calendar
-                                                            mode="single"
-                                                            selected={field.value ? new Date(field.value) : undefined} // Ensure it's a Date object
-                                                            onSelect={(date) => {
-                                                                handleDateChange(date); // Handle the selected date
-                                                            }}
-                                                            initialFocus
-                                                        />
-                                                    </div>
-                                                </PopoverContent>
-                                            </Popover>
-                                        </FormControl>
-                                        <FormMessage />
+                                                </FormControl>
+                                            </PopoverTrigger>
+                                            <PopoverContent className="w-auto p-0" align="start">
+                                                <div className="p-2 flex flex-col space-y-2">
+                                                    {/* Year Selector */}
+                                                    <Select onValueChange={handleYearChange} value={selectedYear.toString()}>
+                                                        <SelectTrigger>
+                                                            <SelectValue placeholder="Select Year" />
+                                                        </SelectTrigger>
+                                                        <SelectContent>
+                                                            {years.map((year) => (
+                                                                <SelectItem key={year} value={year.toString()}>
+                                                                    {year}
+                                                                </SelectItem>
+                                                            ))}
+                                                        </SelectContent>
+                                                    </Select>
+
+                                                 
+                                                    <DayPicker
+                                                        mode="single"
+                                                        selected={field.value ? field.value : undefined}
+                                                        onSelect={(date) => field.onChange(date)}
+                                                        month={selectedMonth} 
+                                                        onMonthChange={handleMonthChange} 
+                                                        fromMonth={new Date(selectedYear, 0)} 
+                                                        toMonth={new Date(selectedYear, 11)} 
+                                                        initialFocus
+                                                    />
+                                                </div>
+                                            </PopoverContent>
+                                        </Popover>
+                                        {/* <FormMessage>{formState.errors.birthDate?.message}</FormMessage> */}
                                     </FormItem>
                                 )}
                             />

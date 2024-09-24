@@ -70,7 +70,7 @@ export const updateProfileSchema = z.object({
     hackerRankLink: z.string().optional(),
     firstName: z.string().optional(),
     middleName: z.string().optional(),
-   
+    skills: z.array(z.string()).optional(),
     lastName: z.string().optional(),
     isProfileComplete: z.boolean().optional().default(false), // Correct usage of boolean
     image: z
