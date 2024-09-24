@@ -12,7 +12,7 @@ const page = () => {
             Empower Your Future: Training & Placement Programs
           </h4>
           <p className="text-sm lg:text-base max-w-2xl my-4 mx-auto text-[#90AEAD] text-center font-normal">
-            Through our Training and Placement department, we offer a variety of programs aimed at preparing you for a successful career. From Employability Development to Technical Skills Enhancement and Online Certifications, our initiatives are designed to equip you with the essential skills and knowledge for thriving in today's competitive job market.
+            Through our Training and Placement department, we offer a variety of programs aimed at preparing you for a successful career. From Employability Development to Technical Skills Enhancement and Online Certifications, our initiatives are designed to equip you with the essential skills and knowledge for thriving in today&apos;s competitive job market.
           </p>
         </div>
       </section>
