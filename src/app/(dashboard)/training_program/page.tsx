@@ -4,7 +4,7 @@ import { trainingProgramsTab1, trainingProgramsTab2, trainingProgramsTab3 } from
 
 const page = () => {
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen">
       {/* Hero Section */}
       <section className="relative py-20  ">
         <div className="mb-8 mt-5">

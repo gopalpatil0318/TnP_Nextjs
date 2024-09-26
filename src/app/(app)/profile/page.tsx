@@ -1,7 +1,7 @@
 "use client"
 
-import { useContext } from 'react'
-import { useUserContext } from "@/context/AppContext"; 
+
+import { useUserContext } from "@/context/AppContext";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
@@ -10,9 +10,10 @@ import { FaGithub, FaLinkedin, FaInstagram, FaTwitter, FaEnvelope, FaPhone, FaFi
 import { SiLeetcode, SiGeeksforgeeks, SiCodechef, SiHackerrank } from 'react-icons/si'
 import { Skeleton } from '@/components/ui/skeleton';
 import InformationTab from '@/components/student/InformationTab';
+import { FaLink } from "react-icons/fa6";
 
 export default function UserProfile() {
-    const { userData,loading } = useUserContext();
+    const { userData, loading } = useUserContext();
 
     if (loading) {
         return (
@@ -69,64 +70,64 @@ export default function UserProfile() {
                         <p className="text-xl text-muted-foreground">{userData.department || "Department"}</p>
                     </div>
                     <CardFooter className="flex justify-center flex-wrap gap-4 mt-10">
-                    {userData.githubLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={userData.githubLink} target="_blank" rel="noopener noreferrer">
-                                <FaGithub className="h-5 w-5 sm:h-6 sm:w-6 text-[#181717]" />
-                            </a>
-                        </Button>
-                    )}
-                    {userData.linkedinLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={userData.linkedinLink} target="_blank" rel="noopener noreferrer">
-                                <FaLinkedin className="h-5 w-5 sm:h-6 sm:w-6 text-[#0A66C2]" />
-                            </a>
-                        </Button>
-                    )}
-                    {userData.instagramLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={userData.instagramLink} target="_blank" rel="noopener noreferrer">
-                                <FaInstagram className="h-5 w-5 sm:h-6 sm:w-6 text-[#E4405F]" />
-                            </a>
-                        </Button>
-                    )}
-                    {userData.twitterLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={userData.twitterLink} target="_blank" rel="noopener noreferrer">
-                                <FaTwitter className="h-5 w-5 sm:h-6 sm:w-6 text-[#1DA1F2]" />
-                            </a>
-                        </Button>
-                    )}
-                    {userData.leetcodeLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={userData.leetcodeLink} target="_blank" rel="noopener noreferrer">
-                                <SiLeetcode className="h-5 w-5 sm:h-6 sm:w-6 text-[#FFA116]" />
-                            </a>
-                        </Button>
-                    )}
-                    {userData.hackerRankLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={userData.hackerRankLink} target="_blank" rel="noopener noreferrer">
-                                <SiHackerrank className="h-5 w-5 sm:h-6 sm:w-6 text-[#00EA64]" />
-                            </a>
-                        </Button>
-                    )}
-                    {userData.codechefLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={userData.codechefLink} target="_blank" rel="noopener noreferrer">
-                                <SiCodechef className="h-5 w-5 sm:h-6 sm:w-6 text-[#5B4638]" />
-                            </a>
-                        </Button>
-                    )}
-                    {userData.geeksForGeeksLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={userData.geeksForGeeksLink} target="_blank" rel="noopener noreferrer">
-                                <SiGeeksforgeeks className="h-5 w-5 sm:h-6 sm:w-6 text-[#0F9D58]" />
-                            </a>
-                        </Button>
-                    )}
-                </CardFooter>
-                <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-[#244855] to-transparent h-[1px] my-8 w-full" />
+                        {userData.githubLink && (
+                            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                                <a href={userData.githubLink} target="_blank" rel="noopener noreferrer">
+                                    <FaGithub className="h-5 w-5 sm:h-6 sm:w-6 text-[#181717]" />
+                                </a>
+                            </Button>
+                        )}
+                        {userData.linkedinLink && (
+                            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                                <a href={userData.linkedinLink} target="_blank" rel="noopener noreferrer">
+                                    <FaLinkedin className="h-5 w-5 sm:h-6 sm:w-6 text-[#0A66C2]" />
+                                </a>
+                            </Button>
+                        )}
+                        {userData.instagramLink && (
+                            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                                <a href={userData.instagramLink} target="_blank" rel="noopener noreferrer">
+                                    <FaInstagram className="h-5 w-5 sm:h-6 sm:w-6 text-[#E4405F]" />
+                                </a>
+                            </Button>
+                        )}
+                        {userData.twitterLink && (
+                            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                                <a href={userData.twitterLink} target="_blank" rel="noopener noreferrer">
+                                    <FaTwitter className="h-5 w-5 sm:h-6 sm:w-6 text-[#1DA1F2]" />
+                                </a>
+                            </Button>
+                        )}
+                        {userData.leetcodeLink && (
+                            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                                <a href={userData.leetcodeLink} target="_blank" rel="noopener noreferrer">
+                                    <SiLeetcode className="h-5 w-5 sm:h-6 sm:w-6 text-[#FFA116]" />
+                                </a>
+                            </Button>
+                        )}
+                        {userData.hackerRankLink && (
+                            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                                <a href={userData.hackerRankLink} target="_blank" rel="noopener noreferrer">
+                                    <SiHackerrank className="h-5 w-5 sm:h-6 sm:w-6 text-[#00EA64]" />
+                                </a>
+                            </Button>
+                        )}
+                        {userData.codechefLink && (
+                            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                                <a href={userData.codechefLink} target="_blank" rel="noopener noreferrer">
+                                    <SiCodechef className="h-5 w-5 sm:h-6 sm:w-6 text-[#5B4638]" />
+                                </a>
+                            </Button>
+                        )}
+                        {userData.geeksForGeeksLink && (
+                            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                                <a href={userData.geeksForGeeksLink} target="_blank" rel="noopener noreferrer">
+                                    <SiGeeksforgeeks className="h-5 w-5 sm:h-6 sm:w-6 text-[#0F9D58]" />
+                                </a>
+                            </Button>
+                        )}
+                    </CardFooter>
+                    <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-[#244855] to-transparent h-[1px] my-8 w-full" />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                         <div className="space-y-8">
                             <div>
@@ -136,30 +137,73 @@ export default function UserProfile() {
                             <div>
                                 <h3 className="text-2xl font-semibold text-[#244855] mb-4">Skills</h3>
                                 <div className="flex flex-wrap gap-2">
-                                    {['Java', 'JavaScript', 'React', 'Node.js', 'Express', 'MongoDB', 'HTML', 'CSS', 'Git', 'TypeScript'].map(skill => (
-                                        <Badge key={skill} variant="secondary" className="text-lg py-1 px-3 bg-[#244855] text-white">{skill}</Badge>
-                                    ))}
+                                    {userData.skills && userData.skills.length > 0 ? (
+                                        userData.skills.map((skill: string) => (
+                                            <Badge
+                                                key={skill}
+                                                variant="secondary"
+                                                className="text-lg py-1 px-3 bg-[#244855] text-white hover:bg-[#90AEAD]"
+                                            >
+                                                {skill}
+                                            </Badge>
+                                        ))
+                                    ) : (
+                                        <p className="text-lg text-muted-foreground">No skills available.</p>
+                                    )}
                                 </div>
                             </div>
+
                             <div className="mt-10">
                                 <h3 className="text-2xl font-semibold text-[#244855] mb-4">Contact</h3>
                                 <div className="flex flex-wrap gap-4">
-                                    <Button variant="outline" size="lg" className="flex items-center space-x-2 border-[#E64833] text-[#244855]">
+                                    <Button
+                                        variant="outline"
+                                        size="lg"
+                                        className="flex items-center space-x-2 border-[#E64833] text-[#244855]"
+                                    >
                                         <FaEnvelope className="h-5 w-5" />
                                         <span>{userData.email}</span>
                                     </Button>
-                                    <Button variant="outline" size="lg" className="flex items-center space-x-2 border-[#E64833] text-[#244855]" asChild>
-                                        <a href="#" download>
-                                            <FaFileAlt className="h-5 w-5" />
-                                            <span>Download Resume</span>
-                                        </a>
-                                    </Button>
-                                    <Button variant="outline" size="lg" className="flex items-center space-x-2 border-[#E64833] text-[#244855]">
+
+                                    <Button
+                                        variant="outline"
+                                        size="lg"
+                                        className="flex items-center space-x-2 border-[#E64833] text-[#244855]"
+                                    >
                                         <FaPhone className="h-5 w-5" />
                                         <span>+91 {userData.mobileNumber}</span>
                                     </Button>
+                                    
+                                    <Button
+                                        variant="outline"
+                                        size="lg"
+                                        className="flex items-center space-x-2 border-[#E64833] text-[#244855]"
+                                        asChild
+                                    >
+                                        <a href={userData.resumeLink} target="_blank" rel="noopener noreferrer">
+                                            <FaFileAlt className="h-5 w-5" />
+                                            <span>View Resume</span>
+                                        </a>
+                                    </Button>
+
+                                 
+
+                                    {userData.personalPortfolioLink && (
+                                        <Button
+                                            variant="outline"
+                                            size="lg"
+                                            className="flex items-center space-x-2 border-[#E64833] text-[#244855]"
+                                            asChild
+                                        >
+                                            <a href={userData.personalPortfolioLink} target="_blank" rel="noopener noreferrer">
+                                                <FaLink className="h-5 w-5" />
+                                                <span>View Portfolio</span>
+                                            </a>
+                                        </Button>
+                                    )}
                                 </div>
                             </div>
+
                         </div>
                         <div className="space-y-8">
                             <div>
@@ -170,7 +214,7 @@ export default function UserProfile() {
                                             <CardTitle className="text-xl text-[#244855]">{userData.projectTitle1}</CardTitle>
                                         </CardHeader>
                                         <CardContent>
-                                            <p className="text-muted-foreground">{userData.projectDescription1}</p>
+                                            <p className="text-[#244855]">{userData.projectDescription1}</p>
                                         </CardContent>
                                         <CardFooter>
                                             <Button variant="outline" className="border-[#E64833]" asChild>
@@ -183,7 +227,7 @@ export default function UserProfile() {
                                             <CardTitle className="text-xl text-[#244855]">{userData.projectTitle2}</CardTitle>
                                         </CardHeader>
                                         <CardContent>
-                                            <p className="text-muted-foreground">{userData.projectDescription2}</p>
+                                            <p className="text-[#244855]">{userData.projectDescription2}</p>
                                         </CardContent>
                                         <CardFooter>
                                             <Button variant="outline" className="border-[#E64833]" asChild>
@@ -196,10 +240,10 @@ export default function UserProfile() {
                         </div>
                     </div>
                 </CardContent>
-              
-               
+
+
             </Card>
-            <InformationTab userData={userData}/>
+            <InformationTab userData={userData} />
         </div>
     )
 }

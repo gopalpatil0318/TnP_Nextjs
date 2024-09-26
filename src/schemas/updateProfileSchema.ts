@@ -60,6 +60,7 @@ export const updateProfileSchema = z.object({
     projectLink2: z.string().optional(),
     projectDescription2: z.string().optional(),
     personalPortfolioLink: z.string().optional(),
+    resumeLink: z.string().optional(),
     githubLink: z.string().optional(),
     linkedinLink: z.string().optional(),
     instagramLink: z.string().optional(),
@@ -70,18 +71,8 @@ export const updateProfileSchema = z.object({
     hackerRankLink: z.string().optional(),
     firstName: z.string().optional(),
     middleName: z.string().optional(),
-    skills: z.array(z.string()).optional(),
+    skills: z.array(z.string()).min(1, "Please select at least one skill"),
     lastName: z.string().optional(),
-    isProfileComplete: z.boolean().optional().default(false), // Correct usage of boolean
-    image: z
-        .any()
-    //     .refine((file) => file?.length == 1, "File is required.")
-    //     .refine(
-    //         (file) =>
-    //             file[0]?.type === "image/png" ||
-    //             file[0]?.type === "image/jpeg" ||
-    //             file[0]?.type === "image/jpg",
-    //         "Must be a png, jpeg or jpg.",
-    //     )
-    //     .refine((file) => file[0]?.size <= 5000000, `Max file size is 5MB.`),
+    isProfileComplete: z.boolean().optional().default(false), 
+    image: z.any(),
 });

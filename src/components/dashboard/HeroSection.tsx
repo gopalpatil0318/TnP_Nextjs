@@ -4,7 +4,7 @@ import Image from "next/image";
 const HeroSection = () => {
   return (
     <div className="h-[45rem] flex flex-col md:flex-row overflow-hidden ">
-      {/* Content Area */}
+   
       <div className="flex-1 md:w-[60%] flex flex-col justify-center items-start p-12 relative">
        
         <motion.div

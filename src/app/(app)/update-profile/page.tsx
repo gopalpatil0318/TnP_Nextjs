@@ -5,6 +5,7 @@ import { useToast } from "@/components/ui/use-toast"
 import { useRouter } from "next/navigation"
 import axios, { AxiosError } from 'axios'
 import { ApiResponse } from "@/types/apiResponse"
+import { MultiSelect } from "react-multi-select-component"
 import {
     Select,
     SelectContent,
@@ -46,6 +47,13 @@ import {
 } from '@/data/options';
 import { DayPicker } from 'react-day-picker';
 
+
+type SkillOption = {
+    label: string;
+    value: string;
+};
+
+
 const Page = () => {
 
 
@@ -70,16 +78,25 @@ const Page = () => {
         form.setValue('prnNumber', userData?.username);
     }, []);
 
-
+    const skillOptions: SkillOption[] = [
+        { label: "React.js", value: "reactjs" },
+        { label: "Node.js", value: "nodejs" },
+        { label: "TypeScript", value: "typescript" },
+        { label: "Next.js", value: "nextjs" },
+    ];
 
     const [gapVisible, setGapVisible] = useState(false)
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [diplomaOr12th, setDiplomaOr12th] = useState("")
+    const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const { toast } = useToast()
     const router = useRouter()
 
     const form = useForm<z.infer<typeof updateProfileSchema>>({
         resolver: zodResolver(updateProfileSchema),
+        defaultValues: {
+            skills: [],
+        },
     });
 
 
@@ -132,18 +149,18 @@ const Page = () => {
             setIsSubmitting(false);
         }
     };
-    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear()); 
-    const [selectedMonth, setSelectedMonth] = useState(new Date(selectedYear, 0)); 
-  
-    const years = Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - i); 
+    const [selectedYear, setSelectedYear] = useState(new Date().getFullYear());
+    const [selectedMonth, setSelectedMonth] = useState(new Date(selectedYear, 0));
+
+    const years = Array.from({ length: 100 }, (_, i) => new Date().getFullYear() - i);
     const handleYearChange = (year: string) => {
-      const newYear = parseInt(year, 10);
-      setSelectedYear(newYear);
-      setSelectedMonth(new Date(newYear, 0));
+        const newYear = parseInt(year, 10);
+        setSelectedYear(newYear);
+        setSelectedMonth(new Date(newYear, 0));
     };
-  
+
     const handleMonthChange = (month: Date) => {
-      setSelectedMonth(month);
+        setSelectedMonth(month);
     };
 
 
@@ -184,6 +201,7 @@ const Page = () => {
                                 <form onSubmit={form.handleSubmit(onSubmit)} >
                                     <p className="mb-4 text-xl font-bold">Personal Information</p>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+
 
 
                                         <FormField
@@ -1315,6 +1333,21 @@ const Page = () => {
                                                 </FormItem>
                                             )}
                                         />
+
+                                        <FormField
+                                            control={form.control}
+                                            name="resumeLink"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Resume Drive Link</FormLabel>
+                                                    <FormControl>
+                                                        <Input placeholder="Resume Link" {...field} />
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+
                                         <FormField
                                             control={form.control}
                                             name="githubLink"
@@ -1431,13 +1464,44 @@ const Page = () => {
                                                                 <SelectValue placeholder="Select area of interest" />
                                                             </SelectTrigger>
                                                             <SelectContent>
-                                                                {areaOfInterestOptions.map((option) => (
+                                                            {areaOfInterestOptions.map((option) => (
                                                                     <SelectItem key={option.value} value={option.value}>
                                                                         {option.label}
                                                                     </SelectItem>
                                                                 ))}
+                    
                                                             </SelectContent>
                                                         </Select>
+                                                    </FormControl>
+                                                    <FormMessage />
+                                                </FormItem>
+                                            )}
+                                        />
+                                        <FormField
+                                            control={form.control}
+                                            name="skills"
+                                            render={({ field }) => (
+                                                <FormItem>
+                                                    <FormLabel>Select Skills</FormLabel>
+                                                    <FormControl>
+                                                        <Controller
+                                                            control={form.control}
+                                                            name="skills"
+                                                            render={({ field }) => (
+                                                                <MultiSelect
+                                                                    options={skillOptions}
+                                                                    value={field.value.map((skill: string) => ({
+                                                                        label: skill,
+                                                                        value: skill.toLowerCase().replace(/\s+/g, '-'),
+                                                                    }))}
+                                                                    onChange={(selected: SkillOption[]) =>
+                                                                        field.onChange(selected.map((option: SkillOption) => option.value))
+                                                                    }
+                                                                    labelledBy={"Select skills"}
+                                                                    hasSelectAll={false}
+                                                                />
+                                                            )}
+                                                        />
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>
@@ -1464,9 +1528,32 @@ const Page = () => {
                                             name="image"
                                             render={({ field }) => (
                                                 <FormItem>
-                                                    <FormLabel>Upload Image</FormLabel>
+                                                    <FormLabel className="text-sm font-semibold mb-2">Upload Image</FormLabel>
                                                     <FormControl>
-                                                        <input type="file" accept="image/*" onChange={(e) => field.onChange(e.target.files?.[0])} />
+                                                        <label
+                                                            htmlFor="image-upload"
+                                                            className={`flex items-center justify-center w-full h-36 border-2 rounded-md cursor-pointer transition ${selectedImage ? 'border-green-500' : 'border-dashed border-gray-300 hover:border-gray-400'}`}
+                                                        >
+                                                            {selectedImage ? (
+                                                                <div className="flex flex-col items-center">
+                                                                    <img src={URL.createObjectURL(selectedImage)} alt="Selected" className="h-24 w-24 object-cover mb-2 rounded-md" />
+                                                                    <span className="text-gray-600">Image Selected</span>
+                                                                </div>
+                                                            ) : (
+                                                                <span className="text-gray-600">Click to upload</span>
+                                                            )}
+                                                            <input
+                                                                id="image-upload"
+                                                                type="file"
+                                                                accept="image/*"
+                                                                className="hidden"
+                                                                onChange={(e) => {
+                                                                    const file = e.target.files?.[0];
+                                                                    field.onChange(file || null);
+                                                                    setSelectedImage(file || null);
+                                                                }}
+                                                            />
+                                                        </label>
                                                     </FormControl>
                                                     <FormMessage />
                                                 </FormItem>

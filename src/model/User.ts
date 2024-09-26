@@ -73,6 +73,7 @@ export interface User extends Document {
     projectLink2: string;
     projectDescription2: string;
     personalPortfolioLink: string;
+    resumeLink: string;
     githubLink: string;
     linkedinLink: string;
     instagramLink: string;
@@ -352,6 +353,10 @@ const UserSchema: Schema<User> = new Schema({
         required: false,
     },
     githubLink: {
+        type: String,
+        required: false,
+    },
+    resumeLink: {
         type: String,
         required: false,
     },

@@ -1,6 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { cn } from "@/lib/utils";
+import { MultiSelect } from "react-multi-select-component"
 import { useToast } from "@/components/ui/use-toast"
 import { useRouter } from "next/navigation"
 import axios, { AxiosError } from 'axios'
@@ -14,7 +14,7 @@ import {
     SelectTrigger,
     SelectValue,
 } from "@/components/ui/select"
-// import { useSession } from 'next-auth/react';
+
 import { User } from "next-auth";
 
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -50,97 +50,37 @@ import { DayPicker } from 'react-day-picker';
 
 const Page = () => {
 
+    type SkillOption = {
+        label: string;
+        value: string;
+    };
 
     const { data: session } = useSession();
     const user: User = session?.user as User;
     const username: string = user?.username || "Loading...";
     const email: string = user?.email || "Loading..."
 
-    // console.log(`${username} and ${email}`)
+    const skillOptions: SkillOption[] = [
+        { label: "React.js", value: "reactjs" },
+        { label: "Node.js", value: "nodejs" },
+        { label: "TypeScript", value: "typescript" },
+        { label: "Next.js", value: "nextjs" },
+    ];
 
 
 
     const [gapVisible, setGapVisible] = useState(false)
     const [isSubmitting, setIsSubmitting] = useState(false)
     const [diplomaOr12th, setDiplomaOr12th] = useState("")
+    const [selectedImage, setSelectedImage] = useState<File | null>(null);
     const { toast } = useToast()
     const router = useRouter()
 
     const form = useForm<z.infer<typeof updateProfileSchema>>({
         resolver: zodResolver(updateProfileSchema),
-        // defaultValues: {
-        //     username: '',
-        //     email: '',
-        //     // password: '',
-        //     mobileNumber: '',
-        //     birthDate: undefined,
-        //     gender: '',
-        //     bloodGroup: '',
-        //     adharNumber: '',
-        //     cast: '',
-        //     fatherName: '',
-        //     fatherMobileNumber: '',
-        //     fatherOccupation: '',
-        //     motherName: '',
-        //     motherMobileNumber: '',
-        //     motherOccupation: '',
-        //     localAddress: '',
-        //     city: '',
-        //     district: '',
-        //     state: '',
-        //     pincode: '',
-        //     prnNumber: '',
-        //     tenthMarks: '',
-        //     twelfthDiploma: '',
-        //     twelfthDiplomaPercentage: '',
-        //     admissionBasedOn: '',
-        //     department: '',
-        //     division: '',
-        //     passoutYear: new Date().getFullYear(),
-        //     lgName: '',
-        //     sem1SGPA: 0,
-        //     sem1CGPA: 0,
-        //     sem1Backlog: 0,
-        //     sem2SGPA: 0,
-        //     sem2CGPA: 0,
-        //     sem2Backlog: 0,
-        //     sem3SGPA: 0,
-        //     sem3CGPA: 0,
-        //     sem3Backlog: 0,
-        //     sem4SGPA: 0,
-        //     sem4CGPA: 0,
-        //     sem4Backlog: 0,
-        //     sem5SGPA: 0,
-        //     sem5CGPA: 0,
-        //     sem5Backlog: 0,
-        //     sem6SGPA: 0,
-        //     sem6CGPA: 0,
-        //     sem6Backlog: 0,
-        //     overallCGPA: 0,
-        //     anyLiveKTs: '',
-        //     anyGapDuringEducation: '',
-        //     gapReason: '',
-        //     areaOfInterest: '',
-        //     aboutYou: '',
-        //     projectTitle1: '',
-        //     projectLink1: '',
-        //     projectDescription1: '',
-        //     projectTitle2: '',
-        //     projectLink2: '',
-        //     projectDescription2: '',
-        //     personalPortfolioLink: '',
-        //     githubLink: '',
-        //     linkedinLink: '',
-        //     instagramLink: '',
-        //     twitterLink: '',
-        //     leetcodeLink: '',
-        //     geeksForGeeksLink: '',
-        //     codechefLink: '',
-        //     hackerRankLink: '',
-        //     firstName: '',
-        //     middleName: '',
-        //     lastName: ''
-        // }
+        defaultValues: {
+            skills: [],
+        },
     });
 
     const uploadImage = async (file: File): Promise<string> => {
@@ -180,7 +120,7 @@ const Page = () => {
 
             await signIn('credentials', { redirect: false });
             signOut();
-            router.replace(`/dashboard`);
+            router.replace(`/sign-in`);
         } catch (error) {
             console.error('Error updating user profile', error);
 
@@ -347,15 +287,15 @@ const Page = () => {
                                                         </SelectContent>
                                                     </Select>
 
-                                                 
+
                                                     <DayPicker
                                                         mode="single"
                                                         selected={field.value ? field.value : undefined}
                                                         onSelect={(date) => field.onChange(date)}
-                                                        month={selectedMonth} 
-                                                        onMonthChange={handleMonthChange} 
-                                                        fromMonth={new Date(selectedYear, 0)} 
-                                                        toMonth={new Date(selectedYear, 11)} 
+                                                        month={selectedMonth}
+                                                        onMonthChange={handleMonthChange}
+                                                        fromMonth={new Date(selectedYear, 0)}
+                                                        toMonth={new Date(selectedYear, 11)}
                                                         initialFocus
                                                     />
                                                 </div>
@@ -1368,6 +1308,20 @@ const Page = () => {
                                     </FormItem>
                                 )}
                             />
+
+                            <FormField
+                                control={form.control}
+                                name="resumeLink"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Resume Drive Link</FormLabel>
+                                        <FormControl>
+                                            <Input placeholder="Resume Link" {...field} />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
                             <FormField
                                 control={form.control}
                                 name="githubLink"
@@ -1497,6 +1451,36 @@ const Page = () => {
                                 )}
                             />
 
+                            <FormField
+                                control={form.control}
+                                name="skills"
+                                render={({ field }) => (
+                                    <FormItem>
+                                        <FormLabel>Select Skills</FormLabel>
+                                        <FormControl>
+                                            <Controller
+                                                control={form.control}
+                                                name="skills"
+                                                render={({ field }) => (
+                                                    <MultiSelect
+                                                        options={skillOptions}
+                                                        value={field.value.map((skill: string) => ({
+                                                            label: skill,
+                                                            value: skill.toLowerCase().replace(/\s+/g, '-'),
+                                                        }))}
+                                                        onChange={(selected: SkillOption[]) =>
+                                                            field.onChange(selected.map((option: SkillOption) => option.value))
+                                                        }
+                                                        labelledBy={"Select skills"}
+                                                        hasSelectAll={false}
+                                                    />
+                                                )}
+                                            />
+                                        </FormControl>
+                                        <FormMessage />
+                                    </FormItem>
+                                )}
+                            />
 
                             <FormField
                                 control={form.control}
@@ -1518,9 +1502,32 @@ const Page = () => {
                                 name="image"
                                 render={({ field }) => (
                                     <FormItem>
-                                        <FormLabel>Upload Image</FormLabel>
+                                        <FormLabel className="text-sm font-semibold mb-2">Upload Image</FormLabel>
                                         <FormControl>
-                                            <input type="file" accept="image/*" onChange={(e) => field.onChange(e.target.files?.[0])} />
+                                            <label
+                                                htmlFor="image-upload"
+                                                className={`flex items-center justify-center w-full h-36 border-2 rounded-md cursor-pointer transition ${selectedImage ? 'border-green-500' : 'border-dashed border-gray-300 hover:border-gray-400'}`}
+                                            >
+                                                {selectedImage ? (
+                                                    <div className="flex flex-col items-center">
+                                                        <img src={URL.createObjectURL(selectedImage)} alt="Selected" className="h-24 w-24 object-cover mb-2 rounded-md" />
+                                                        <span className="text-gray-600">Image Selected</span>
+                                                    </div>
+                                                ) : (
+                                                    <span className="text-gray-600">Click to upload</span>
+                                                )}
+                                                <input
+                                                    id="image-upload"
+                                                    type="file"
+                                                    accept="image/*"
+                                                    className="hidden"
+                                                    onChange={(e) => {
+                                                        const file = e.target.files?.[0];
+                                                        field.onChange(file || null);
+                                                        setSelectedImage(file || null);
+                                                    }}
+                                                />
+                                            </label>
                                         </FormControl>
                                         <FormMessage />
                                     </FormItem>

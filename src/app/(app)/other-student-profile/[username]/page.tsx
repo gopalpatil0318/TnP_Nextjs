@@ -9,14 +9,14 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Skeleton } from "@/components/ui/skeleton"
-import { FaGithub, FaLinkedin, FaInstagram, FaTwitter, FaEnvelope, FaPhone, FaFileAlt } from 'react-icons/fa'
+import { FaGithub, FaLinkedin, FaInstagram, FaTwitter, FaEnvelope, FaPhone, FaFileAlt, FaLink } from 'react-icons/fa'
 import { SiLeetcode, SiGeeksforgeeks, SiCodechef, SiHackerrank } from 'react-icons/si'
 
 interface Student {
     username: string
     firstName: string
     lastName: string
-    middleName:string
+    middleName: string
     image?: string
     areaOfInterest?: string
     department?: string
@@ -38,6 +38,7 @@ interface Student {
     hackerRankLink?: string
     codechefLink?: string
     geeksForGeeksLink?: string
+    personalPortfolioLink?: string
 }
 
 export default function Component() {
@@ -53,7 +54,7 @@ export default function Component() {
                         username: params.username,
                     })
                     setStudentData(response.data.data)
-                   
+
                 } catch (error) {
                     console.error("Failed to fetch student data:", error)
                 } finally {
@@ -116,6 +117,65 @@ export default function Component() {
                         <CardDescription className="text-2xl text-[#874F41] mb-2">{studentData.areaOfInterest || "Area of Interest"}</CardDescription>
                         <p className="text-xl text-muted-foreground">{studentData.department || "Department"}</p>
                     </div>
+                    <CardFooter className="flex justify-center flex-wrap gap-4 mt-10">
+                        {studentData.githubLink && (
+                            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                                <a href={studentData.githubLink} target="_blank" rel="noopener noreferrer">
+                                    <FaGithub className="h-5 w-5 sm:h-6 sm:w-6 text-[#181717]" />
+                                </a>
+                            </Button>
+                        )}
+                        {studentData.linkedinLink && (
+                            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                                <a href={studentData.linkedinLink} target="_blank" rel="noopener noreferrer">
+                                    <FaLinkedin className="h-5 w-5 sm:h-6 sm:w-6 text-[#0A66C2]" />
+                                </a>
+                            </Button>
+                        )}
+                        {studentData.instagramLink && (
+                            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                                <a href={studentData.instagramLink} target="_blank" rel="noopener noreferrer">
+                                    <FaInstagram className="h-5 w-5 sm:h-6 sm:w-6 text-[#E4405F]" />
+                                </a>
+                            </Button>
+                        )}
+                        {studentData.twitterLink && (
+                            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                                <a href={studentData.twitterLink} target="_blank" rel="noopener noreferrer">
+                                    <FaTwitter className="h-5 w-5 sm:h-6 sm:w-6 text-[#1DA1F2]" />
+                                </a>
+                            </Button>
+                        )}
+                        {studentData.leetcodeLink && (
+                            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                                <a href={studentData.leetcodeLink} target="_blank" rel="noopener noreferrer">
+                                    <SiLeetcode className="h-5 w-5 sm:h-6 sm:w-6 text-[#FFA116]" />
+                                </a>
+                            </Button>
+                        )}
+                        {studentData.hackerRankLink && (
+                            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                                <a href={studentData.hackerRankLink} target="_blank" rel="noopener noreferrer">
+                                    <SiHackerrank className="h-5 w-5 sm:h-6 sm:w-6 text-[#00EA64]" />
+                                </a>
+                            </Button>
+                        )}
+                        {studentData.codechefLink && (
+                            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                                <a href={studentData.codechefLink} target="_blank" rel="noopener noreferrer">
+                                    <SiCodechef className="h-5 w-5 sm:h-6 sm:w-6 text-[#5B4638]" />
+                                </a>
+                            </Button>
+                        )}
+                        {studentData.geeksForGeeksLink && (
+                            <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
+                                <a href={studentData.geeksForGeeksLink} target="_blank" rel="noopener noreferrer">
+                                    <SiGeeksforgeeks className="h-5 w-5 sm:h-6 sm:w-6 text-[#0F9D58]" />
+                                </a>
+                            </Button>
+                        )}
+                    </CardFooter>
+                    <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-[#244855] to-transparent h-[1px] my-8 w-full" />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
                         <div className="space-y-8">
                             <div>
@@ -133,20 +193,51 @@ export default function Component() {
                             <div className="mt-10">
                                 <h3 className="text-2xl font-semibold text-[#244855] mb-4">Contact</h3>
                                 <div className="flex flex-wrap gap-4">
-                                    <Button variant="outline" size="lg" className="flex items-center space-x-2 border-[#E64833] text-[#244855]">
+                                    <Button
+                                        variant="outline"
+                                        size="lg"
+                                        className="flex items-center space-x-2 border-[#E64833] text-[#244855]"
+                                    >
                                         <FaEnvelope className="h-5 w-5" />
                                         <span>{studentData.email}</span>
                                     </Button>
-                                    <Button variant="outline" size="lg" className="flex items-center space-x-2 border-[#E64833] text-[#244855]" asChild>
-                                        <a href={studentData.resumeLink} download>
-                                            <FaFileAlt className="h-5 w-5" />
-                                            <span>Download Resume</span>
-                                        </a>
-                                    </Button>
-                                    <Button variant="outline" size="lg" className="flex items-center space-x-2 border-[#E64833] text-[#244855]">
+
+                                    <Button
+                                        variant="outline"
+                                        size="lg"
+                                        className="flex items-center space-x-2 border-[#E64833] text-[#244855]"
+                                    >
                                         <FaPhone className="h-5 w-5" />
                                         <span>+91 {studentData.mobileNumber}</span>
                                     </Button>
+
+                                    <Button
+                                        variant="outline"
+                                        size="lg"
+                                        className="flex items-center space-x-2 border-[#E64833] text-[#244855]"
+                                        asChild
+                                    >
+                                        <a href={studentData.resumeLink} target="_blank" rel="noopener noreferrer">
+                                            <FaFileAlt className="h-5 w-5" />
+                                            <span>View Resume</span>
+                                        </a>
+                                    </Button>
+
+
+
+                                    {studentData.personalPortfolioLink && (
+                                        <Button
+                                            variant="outline"
+                                            size="lg"
+                                            className="flex items-center space-x-2 border-[#E64833] text-[#244855]"
+                                            asChild
+                                        >
+                                            <a href={studentData.personalPortfolioLink} target="_blank" rel="noopener noreferrer">
+                                                <FaLink className="h-5 w-5" />
+                                                <span>View Portfolio</span>
+                                            </a>
+                                        </Button>
+                                    )}
                                 </div>
                             </div>
                         </div>
@@ -186,64 +277,7 @@ export default function Component() {
                     </div>
                 </CardContent>
                 <div className="bg-gradient-to-r from-transparent via-neutral-300 dark:via-[#244855] to-transparent h-[1px] mt-5 w-full" />
-                <CardFooter className="flex justify-center flex-wrap gap-4 mt-10">
-                    {studentData.githubLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={studentData.githubLink} target="_blank" rel="noopener noreferrer">
-                                <FaGithub className="h-5 w-5 sm:h-6 sm:w-6 text-[#181717]" />
-                            </a>
-                        </Button>
-                    )}
-                    {studentData.linkedinLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={studentData.linkedinLink} target="_blank" rel="noopener noreferrer">
-                                <FaLinkedin className="h-5 w-5 sm:h-6 sm:w-6 text-[#0A66C2]" />
-                            </a>
-                        </Button>
-                    )}
-                    {studentData.instagramLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={studentData.instagramLink} target="_blank" rel="noopener noreferrer">
-                                <FaInstagram className="h-5 w-5 sm:h-6 sm:w-6 text-[#E4405F]" />
-                            </a>
-                        </Button>
-                    )}
-                    {studentData.twitterLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={studentData.twitterLink} target="_blank" rel="noopener noreferrer">
-                                <FaTwitter className="h-5 w-5 sm:h-6 sm:w-6 text-[#1DA1F2]" />
-                            </a>
-                        </Button>
-                    )}
-                    {studentData.leetcodeLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={studentData.leetcodeLink} target="_blank" rel="noopener noreferrer">
-                                <SiLeetcode className="h-5 w-5 sm:h-6 sm:w-6 text-[#FFA116]" />
-                            </a>
-                        </Button>
-                    )}
-                    {studentData.hackerRankLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={studentData.hackerRankLink} target="_blank" rel="noopener noreferrer">
-                                <SiHackerrank className="h-5 w-5 sm:h-6 sm:w-6 text-[#00EA64]" />
-                            </a>
-                        </Button>
-                    )}
-                    {studentData.codechefLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={studentData.codechefLink} target="_blank" rel="noopener noreferrer">
-                                <SiCodechef className="h-5 w-5 sm:h-6 sm:w-6 text-[#5B4638]" />
-                            </a>
-                        </Button>
-                    )}
-                    {studentData.geeksForGeeksLink && (
-                        <Button variant="outline" size="icon" className="rounded-full w-10 h-10 sm:w-12 sm:h-12 border-[#244855]" asChild>
-                            <a href={studentData.geeksForGeeksLink} target="_blank" rel="noopener noreferrer">
-                                <SiGeeksforgeeks className="h-5 w-5 sm:h-6 sm:w-6 text-[#0F9D58]" />
-                            </a>
-                        </Button>
-                    )}
-                </CardFooter>
+                
 
             </Card>
         </div>
