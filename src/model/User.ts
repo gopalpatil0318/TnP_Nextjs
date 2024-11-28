@@ -1,5 +1,4 @@
 import mongoose, { Schema, Document } from "mongoose";
-import { boolean } from "zod";
 
 export interface User extends Document {
     username: string;
@@ -84,6 +83,7 @@ export interface User extends Document {
     hackerRankLink: string; 
     image:string;
     skills: string[];
+    role: string;
 }
 
 const UserSchema: Schema<User> = new Schema({
@@ -407,7 +407,13 @@ const UserSchema: Schema<User> = new Schema({
         type: [String], 
         default: [] 
     },
- 
+    role: {
+        type: String,
+        default: "tpo",
+        required: true,
+    },
+}, {
+    timestamps: true
 });
 
 const UserModel = (mongoose.models.User as mongoose.Model<User>) || mongoose.model<User>("User", UserSchema);

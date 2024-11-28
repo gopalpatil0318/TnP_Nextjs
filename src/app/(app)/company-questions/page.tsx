@@ -1,78 +1,178 @@
-'use client'
+  "use client"
+import { useState } from 'react';
+import debounce from 'lodash/debounce';
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { X, Plus } from 'lucide-react';
+import { ScrollArea } from "@/components/ui/scroll-area";
 
-import { useState } from 'react'
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { AddQuestionForm } from '@/components/student/AddQuestionForm'
-import { QuestionCard } from '@/components/student/QuestionCard'
-
-interface Question {
-  company: string
-  questions: string[]
-  studentName: string
-  review: string
+interface AddQuestionFormProps {
+    onSubmit: (question: { company: string; questions: string[]; studentName: string; review: string }) => void;
+    onClose: () => void;
 }
 
-export default function Page() {
-  const [showForm, setShowForm] = useState(false)
-  const [questions, setQuestions] = useState<Question[]>([])
-  const [filter, setFilter] = useState('')
+export function AddQuestionForm({ onSubmit, onClose }: AddQuestionFormProps) {
+    const [company, setCompany] = useState('');
+    const [questions, setQuestions] = useState(['']);
+    const [studentName, setStudentName] = useState('');
+    const [suggestedStudents, setSuggestedStudents] = useState<string[]>([]);
+    const [review, setReview] = useState('');
+    const [loading, setLoading] = useState(false);
 
-  const addQuestion = (newQuestion: Question) => {
-    setQuestions([...questions, newQuestion])
-    setShowForm(false)
-  }
+    const handleAddQuestion = () => setQuestions([...questions, '']);
+    const handleRemoveQuestion = (index: number) => setQuestions(questions.filter((_, i) => i !== index));
+    const handleQuestionChange = (index: number, value: string) => {
+        const newQuestions = [...questions];
+        newQuestions[index] = value;
+        setQuestions(newQuestions);
+    };
 
-  const filteredQuestions = questions.filter(q => 
-    q.company.toLowerCase().includes(filter.toLowerCase())
-  )
+    // Function to fetch students dynamically by either firstName or username
+    const fetchSuggestedStudents = async (query: string) => {
+        if (!query) {
+            setSuggestedStudents([]);
+            return;
+        }
 
-  return (
-    <div className="container mx-auto p-4  min-h-screen  mb-10 ">
-          <section className="relative py-10  ">
-        <div className="mb-4 mt-2">
-          <h4 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-[#244855]">
-            Company Questions
-          </h4>
-          <p className="text-sm lg:text-base max-w-2xl my-4 mx-auto text-[#90AEAD] text-center font-normal">
-            Search company specific questions faced by students during interviews.
-          </p>
-        </div>
-      </section>
-      <div className="flex justify-between items-center mb-6">
-      <div className="relative mb-6">
-        <Input
-          className="pl-10 pr-4 py-2 border-gray-300 focus:border-blue-500 focus:ring-blue-500 rounded-lg shadow-sm"
-          placeholder="Filter by company name"
-          value={filter}
-          onChange={(e) => setFilter(e.target.value)}
-        />
-        <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-          <svg className="h-5 w-5 text-gray-400" viewBox="0 0 20 20" fill="currentColor">
-            <path fillRule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clipRule="evenodd" />
-          </svg>
-        </div>
-      </div>
-        <Button onClick={() => setShowForm(true)} className="bg-blue-600 hover:bg-blue-700">
-          Add Questions
-        </Button>
-      </div>
+        setLoading(true);
+        try {
+            const response = await fetch(`/api/fetch-student-name?query=${query}`);
+            const data = await response.json();
 
-     
+            if (data.success) {
+                setSuggestedStudents(
+                    data.users.map((user: { firstName: string; lastName: string, username: string }) => {
+                        return `${user.firstName} ${user.lastName} (${user.username})`;
+                    })
+                );
+            } else {
+                setSuggestedStudents([]);
+            }
+        } catch (error) {
+            console.error('Error fetching students:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20">
-        {filteredQuestions.map((q, index) => (
-          <QuestionCard key={index} question={q} />
-        ))}
-      </div>
+    const debouncedFetch = debounce(fetchSuggestedStudents, 300);
 
-      {showForm && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg w-full max-w-md max-h-[90vh] overflow-y-auto">
-            <AddQuestionForm onSubmit={addQuestion} onClose={() => setShowForm(false)} />
-          </div>
-        </div>
-      )}
-    </div>
-  )
+    const handleStudentNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const value = e.target.value;
+        setStudentName(value);
+        debouncedFetch(value);
+    };
+
+    const handleSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        const newQuestion = {
+            company,
+            questions: questions.filter(q => q.trim() !== ''),
+            studentName,
+            review,
+        };
+
+        try {
+            const response = await fetch('/api/questions', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(newQuestion),
+            });
+
+            if (!response.ok) {
+                const errorText = await response.text();
+                console.error('Failed to add question:', errorText);
+                alert(`Error: ${errorText || 'Unknown error'}`);
+                return;
+            }
+
+            onSubmit(newQuestion);
+        } catch (error) {
+            console.error('An error occurred:', error);
+            alert(`An error occurred while submitting your question: ${error instanceof Error ? error.message : 'Unknown error'}`);
+        }
+    };
+
+    return (
+        <form onSubmit={handleSubmit} className="space-y-4">
+            <div className="flex justify-between items-center">
+                <h2 className="text-xl font-semibold text-[#244855]">Add Questions</h2>
+                <Button variant="ghost" size="icon" onClick={onClose}>
+                    <X className="h-5 w-5 text-gray-500" />
+                </Button>
+            </div>
+
+            <div className="relative">
+                <Input
+                    value={studentName}
+                    onChange={handleStudentNameChange}
+                    placeholder="Search student name or username..."
+                />
+                {loading && <p>Loading...</p>}
+                {suggestedStudents.length > 0 && (
+                    <div className="absolute bg-white border border-gray-300 rounded-md shadow-lg w-full max-h-48 overflow-y-auto">
+                        {suggestedStudents.map((name, index) => (
+                            <div
+                                key={index}
+                                className="px-4 py-2 cursor-pointer hover:bg-gray-100"
+                                onClick={() => {
+                                    setStudentName(name);
+                                    setSuggestedStudents([]);
+                                }}
+                            >
+                                {name}
+                            </div>
+                        ))}
+                    </div>
+                )}
+            </div>
+
+            <Select onValueChange={setCompany} required>
+                <SelectTrigger className="border-gray-300 focus:ring-[#244855] focus:border-[#244855]">
+                    <SelectValue placeholder="Select company" />
+                </SelectTrigger>
+                <SelectContent>
+                    <SelectItem value="Microsoft">Microsoft</SelectItem>
+                    <SelectItem value="Google">Google</SelectItem>
+                    <SelectItem value="RecruitCRM">RecruitCRM</SelectItem>
+                </SelectContent>
+            </Select>
+
+            <ScrollArea className="h-[200px] pr-4">
+                {questions.map((question, index) => (
+                    <div key={index} className="flex items-center space-x-2 mb-4">
+                        <Textarea
+                            placeholder={`Question ${index + 1}`}
+                            value={question}
+                            onChange={(e) => handleQuestionChange(index, e.target.value)}
+                            required
+                            className="flex-grow"
+                        />
+                        {index > 0 && (
+                            <Button type="button" onClick={() => handleRemoveQuestion(index)} variant="destructive" size="icon">
+                                <X className="h-4 w-4 text-black" />
+                            </Button>
+                        )}
+                    </div>
+                ))}
+            </ScrollArea>
+
+            <Button type="button" onClick={handleAddQuestion} variant="outline" className="w-full border-[#244855] text-[#244855] hover:bg-[#FBE9D0]">
+                <Plus className="h-4 w-4 mr-2" /> Add Another Question
+            </Button>
+
+            <Textarea
+                placeholder="Review (optional)"
+                value={review}
+                onChange={(e) => setReview(e.target.value)}
+                className="mt-4"
+            />
+
+            <Button type="submit" className="w-full bg-[#E64833] hover:bg-[#C93C2B] text-white">
+                Submit
+            </Button>
+        </form>
+    );
 }

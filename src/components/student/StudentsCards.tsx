@@ -32,17 +32,17 @@ export function StudentsCards({ student }: StudentsCardsProps) {
 
   return (
     <Card className="w-64 bg-white shadow-lg mt-20 rounded-lg relative">
-      {/* Static background color with primary accent */}
-      <div className="h-24 bg-[#244855]" /> {/* Primary accent color */}
+     
+      <div className="h-24 bg-[#244855]" /> 
 
-      {/* Student's profile image */}
-      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+   
+      <div className="absolute top-0 left-1/2 transform -translate-x-1/2 -translate-y-1/2 overflow-hidden">
         <Image
           src={student.image || "/image.png"}
           alt={`${student.firstName} ${student.lastName}'s profile`}
           width={120}
           height={120}
-          className="rounded-lg border-4 border-white"
+          className="w-[120px] h-[120px] rounded-lg border-4 border-white object-cover"
         />
       </div>
 
@@ -62,7 +62,7 @@ export function StudentsCards({ student }: StudentsCardsProps) {
           <span className="font-semibold">Area of Interest:</span> {student.areaOfInterest}
         </p>
 
-        {/* Social Icons */}
+       
         <div className="flex space-x-4 mb-4 justify-center">
           {student.linkedinLink && (
             <a
@@ -96,7 +96,7 @@ export function StudentsCards({ student }: StudentsCardsProps) {
           )}
         </div>
 
-        {/* Visit Full Profile Button */}
+      
         <Button 
           onClick={handleVisitProfile} 
           className="w-full bg-[#E64833] hover:bg-[#874F41] text-white transition-colors duration-300"

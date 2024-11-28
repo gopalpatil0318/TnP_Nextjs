@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import { ChevronDown, ChevronUp, MessageCircle, User } from 'lucide-react'
+import { ChevronDown, ChevronUp, User, Calendar } from 'lucide-react'
 
 interface QuestionCardProps {
   question: {
@@ -9,6 +9,7 @@ interface QuestionCardProps {
     questions: string[]
     studentName: string
     review: string
+    dateAdded: string 
   }
 }
 
@@ -57,18 +58,22 @@ export function QuestionCard({ question }: QuestionCardProps) {
         )}
         <div className="mt-2 p-2 text-[#90AEAD] rounded-md">
           <h3 className="font-semibold text-[#874F41] mb-1 text-sm flex items-center">
-        
             Review:
           </h3>
           <p className="text-gray-700 text-sm break-words">{question.review || "No review provided."}</p>
         </div>
       </CardContent>
       <CardFooter className="bg-gray-50 flex justify-between items-center py-2 px-3">
-        <span className="text-xs text-gray-500 flex items-center">
-          <User className="h-4 w-4 mr-1" />
-          Added by:
-        </span>
-        <span className="font-medium text-gray-700 text-sm">{question.studentName}</span>
+        <div className="flex items-center space-x-2">
+          <User className="h-4 w-4 text-gray-500" />
+          <span className="text-xs text-gray-500">Added by:</span>
+          <span className="font-medium text-gray-700 text-sm">{question.studentName}</span>
+        </div>
+        <div className="flex items-center space-x-2">
+          <Calendar className="h-4 w-4 text-gray-500" />
+          <span className="text-xs text-gray-500">Date:</span>
+          <span className="font-medium text-gray-700 text-sm">{question.dateAdded}</span>
+        </div>
       </CardFooter>
     </Card>
   )

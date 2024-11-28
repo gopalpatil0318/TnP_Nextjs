@@ -3,12 +3,14 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import bcrypt from "bcryptjs"
 import dbConnect from "@/lib/dbConnect";
 import UserModel from "@/model/User";
+import TPOModel from "@/model/Tpo";
+import TPCModel from "@/model/Tpc";
 
 
 export const authOptions: NextAuthOptions = {
     providers: [
         CredentialsProvider({
-            id: "credentials",
+            id: "student-credentials",
             name: "Credentials",
             credentials: {
                 email: { label: "Email", type: "text" },
@@ -46,14 +48,72 @@ export const authOptions: NextAuthOptions = {
                     throw new Error(err)
                 }
             }
-        })
+        }),
+        CredentialsProvider({
+            id: "tpo-credentials",
+            name: "Credentials",
+            credentials: {
+                email: { label: "Email", type: "text" },
+                password: { label: "Password", type: "password" },
+            },
+            async authorize(credentials: any): Promise<any> {
+                await dbConnect();
+                try {
+                    console.log("Gopal Bharat Patil",credentials.identifier);
+                    const tpo = await TPOModel.findOne({ email: credentials.identifier });
+
+                    if (!tpo) {
+                        throw new Error("No TPO found with this email");
+                    }
+
+                    const isPasswordCorrect = await bcrypt.compare(credentials.password, tpo.password);
+
+                    if (!isPasswordCorrect) {
+                        throw new Error("Incorrect Password");
+                    }
+
+                    return tpo;
+                } catch (err: any) {
+                    throw new Error(err);
+                }
+            },
+        }),
+        CredentialsProvider({
+            id: "tpc-credentials",
+            name: "Credentials",
+            credentials: {
+                email: { label: "Email", type: "text" },
+                password: { label: "Password", type: "password" },
+            },
+            async authorize(credentials: any): Promise<any> {
+                await dbConnect();
+                try {
+                    console.log("Gopal Bharat Patil",credentials.identifier);
+                    const tpc = await TPCModel.findOne({ email: credentials.identifier });
+
+                    if (!tpc) {
+                        throw new Error("No TPO found with this email");
+                    }
+
+                    const isPasswordCorrect = await bcrypt.compare(credentials.password, tpc.password);
+
+                    if (!isPasswordCorrect) {
+                        throw new Error("Incorrect Password");
+                    }
+
+                    return tpc;
+                } catch (err: any) {
+                    throw new Error(err);
+                }
+            },
+        }),
     ],
     callbacks: {
         async jwt({ token, user }) {
             if (user) {
                 token._id = user._id?.toString();
                 token.isVerified = user.isVerified;
-                token.isAcceptingMessages = user.isAcceptingMessages;
+                token.role = user.role;
                 token.username = user.username;
                 token.isProfileComplete = user.isProfileComplete;
             }
@@ -63,8 +123,8 @@ export const authOptions: NextAuthOptions = {
             if (token) {
                 session.user._id = token._id
                 session.user.isVerified = token.isVerified
-                session.user.isAcceptingMessages = token.isAcceptingMessages
                 session.user.username = token.username
+                session.user.role = token.role;
                 token.isProfileComplete = token.isProfileComplete;
             }
             return session

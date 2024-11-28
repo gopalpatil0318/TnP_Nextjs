@@ -68,7 +68,7 @@ const Page: React.FC = () => {
 
   return (
     <div className="min-h-screen ">
-      <div className="w-full px-4 py-8"> {/* Full width without container */}
+      <div className="w-full px-4 py-8">
         <div className="mb-8 mt-5">
           <h4 className="text-3xl lg:text-5xl lg:leading-tight max-w-5xl mx-auto text-center tracking-tight font-medium text-[#244855]">
             Explore Your Peers
