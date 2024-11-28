@@ -1,8 +1,8 @@
-"use client"
-import { useState } from 'react';
+"use client";
+import { useState } from "react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { motion } from "framer-motion";
-
+import Image from "next/image";
 
 interface Event {
   id: string;
@@ -12,7 +12,7 @@ interface Event {
 
 // Hero Component
 const Hero = () => (
-  <div className="  text-black py-16 px-8 text-center">
+  <div className="text-black py-16 px-8 text-center">
     <h1 className="text-5xl font-bold mb-4">GALLERY</h1>
     <h2 className="text-3xl font-semibold mb-6">Training And Placement Department</h2>
     <p className="max-w-3xl mx-auto text-lg">
@@ -21,21 +21,28 @@ const Hero = () => (
   </div>
 );
 
-
 interface RotatingPhotoRowProps {
   images: string[];
-  direction: 'left' | 'right';
+  direction: "left" | "right";
 }
 
 const RotatingPhotoRow: React.FC<RotatingPhotoRowProps> = ({ images, direction }) => (
-  <div className="overflow-hidden py-8  ">
+  <div className="overflow-hidden py-8">
     <motion.div
-      animate={{ x: direction === 'left' ? [0, -1000] : [-1000, 0] }}
+      animate={{ x: direction === "left" ? [0, -1000] : [-1000, 0] }}
       transition={{ repeat: Infinity, duration: 20, ease: "linear" }}
       className="flex"
     >
       {images.concat(images).map((src, index) => (
-        <img key={index} src={src} alt={`Gallery image ${index + 1}`} className="w-64 h-64 object-cover mx-2 rounded-lg shadow-lg" />
+        <div key={index} className="mx-2">
+          <Image
+            src={src}
+            alt={`Gallery image ${index + 1}`}
+            width={256}
+            height={256}
+            className="w-64 h-64 object-cover rounded-lg shadow-lg"
+          />
+        </div>
       ))}
     </motion.div>
   </div>
@@ -59,7 +66,14 @@ const TabGallery: React.FC<TabGalleryProps> = ({ events }) => {
         <TabsContent key={event.id} value={event.id}>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {event.images.map((src, index) => (
-              <img key={index} src={src} alt={`${event.name} image ${index + 1}`} className="w-full h-64 object-cover rounded-lg shadow-lg" loading="lazy" />
+              <Image
+                key={index}
+                src={src}
+                alt={`${event.name} image ${index + 1}`}
+                width={256}
+                height={256}
+                className="w-full h-64 object-cover rounded-lg shadow-lg"
+              />
             ))}
           </div>
         </TabsContent>
@@ -70,9 +84,9 @@ const TabGallery: React.FC<TabGalleryProps> = ({ events }) => {
 
 const GalleryPage: React.FC = () => {
   const [events] = useState<Event[]>([
-    { 
-      id: 'placement-drive', 
-      name: 'Placement Drive', 
+    {
+      id: "placement-drive",
+      name: "Placement Drive",
       images: [
         "/gallery/g12.jpg",
         "/gallery/g13.jpg",
@@ -80,31 +94,26 @@ const GalleryPage: React.FC = () => {
         "/gallery/g15.jpg",
         "/gallery/g16.jpg",
         "/gallery/g1.jpg",
-        // "/gallery/g2.jpg",
         "/gallery/g3.jpg",
         "/gallery/g4.jpg",
         "/gallery/g5.jpg",
         "/gallery/g6.jpg",
         "/gallery/g7.jpg",
-        // "/gallery/g8.jpg",
         "/gallery/g9.jpg",
         "/gallery/g10.jpg",
         "/gallery/g11.jpg",
-      
-      ]
+      ],
     },
-    { 
-      id: 'training-workshop', 
-      name: 'Training Workshop', 
+    {
+      id: "training-workshop",
+      name: "Training Workshop",
       images: [
         "/gallery/g1.jpg",
-        // "/gallery/g2.jpg",
         "/gallery/g3.jpg",
         "/gallery/g4.jpg",
         "/gallery/g5.jpg",
         "/gallery/g6.jpg",
         "/gallery/g7.jpg",
-        // "/gallery/g8.jpg",
         "/gallery/g9.jpg",
         "/gallery/g10.jpg",
         "/gallery/g11.jpg",
@@ -113,13 +122,12 @@ const GalleryPage: React.FC = () => {
         "/gallery/g14.jpg",
         "/gallery/g15.jpg",
         "/gallery/g16.jpg",
-      ]
+      ],
     },
-    { 
-      id: 'industry-visit', 
-      name: 'Industry Visit', 
+    {
+      id: "industry-visit",
+      name: "Industry Visit",
       images: [
-       
         "/gallery/g6.jpg",
         "/gallery/g7.jpg",
         "/gallery/g8.jpg",
@@ -136,33 +144,30 @@ const GalleryPage: React.FC = () => {
         "/gallery/g14.jpg",
         "/gallery/g15.jpg",
         "/gallery/g16.jpg",
-      ]
+      ],
     },
   ]);
 
-
   const rowImages = [
     "/gallery/g1.jpg",
-  // "/gallery/g2.jpg",
-  "/gallery/g3.jpg",
-  "/gallery/g4.jpg",
-  "/gallery/g5.jpg",
-  "/gallery/g6.jpg",
-  "/gallery/g7.jpg",
-  // "/gallery/g8.jpg",
-  "/gallery/g9.jpg",
-  "/gallery/g10.jpg",
-  "/gallery/g11.jpg",
-  "/gallery/g12.jpg",
-  "/gallery/g13.jpg",
-  "/gallery/g14.jpg",
-  "/gallery/g15.jpg",
-  "/gallery/g16.jpg",
-  "/gallery/g1.jpg",
-  "/gallery/g2.jpg",
-  "/gallery/g3.jpg",
-  "/gallery/g4.jpg",
-  "/gallery/g5.jpg",
+    "/gallery/g3.jpg",
+    "/gallery/g4.jpg",
+    "/gallery/g5.jpg",
+    "/gallery/g6.jpg",
+    "/gallery/g7.jpg",
+    "/gallery/g9.jpg",
+    "/gallery/g10.jpg",
+    "/gallery/g11.jpg",
+    "/gallery/g12.jpg",
+    "/gallery/g13.jpg",
+    "/gallery/g14.jpg",
+    "/gallery/g15.jpg",
+    "/gallery/g16.jpg",
+    "/gallery/g1.jpg",
+    "/gallery/g2.jpg",
+    "/gallery/g3.jpg",
+    "/gallery/g4.jpg",
+    "/gallery/g5.jpg",
   ];
 
   return (

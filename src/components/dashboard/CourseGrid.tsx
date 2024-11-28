@@ -1,6 +1,6 @@
-
 import { Card, CardContent } from '@/components/ui/card'
 import { ChevronRight } from 'lucide-react'
+import Image from 'next/image'
 
 interface Course {
   title: string
@@ -21,10 +21,12 @@ export function CourseGrid({ courses }: CourseGridProps) {
           className="group overflow-hidden h-full shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
         >
           <div className="relative h-48 overflow-hidden">
-            <img
+            <Image
               src={course.src}
               alt={course.title}
-              className="object-cover w-full h-full transition-transform duration-300 group-hover:scale-110"
+              layout="fill"
+              objectFit="cover"
+              className="transition-transform duration-300 group-hover:scale-110"
             />
             <div className="absolute inset-0 bg-black bg-opacity-40 transition-opacity duration-300 opacity-0 group-hover:opacity-100" />
           </div>
