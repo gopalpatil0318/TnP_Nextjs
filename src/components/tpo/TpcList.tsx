@@ -21,51 +21,13 @@ interface Tpc {
   email: string
 }
 
-export function TpcList() {
-  const [tpcs, setTpcs] = useState<Tpc[]>([])
-  const [loading, setLoading] = useState(true)
+interface TpcListProps {
+  tpcs: Tpc[]
+  loading: boolean
+  handleDelete: (id: string) => void
+}
 
-  useEffect(() => {
-    fetchTpcs()
-  }, [])
-
-  const fetchTpcs = async () => {
-    try {
-      const response = await axios.get('/api/tpo/get-tpcs', { headers: { 'Cache-Control': 'no-cache' } });
-      setTpcs(response.data.data)
-      console.log(response.data.data)
-    } catch (error) {
-      console.error('Error fetching TPCs:', error)
-      toast({
-        title: "Error",
-        description: "Failed to load TPCs. Please try again.",
-        variant: "destructive",
-      })
-    } finally {
-      setLoading(false)
-    }
-  }
-
-  const handleDelete = async (id: string) => {
-    try {
-      await axios.delete(`/api/tpo/delete-tpc/${id}`);
-    
-      fetchTpcs();
-      toast({
-        title: "Success",
-        description: "TPC deleted successfully.",
-      });
-    } catch (error) {
-      console.error('Error deleting TPC:', error);
-      toast({
-        title: "Error",
-        description: "Failed to delete TPC. Please try again.",
-        variant: "destructive",
-      });
-    }
-  };
-  
-
+export function TpcList({ tpcs, loading, handleDelete }: TpcListProps) {
   if (loading) {
     return (
       <div className="bg-white p-8 rounded-lg">
@@ -113,7 +75,7 @@ export function TpcList() {
             <TableRow>
               <TableHead className="w-[250px] bg-[#244855] text-white pl-4">Name</TableHead>
               <TableHead className="bg-[#244855] text-white pl-4">Email</TableHead>
-              <TableHead className="text-center  bg-[#244855] text-white pl-4">Actions</TableHead>
+              <TableHead className="text-center bg-[#244855] text-white pl-4">Actions</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -122,12 +84,6 @@ export function TpcList() {
                 <TableCell className="font-medium text-[#244855] pl-4">{tpc.name}</TableCell>
                 <TableCell className="text-[#244855] pl-4">{tpc.email}</TableCell>
                 <TableCell className="text-center space-x-2">
-                  <button
-                    className="p-2 border border-[#244855] text-[#244855] rounded hover:bg-[#244855] hover:text-white"
-                    title="Edit"
-                  >
-                    <Edit className="h-4 w-4" />
-                  </button>
                   <button
                     className="p-2 border border-[#E64833] text-[#E64833] rounded hover:bg-[#E64833] hover:text-white"
                     title="Delete"

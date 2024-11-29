@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as z from 'zod'
 import axios from 'axios'
-import { useRouter } from 'next/navigation'
+
 import { toast } from "@/components/ui/use-toast"
 import { Input } from "@/components/ui/input"
 import { Button } from "@/components/ui/button"
@@ -18,12 +18,11 @@ type TpcFormData = z.infer<typeof tpcSchema>
 
 interface AddTpcFormProps {
   onClose: () => void
+  fetchTpcs: () => Promise<void>
 }
 
-export function AddTpcForm({ onClose }: AddTpcFormProps) {
+export function AddTpcForm({ onClose, fetchTpcs }: AddTpcFormProps) {
   const [isSubmitting, setIsSubmitting] = useState(false)
-  const router = useRouter()
-
   const form = useForm<TpcFormData>({
     resolver: zodResolver(tpcSchema),
     defaultValues: {
@@ -42,8 +41,8 @@ export function AddTpcForm({ onClose }: AddTpcFormProps) {
         title: "Success",
         description: response.data.message,
       })
+      fetchTpcs() // Fetch updated TPC list after adding
       onClose()
-      router.refresh()
     } catch (error) {
       console.error("Error in TPC sign-up:", error)
       toast({
@@ -104,11 +103,17 @@ export function AddTpcForm({ onClose }: AddTpcFormProps) {
             <p className="text-sm text-[#E64833]">{form.formState.errors.password.message}</p>
           )}
         </div>
-        <Button type="submit" disabled={isSubmitting} className="w-full bg-[#E64833] text-white hover:bg-[#244855] transition-colors">
-          {isSubmitting ? (<><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait</>) : 'Add TPC'}
-        </Button>
+        <div className="flex justify-between">
+          <Button
+            type="submit"
+            className="w-full md:w-auto bg-[#E64833] text-white hover:bg-[#244855] transition-colors"
+            disabled={isSubmitting}
+          >
+             {isSubmitting ? (<><Loader2 className="mr-2 h-4 w-4 animate-spin" /> Please wait</>) : 'Add TPC'}
+          
+          </Button>
+        </div>
       </form>
     </div>
   )
 }
-
