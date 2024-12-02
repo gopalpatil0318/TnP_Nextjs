@@ -6,7 +6,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { ScrollArea } from "@/components/ui/scroll-area"
 
-interface UserData {
+interface StudentData {
   firstName: string
   middleName: string
   lastName: string
@@ -61,15 +61,20 @@ interface UserData {
   gapReason?: string
 }
 
-export default function InformationTab({ userData }: { userData: UserData }) {
+interface StudentProfileProps {
+  studentData: StudentData | null
+  loading: boolean
+}
+
+export default function InformationTab({ studentData }: StudentProfileProps) {
   const [activeTab, setActiveTab] = useState("personal")
 
-  if (!userData) {
+  if (!studentData) {
     return <div className="flex items-center justify-center h-screen">Loading...</div>
   }
 
   return (
-    <Card className="w-full max-w-4xl mx-auto">
+    <Card className="w-full max-w-4xl mx-auto mt-8">
       <CardHeader>
         <CardTitle className="text-3xl font-bold text-center">Student Information</CardTitle>
         <CardDescription className="text-center">View personal and academic details</CardDescription>
@@ -86,79 +91,79 @@ export default function InformationTab({ userData }: { userData: UserData }) {
                 <TableBody>
                   <TableRow>
                     <TableHead className="font-medium">Full Name</TableHead>
-                    <TableCell>{`${userData.firstName} ${userData.middleName} ${userData.lastName}`}</TableCell>
+                    <TableCell>{`${studentData.firstName} ${studentData.middleName} ${studentData.lastName}`}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">Email</TableHead>
-                    <TableCell>{userData.email}</TableCell>
+                    <TableCell>{studentData.email}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">Mobile Number</TableHead>
-                    <TableCell>{userData.mobileNumber}</TableCell>
+                    <TableCell>{studentData.mobileNumber}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">Birth Date</TableHead>
-                    <TableCell>{new Date(userData.birthDate).toLocaleDateString()}</TableCell>
+                    <TableCell>{new Date(studentData.birthDate).toLocaleDateString()}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">Gender</TableHead>
-                    <TableCell>{userData.gender}</TableCell>
+                    <TableCell>{studentData.gender}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">Aadhar Number</TableHead>
-                    <TableCell>{userData.adharNumber}</TableCell>
+                    <TableCell>{studentData.adharNumber}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">Cast</TableHead>
-                    <TableCell>{userData.cast}</TableCell>
+                    <TableCell>{studentData.cast}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">Blood Group</TableHead>
-                    <TableCell>{userData.bloodGroup}</TableCell>
+                    <TableCell>{studentData.bloodGroup}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">Father&apos;s Name</TableHead>
-                    <TableCell>{userData.fatherName}</TableCell>
+                    <TableCell>{studentData.fatherName}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">Father&apos;s Mobile</TableHead>
-                    <TableCell>{userData.fatherMobileNumber}</TableCell>
+                    <TableCell>{studentData.fatherMobileNumber}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">Father&apos;s Occupation</TableHead>
-                    <TableCell>{userData.fatherOccupation}</TableCell>
+                    <TableCell>{studentData.fatherOccupation}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">Mother&apos;s Name</TableHead>
-                    <TableCell>{userData.motherName}</TableCell>
+                    <TableCell>{studentData.motherName}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">Mother&apos;s Mobile</TableHead>
-                    <TableCell>{userData.motherMobileNumber}</TableCell>
+                    <TableCell>{studentData.motherMobileNumber}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">Mother&apos;s Occupation</TableHead>
-                    <TableCell>{userData.motherOccupation}</TableCell>
+                    <TableCell>{studentData.motherOccupation}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">City</TableHead>
-                    <TableCell>{userData.city}</TableCell>
+                    <TableCell>{studentData.city}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">District</TableHead>
-                    <TableCell>{userData.district}</TableCell>
+                    <TableCell>{studentData.district}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">State</TableHead>
-                    <TableCell>{userData.state}</TableCell>
+                    <TableCell>{studentData.state}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">Pincode</TableHead>
-                    <TableCell>{userData.pincode}</TableCell>
+                    <TableCell>{studentData.pincode}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">Local Address</TableHead>
-                    <TableCell>{userData.localAddress}</TableCell>
+                    <TableCell>{studentData.localAddress}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -170,39 +175,39 @@ export default function InformationTab({ userData }: { userData: UserData }) {
                 <TableBody>
                   <TableRow>
                     <TableHead className="font-medium">PRN Number</TableHead>
-                    <TableCell>{userData.prnNumber}</TableCell>
+                    <TableCell>{studentData.prnNumber}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">Department</TableHead>
-                    <TableCell>{userData.department}</TableCell>
+                    <TableCell>{studentData.department}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">Division</TableHead>
-                    <TableCell>{userData.division}</TableCell>
+                    <TableCell>{studentData.division}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">Passout Year</TableHead>
-                    <TableCell>{userData.passoutYear}</TableCell>
+                    <TableCell>{studentData.passoutYear}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">LG Name</TableHead>
-                    <TableCell>{userData.lgName}</TableCell>
+                    <TableCell>{studentData.lgName}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">10th Percentage</TableHead>
-                    <TableCell>{userData.tenthMarks}</TableCell>
+                    <TableCell>{studentData.tenthMarks}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">12th/Diploma</TableHead>
-                    <TableCell>{userData.twelfthDiploma}</TableCell>
+                    <TableCell>{studentData.twelfthDiploma}</TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableHead className="font-medium">{userData.twelfthDiploma} Percentage</TableHead>
-                    <TableCell>{userData.twelfthDiplomaPercentage}</TableCell>
+                    <TableHead className="font-medium">{studentData.twelfthDiploma} Percentage</TableHead>
+                    <TableCell>{studentData.twelfthDiplomaPercentage}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">Admission Based On</TableHead>
-                    <TableCell>{userData.admissionBasedOn}</TableCell>
+                    <TableCell>{studentData.admissionBasedOn}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -218,39 +223,39 @@ export default function InformationTab({ userData }: { userData: UserData }) {
                 <TableBody>
                   <TableRow>
                     <TableCell>Semester 1</TableCell>
-                    <TableCell>{userData.sem1SGPA ?? 'N/A'}</TableCell>
-                    <TableCell>{userData.sem1CGPA ?? 'N/A'}</TableCell>
-                    <TableCell>{userData.sem1Backlog ?? 'N/A'}</TableCell>
+                    <TableCell>{studentData.sem1SGPA ?? 'N/A'}</TableCell>
+                    <TableCell>{studentData.sem1CGPA ?? 'N/A'}</TableCell>
+                    <TableCell>{studentData.sem1Backlog ?? 'N/A'}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Semester 2</TableCell>
-                    <TableCell>{userData.sem2SGPA ?? 'N/A'}</TableCell>
-                    <TableCell>{userData.sem2CGPA ?? 'N/A'}</TableCell>
-                    <TableCell>{userData.sem2Backlog ?? 'N/A'}</TableCell>
+                    <TableCell>{studentData.sem2SGPA ?? 'N/A'}</TableCell>
+                    <TableCell>{studentData.sem2CGPA ?? 'N/A'}</TableCell>
+                    <TableCell>{studentData.sem2Backlog ?? 'N/A'}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Semester 3</TableCell>
-                    <TableCell>{userData.sem3SGPA ?? 'N/A'}</TableCell>
-                    <TableCell>{userData.sem3CGPA ?? 'N/A'}</TableCell>
-                    <TableCell>{userData.sem3Backlog ?? 'N/A'}</TableCell>
+                    <TableCell>{studentData.sem3SGPA ?? 'N/A'}</TableCell>
+                    <TableCell>{studentData.sem3CGPA ?? 'N/A'}</TableCell>
+                    <TableCell>{studentData.sem3Backlog ?? 'N/A'}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Semester 4</TableCell>
-                    <TableCell>{userData.sem4SGPA ?? 'N/A'}</TableCell>
-                    <TableCell>{userData.sem4CGPA ?? 'N/A'}</TableCell>
-                    <TableCell>{userData.sem4Backlog ?? 'N/A'}</TableCell>
+                    <TableCell>{studentData.sem4SGPA ?? 'N/A'}</TableCell>
+                    <TableCell>{studentData.sem4CGPA ?? 'N/A'}</TableCell>
+                    <TableCell>{studentData.sem4Backlog ?? 'N/A'}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Semester 5</TableCell>
-                    <TableCell>{userData.sem5SGPA ?? 'N/A'}</TableCell>
-                    <TableCell>{userData.sem5CGPA ?? 'N/A'}</TableCell>
-                    <TableCell>{userData.sem5Backlog ?? 'N/A'}</TableCell>
+                    <TableCell>{studentData.sem5SGPA ?? 'N/A'}</TableCell>
+                    <TableCell>{studentData.sem5CGPA ?? 'N/A'}</TableCell>
+                    <TableCell>{studentData.sem5Backlog ?? 'N/A'}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell>Semester 6</TableCell>
-                    <TableCell>{userData.sem6SGPA ?? 'N/A'}</TableCell>
-                    <TableCell>{userData.sem6CGPA ?? 'N/A'}</TableCell>
-                    <TableCell>{userData.sem6Backlog ?? 'N/A'}</TableCell>
+                    <TableCell>{studentData.sem6SGPA ?? 'N/A'}</TableCell>
+                    <TableCell>{studentData.sem6CGPA ?? 'N/A'}</TableCell>
+                    <TableCell>{studentData.sem6Backlog ?? 'N/A'}</TableCell>
                   </TableRow>
                 </TableBody>
               </Table>
@@ -259,20 +264,20 @@ export default function InformationTab({ userData }: { userData: UserData }) {
                 <TableBody>
                   <TableRow>
                     <TableHead className="font-medium">Overall CGPA</TableHead>
-                    <TableCell>{userData.overallCGPA}</TableCell>
+                    <TableCell>{studentData.overallCGPA}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">Live KT&apos;s</TableHead>
-                    <TableCell>{userData.anyLiveKTs}</TableCell>
+                    <TableCell>{studentData.anyLiveKTs}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableHead className="font-medium">Any gap during education</TableHead>
-                    <TableCell>{userData.anyGapDuringEducation}</TableCell>
+                    <TableCell>{studentData.anyGapDuringEducation}</TableCell>
                   </TableRow>
-                  {userData.anyGapDuringEducation === "Yes" && (
+                  {studentData.anyGapDuringEducation === "Yes" && (
                     <TableRow>
                       <TableHead className="font-medium">Gap Reason</TableHead>
-                      <TableCell>{userData.gapReason}</TableCell>
+                      <TableCell>{studentData.gapReason}</TableCell>
                     </TableRow>
                   )}
                 </TableBody>
@@ -284,3 +289,4 @@ export default function InformationTab({ userData }: { userData: UserData }) {
     </Card>
   )
 }
+

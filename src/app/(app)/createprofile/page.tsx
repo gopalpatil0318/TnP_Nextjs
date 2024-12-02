@@ -61,11 +61,29 @@ const Page = () => {
     const email: string = user?.email || "Loading..."
 
     const skillOptions: SkillOption[] = [
+        { label: "HTML", value: "html" },
+        { label: "CSS", value: "css" },
+        { label: "JavaScript", value: "javascript" },
+        { label: "TypeScript", value: "typescript" },
         { label: "React.js", value: "reactjs" },
         { label: "Node.js", value: "nodejs" },
-        { label: "TypeScript", value: "typescript" },
+        { label: "Express.js", value: "expressjs" },
         { label: "Next.js", value: "nextjs" },
+        { label: "MongoDB", value: "mongodb" },
+        { label: "SQL", value: "sql" },
+        { label: "Git", value: "git" },
+        { label: "Docker", value: "docker" },
+        { label: "Kubernetes", value: "kubernetes" },
+        { label: "AWS", value: "aws" },
+        { label: "Firebase", value: "firebase" },
+        { label: "Python", value: "python" },
+        { label: "Django", value: "django" },
+        { label: "Flask", value: "flask" },
+        { label: "Java", value: "java" },
+        { label: "C++", value: "cpp" },
+        { label: "GraphQL", value: "graphql" },
     ];
+    
 
 
 

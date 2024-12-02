@@ -61,29 +61,48 @@ const Page = () => {
 
     const { data: session } = useSession();
     const user: User = session?.user as User;
-    const { userData, fetchUserData } = useUserContext();
+    const { studentData, fetchstudentData } = useUserContext();
 
 
 
 
     useEffect(() => {
-        fetchUserData();
-        if (userData) {
+        fetchstudentData();
+        if (studentData) {
             form.reset({
-                ...userData,
+                ...studentData,
             });
         }
-        console.log(userData)
+        console.log(studentData)
 
-        form.setValue('prnNumber', userData?.username);
+        form.setValue('prnNumber', studentData?.username);
     }, []);
 
     const skillOptions: SkillOption[] = [
+        { label: "HTML", value: "html" },
+        { label: "CSS", value: "css" },
+        { label: "JavaScript", value: "javascript" },
+        { label: "TypeScript", value: "typescript" },
         { label: "React.js", value: "reactjs" },
         { label: "Node.js", value: "nodejs" },
-        { label: "TypeScript", value: "typescript" },
+        { label: "Express.js", value: "expressjs" },
         { label: "Next.js", value: "nextjs" },
+        { label: "MongoDB", value: "mongodb" },
+        { label: "SQL", value: "sql" },
+        { label: "Git", value: "git" },
+        { label: "Docker", value: "docker" },
+        { label: "Kubernetes", value: "kubernetes" },
+        { label: "AWS", value: "aws" },
+        { label: "Firebase", value: "firebase" },
+        { label: "Python", value: "python" },
+        { label: "Django", value: "django" },
+        { label: "Flask", value: "flask" },
+        { label: "Java", value: "java" },
+        { label: "C++", value: "cpp" },
+        { label: "GraphQL", value: "graphql" },
     ];
+    
+    
 
     const [gapVisible, setGapVisible] = useState(false)
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -129,7 +148,7 @@ const Page = () => {
 
             const response = await axios.post<ApiResponse>('/api/update-student-profile/', data);
 
-            fetchUserData();
+            fetchstudentData();
 
             toast({
                 title: 'Success',
@@ -166,16 +185,16 @@ const Page = () => {
 
 
     useEffect(() => {
-        if (userData) {
+        if (studentData) {
 
-            const birthDate = userData.birthDate ? new Date(userData.birthDate) : undefined;
+            const birthDate = studentData.birthDate ? new Date(studentData.birthDate) : undefined;
 
             form.reset({
-                ...userData,
+                ...studentData,
                 birthDate,
             });
         }
-    }, [userData, form]);
+    }, [studentData, form]);
 
 
     return (

@@ -14,7 +14,7 @@ export async function POST(request: NextRequest) {
 
      
         const user = await UserModel.findOne({ username: new RegExp(`^${decodedUsername}$`, 'i') })
-            .select('firstName lastName middleName email mobileNumber image department areaOfInterest aboutYou githubLink linkedinLink leetcodeLink personalPortfolioLink instagramLink twitterLink hackerRankLink codechefLink geeksForGeeksLink projectTitle1 projectLink1 projectDescription1 projectTitle2 projectLink2 projectDescription2'); // Projection: select only required fields
+            .select('firstName lastName middleName email mobileNumber image department areaOfInterest aboutYou githubLink linkedinLink leetcodeLink personalPortfolioLink instagramLink resumeLink twitterLink hackerRankLink codechefLink geeksForGeeksLink projectTitle1 projectLink1 projectDescription1 projectTitle2 projectLink2 projectDescription2 skills'); // Projection: select only required fields
 
         if (!user) {
             return NextResponse.json({

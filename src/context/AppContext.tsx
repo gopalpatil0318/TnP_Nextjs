@@ -5,9 +5,9 @@ import { User } from "@/model/User";
 import { useSession } from 'next-auth/react';
 
 interface UserContextProps {
-    userData: User | null;
-    setUserData: React.Dispatch<React.SetStateAction<User | null>>;
-    fetchUserData: () => void;
+    studentData: User | null;
+    setstudentData: React.Dispatch<React.SetStateAction<User | null>>;
+    fetchstudentData: () => void;
     loading: boolean;
     logout: () => void;
 }
@@ -19,15 +19,15 @@ interface UserProviderProps {
 const UserContext = createContext<UserContextProps | undefined>(undefined);
 
 export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
-    const [userData, setUserData] = useState<User | null>(null);
+    const [studentData, setstudentData] = useState<User | null>(null);
     const [loading, setLoading] = useState<boolean>(true);
     const { data: session } = useSession();
 
-    const fetchUserData = async () => {
+    const fetchstudentData = async () => {
         setLoading(true);
         try {
             const response = await axios.get('/api/fetch-data'); 
-            setUserData(response.data?.user || null); 
+            setstudentData(response.data?.user || null); 
         } catch (error) {
             if (axios.isAxiosError(error)) {
                 console.error('Error fetching user data', {
@@ -46,19 +46,19 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     };
 
     const logout = () => {
-        setUserData(null);
+        setstudentData(null);
     };
 
     useEffect(() => {
         if (session?.user) {
-            fetchUserData();
+            fetchstudentData();
         }
     }, [session]); 
 
-    console.log("context api ", userData);
+    console.log("context api ", studentData);
 
     return (
-        <UserContext.Provider value={{ userData, setUserData, fetchUserData, loading, logout }}>
+        <UserContext.Provider value={{ studentData, setstudentData, fetchstudentData, loading, logout }}>
             {children}
         </UserContext.Provider>
     );

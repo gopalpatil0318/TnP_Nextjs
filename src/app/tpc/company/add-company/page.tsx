@@ -15,7 +15,30 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@
 import { toast } from '@/components/ui/use-toast'
 import { companySchema, CompanyFormData } from '@/schemas/companySchema'
 
-const SKILLS = ['JavaScript', 'React', 'Node.js', 'Python', 'Java', 'C++', 'SQL', 'Machine Learning', 'Data Analysis', 'Cloud Computing'];
+const SKILLS = [
+  'html', 
+  'css', 
+  'javascript', 
+  'typescript', 
+  'reactjs', 
+  'nodejs', 
+  'expressjs', 
+  'nextjs', 
+  'mongodb', 
+  'sql', 
+  'git', 
+  'docker', 
+  'kubernetes', 
+  'aws', 
+  'firebase', 
+  'python', 
+  'django', 
+  'flask', 
+  'java', 
+  'cpp', 
+  'graphql'
+];
+
 const DEPARTMENTS = ['CS', 'IT', 'EXTC', 'MECH', 'CIVIL'];
 
 export default function AddCompanyForm() {
