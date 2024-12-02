@@ -20,7 +20,7 @@ export default function SideBar() {
   const { data: session } = useSession();
   const user: User = session?.user as User;
   const profileName: string = user?.username || "Error";
-  const { userData, fetchUserData } = useUserContext();
+  const { studentData, fetchstudentData } = useUserContext();
 
   const links = [
     {
@@ -73,11 +73,11 @@ export default function SideBar() {
           <div>
           <SidebarLink
             link={{
-              label: userData?.firstName || "Loading..",
+              label: studentData?.firstName || "Loading..",
               href: "/profile",
               icon: (
                 <Image
-                  src={userData?.image || "/image.png"}
+                  src={studentData?.image || "/image.png"}
                   className="h-7 w-7 flex-shrink-0 rounded-full"
                   width={50}
                   height={50}
