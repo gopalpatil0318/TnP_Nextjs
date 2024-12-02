@@ -409,7 +409,7 @@ const UserSchema: Schema<User> = new Schema({
     },
     role: {
         type: String,
-        default: "tpo",
+        default: "student",
         required: true,
     },
 }, {
