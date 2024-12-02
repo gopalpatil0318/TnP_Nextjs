@@ -27,6 +27,13 @@ const config = {
         input: `0px 2px 3px -1px rgba(0,0,0,0.1), 0px 1px 0px 0px rgba(25,28,33,0.02), 0px 0px 0px 1px rgba(25,28,33,0.08)`,
       },
       colors: {
+        primary1: "#244855",
+        secondary1: "#E64833",
+        accent1: {
+          1: "#874F41",
+          2: "#90AEAD",
+          3: "#FBE9D0",
+        },
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",

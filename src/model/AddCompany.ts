@@ -21,9 +21,9 @@ export interface Company extends Document {
     rounds: {
         roundNumber: number;
         roundName: string;
-        selectedStudents: mongoose.Types.ObjectId[]; // References student IDs
+        selectedStudents: mongoose.Types.ObjectId[]; 
     }[];
-    createdBy: mongoose.Types.ObjectId; // References the TPC who created the company
+    createdBy: mongoose.Types.ObjectId; 
 }
 
 const CompanySchema: Schema<Company> = new Schema({
