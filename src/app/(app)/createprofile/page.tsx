@@ -122,7 +122,7 @@ const Page = () => {
 
             if (data.image instanceof File) {
                 const imageUrl = await uploadImage(data.image);
-                console.log("my name is chanfsnf")
+            
                 data = { ...data, image: imageUrl };
             }
 
