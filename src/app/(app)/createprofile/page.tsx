@@ -103,7 +103,7 @@ const Page = () => {
 
     const uploadImage = async (file: File): Promise<string> => {
         const formData = new FormData();
-        console.log("my name is chanfsnf1234567890")
+       
         formData.append('file', file);
         formData.append('upload_preset', 'gopaluploadpreset');
         formData.append('cloud_name', 'dae4fjmsn');
@@ -133,10 +133,11 @@ const Page = () => {
 
             toast({
                 title: 'Success',
-                description: "Profile Created SuccessFully",
+                description: "Profile Created SuccessFully, Login again with your PRN OR Email",
             });
 
-            await signIn('credentials', { redirect: false });
+
+            await signIn('student-credentials', { redirect: false });
             signOut();
             router.replace(`/sign-in`);
         } catch (error) {

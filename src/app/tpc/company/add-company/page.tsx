@@ -5,7 +5,8 @@ import { useForm, useFieldArray, Controller } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/navigation'
 import { Loader2, Plus, Trash2 } from 'lucide-react'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
+import { ApiResponse } from "@/types/apiResponse"
 
 import { Input } from '@/components/ui/input'
 import { Button } from '@/components/ui/button'
@@ -65,9 +66,13 @@ export default function AddCompanyForm() {
         diplomaPercentage: 0,
         skills: [],
       },
-      rounds: [{ roundNumber: 1, roundName: '' }],
+      rounds: [
+        { roundNumber: 1, roundName: 'Eligible Students' },
+        { roundNumber: 2, roundName: 'Selected Students for Round One' },
+        { roundNumber: 3, roundName: '' },
+      ],
     },
-  })
+  });
 
   const { fields, append, remove } = useFieldArray({
     control: form.control,
@@ -79,19 +84,22 @@ export default function AddCompanyForm() {
 
     try {
       console.log(data);
-      await axios.post('/api/companies', data)
+      const response = await axios.post<ApiResponse>('/api/tpc/add-company/', data)
       toast({
         title: 'Company Added',
-        description: 'The company has been successfully added.',
+        description: response.data.message,
       })
-      router.push('/companies') // Redirect to companies page
+      router.push('/tpc/company/add-company')
     } catch (error) {
-      console.error('Error adding company:', error)
-      toast({
-        title: 'Error',
-        description: 'Failed to add the company. Please try again.',
-        variant: 'destructive',
-      })
+      console.error('error in signup of User', error)
+            const AxiosError = error as AxiosError<ApiResponse>;
+            let errorMessage = AxiosError.response?.data.message
+
+            toast({
+                title: "Failed to add company",
+                description: errorMessage,
+                variant: "destructive"
+            })
     } finally {
       setIsSubmitting(false)
     }

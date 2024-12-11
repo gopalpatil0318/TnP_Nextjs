@@ -10,7 +10,7 @@ export interface Company extends Document {
         cgpa: number;
         gender: string[];
         passoutYear: number;
-        liveKT: number;
+        liveKT: string;
         educationGap: string;
         department: string[];
         tenthPercentage: number;
@@ -21,9 +21,9 @@ export interface Company extends Document {
     rounds: {
         roundNumber: number;
         roundName: string;
-        selectedStudents: mongoose.Types.ObjectId[]; 
+        selectedStudents: mongoose.Types.ObjectId[];
     }[];
-    createdBy: mongoose.Types.ObjectId; 
+    createdBy: mongoose.Types.ObjectId;
 }
 
 const CompanySchema: Schema<Company> = new Schema({
@@ -36,7 +36,7 @@ const CompanySchema: Schema<Company> = new Schema({
         cgpa: { type: Number },
         gender: { type: [String] },
         passoutYear: { type: Number },
-        liveKT: { type: Number },
+        liveKT: { type: String },
         educationGap: { type: String },
         department: { type: [String] },
         tenthPercentage: { type: Number },
@@ -46,8 +46,8 @@ const CompanySchema: Schema<Company> = new Schema({
     },
     rounds: [
         {
-            roundNumber: { type: Number },
-            roundName: { type: String },
+            roundNumber: { type: Number, required: true },
+            roundName: { type: String, required: true },
             selectedStudents: [{ type: mongoose.Schema.Types.ObjectId, ref: "User" }],
         },
     ],
@@ -56,7 +56,9 @@ const CompanySchema: Schema<Company> = new Schema({
         ref: "TPC",
         required: true,
     },
+}, {
+    timestamps: true, 
 });
 
-const CompanyModel = mongoose.model<Company>("Company", CompanySchema);
+const CompanyModel = mongoose.models.Company ||mongoose.model<Company>("Company", CompanySchema);
 export default CompanyModel;
