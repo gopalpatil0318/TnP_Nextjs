@@ -2,7 +2,8 @@ import dbConnect from "@/lib/dbConnect";
 import CompanyModel from "@/model/AddCompany";
 import { NextRequest, NextResponse } from "next/server";
 
-
+export const revalidate = 0;
+export const dynamic = "force-dynamic";
 export async function GET(request: NextRequest): Promise<NextResponse> {
    
     await dbConnect();
