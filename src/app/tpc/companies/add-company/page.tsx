@@ -15,32 +15,40 @@ import { Checkbox } from '@/components/ui/checkbox'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select'
 import { toast } from '@/components/ui/use-toast'
 import { companySchema, CompanyFormData } from '@/schemas/companySchema'
+import { liveKTOptions } from '@/data/options'
 
 const SKILLS = [
-  'html', 
-  'css', 
-  'javascript', 
-  'typescript', 
-  'reactjs', 
-  'nodejs', 
-  'expressjs', 
-  'nextjs', 
-  'mongodb', 
-  'sql', 
-  'git', 
-  'docker', 
-  'kubernetes', 
-  'aws', 
-  'firebase', 
-  'python', 
-  'django', 
-  'flask', 
-  'java', 
-  'cpp', 
+  'html',
+  'css',
+  'javascript',
+  'typescript',
+  'reactjs',
+  'nodejs',
+  'expressjs',
+  'nextjs',
+  'mongodb',
+  'sql',
+  'git',
+  'docker',
+  'kubernetes',
+  'aws',
+  'firebase',
+  'python',
+  'django',
+  'flask',
+  'java',
+  'cpp',
   'graphql'
 ];
 
-const DEPARTMENTS = ['CS', 'IT', 'EXTC', 'MECH', 'CIVIL'];
+const DEPARTMENTS = ["Computer",
+  "Data Science",
+  "AIML",
+  "E&TC",
+  "Mechanical",
+  "Electrical",
+  "AIDS",
+  "IT"];
 
 export default function AddCompanyForm() {
   const [isSubmitting, setIsSubmitting] = useState(false)
@@ -55,20 +63,18 @@ export default function AddCompanyForm() {
       location: '',
       bond: '',
       criteria: {
-        cgpa: 0,
+        overallCGPA: 0,
         gender: [],
-        passoutYear: new Date().getFullYear(),
-        liveKT: '',
-        educationGap: '',
+        passoutYear: new Date().getFullYear() + 1,
+        anyLiveKTs: 0,
+        anyGapDuringEducation: '',
         department: [],
-        tenthPercentage: 0,
+        tenthMarks: 0,
         twelfthPercentage: 0,
         diplomaPercentage: 0,
         skills: [],
       },
       rounds: [
-        { roundNumber: 1, roundName: 'Eligible Students' },
-        { roundNumber: 2, roundName: 'Selected Students for Round One' },
         { roundNumber: 3, roundName: '' },
       ],
     },
@@ -89,17 +95,17 @@ export default function AddCompanyForm() {
         title: 'Company Added',
         description: response.data.message,
       })
-      router.push('/tpc/company/add-company')
+      router.push('/tpc/companies')
     } catch (error) {
       console.error('error in signup of User', error)
-            const AxiosError = error as AxiosError<ApiResponse>;
-            let errorMessage = AxiosError.response?.data.message
+      const AxiosError = error as AxiosError<ApiResponse>;
+      let errorMessage = AxiosError.response?.data.message
 
-            toast({
-                title: "Failed to add company",
-                description: errorMessage,
-                variant: "destructive"
-            })
+      toast({
+        title: "Failed to add company",
+        description: errorMessage,
+        variant: "destructive"
+      })
     } finally {
       setIsSubmitting(false)
     }
@@ -197,7 +203,7 @@ export default function AddCompanyForm() {
                 type="number"
                 step="0.01"
                 placeholder="CGPA"
-                {...form.register('criteria.cgpa', { valueAsNumber: true })}
+                {...form.register('criteria.overallCGPA', { valueAsNumber: true })}
                 className="w-full"
               />
             </div>
@@ -244,21 +250,30 @@ export default function AddCompanyForm() {
               <label htmlFor="liveKT" className="text-sm font-medium text-primary1">
                 Live KT
               </label>
-              <Select onValueChange={(value) => form.setValue('criteria.liveKT', value)}>
+              <Select
+                onValueChange={(value) => {
+                  const numberValue = parseInt(value, 10); // Convert string to number
+                  form.setValue('criteria.anyLiveKTs', numberValue);
+                }}
+              >
                 <SelectTrigger>
                   <SelectValue placeholder="Select option" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Yes">Yes</SelectItem>
-                  <SelectItem value="No">No</SelectItem>
+                  {liveKTOptions.map((option) => (
+                    <SelectItem key={option.value} value={String(option.value)}>
+                      {option.label}
+                    </SelectItem>
+                  ))}
                 </SelectContent>
               </Select>
             </div>
+
             <div className="space-y-2">
               <label htmlFor="educationGap" className="text-sm font-medium text-primary1">
                 Education Gap
               </label>
-              <Select onValueChange={(value) => form.setValue('criteria.educationGap', value)}>
+              <Select onValueChange={(value) => form.setValue('criteria.anyGapDuringEducation', value)}>
                 <SelectTrigger>
                   <SelectValue placeholder="Select option" />
                 </SelectTrigger>
@@ -304,7 +319,7 @@ export default function AddCompanyForm() {
                 type="number"
                 step="0.01"
                 placeholder="10th Percentage"
-                {...form.register('criteria.tenthPercentage', { valueAsNumber: true })}
+                {...form.register('criteria.tenthMarks', { valueAsNumber: true })}
                 className="w-full"
               />
             </div>
@@ -404,7 +419,7 @@ export default function AddCompanyForm() {
             type="button"
             variant="outline"
             size="sm"
-            onClick={() => append({ roundNumber: fields.length + 1, roundName: '' })}
+            onClick={() => append({ roundNumber: fields.length + 3, roundName: '' })}
             className="bg-accent1-2 hover:bg-accent1-2/90 text-primary1"
           >
             <Plus className="h-4 w-4 mr-2" /> Add Round

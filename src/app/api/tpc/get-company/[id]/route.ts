@@ -7,8 +7,15 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
 
     try {
         const { id } = params;
-        console.log("goapaldfvfd",id)
-        const company = await CompanyModel.findById(id);
+       
+        const company = await CompanyModel.findById(id)
+            .populate({
+                path: 'rounds.selectedStudents',
+                select: 'email department overallCGPA firstName lastName username twelfthDiplomaPercentage tenthMarks twelfthDiploma',
+            });
+
+      
+
 
         if (!company) {
             return NextResponse.json(

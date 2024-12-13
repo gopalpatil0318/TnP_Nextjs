@@ -101,8 +101,8 @@ const Page = () => {
         { label: "C++", value: "cpp" },
         { label: "GraphQL", value: "graphql" },
     ];
-    
-    
+
+
 
     const [gapVisible, setGapVisible] = useState(false)
     const [isSubmitting, setIsSubmitting] = useState(false)
@@ -1196,7 +1196,7 @@ const Page = () => {
                                                             </SelectTrigger>
                                                             <SelectContent>
                                                                 {liveKTOptions.map((option) => (
-                                                                    <SelectItem key={option.value} value={String(option.value)}> {/* Ensure value is a string for consistency */}
+                                                                    <SelectItem key={option.value} value={String(option.value)}> 
                                                                         {option.label}
                                                                     </SelectItem>
                                                                 ))}
@@ -1483,12 +1483,12 @@ const Page = () => {
                                                                 <SelectValue placeholder="Select area of interest" />
                                                             </SelectTrigger>
                                                             <SelectContent>
-                                                            {areaOfInterestOptions.map((option) => (
+                                                                {areaOfInterestOptions.map((option) => (
                                                                     <SelectItem key={option.value} value={option.value}>
                                                                         {option.label}
                                                                     </SelectItem>
                                                                 ))}
-                    
+
                                                             </SelectContent>
                                                         </Select>
                                                     </FormControl>

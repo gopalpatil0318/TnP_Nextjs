@@ -48,7 +48,7 @@ const Header = () => {
     { href: "/gallery", label: "Gallery" },
     { href: "/tpc/dashboard", label: "Dashboard" },
     { href: "/all-students-profile", label: "All Students Profile" },
-    { href: "/tpc/company", label: "Company" },
+    { href: "/tpc/companies", label: "Company" },
     { href: "/contact", label: "Contact Us" },
   ];
 

@@ -37,11 +37,11 @@ export default function CompaniesPage() {
   }, [])
 
   const handleAddCompany = () => {
-    router.push('/tpc/company/add-company')
+    router.push('/tpc/companies/add-company')
   }
 
   const handleCompanyClick = (id: string) => {
-    router.push(`/tpc/company/company/${id}`)
+    router.push(`/tpc/companies/company/${id}`)
   }
 
   return (

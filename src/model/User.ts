@@ -7,9 +7,9 @@ export interface User extends Document {
     verifyCode: string;
     verifyCodeExpiry: Date;
     isVerified: boolean;
-    isProfileComplete:boolean;
-    firstName: string; 
-    middleName: string; 
+    isProfileComplete: boolean;
+    firstName: string;
+    middleName: string;
     lastName: string;
     mobileNumber: string;
     birthDate: Date;
@@ -60,9 +60,9 @@ export interface User extends Document {
     anyLiveKTs: number;
     anyGapDuringEducation: string;
     gapReason: string;
-  
 
-    
+
+
     areaOfInterest: string;
     aboutYou: string;
     projectTitle1: string;
@@ -80,10 +80,12 @@ export interface User extends Document {
     leetcodeLink: string;
     geeksForGeeksLink: string;
     codechefLink: string;
-    hackerRankLink: string; 
-    image:string;
+    hackerRankLink: string;
+    image: string;
     skills: string[];
     role: string;
+    placedCompanies: mongoose.Schema.Types.ObjectId[];
+    requestedCompanies: mongoose.Schema.Types.ObjectId[];
 }
 
 const UserSchema: Schema<User> = new Schema({
@@ -315,7 +317,7 @@ const UserSchema: Schema<User> = new Schema({
         type: String,
         required: false,
     },
-  
+
     areaOfInterest: {
         type: String,
         required: false,
@@ -403,15 +405,21 @@ const UserSchema: Schema<User> = new Schema({
     image: {
         type: String,
     },
-    skills: { 
-        type: [String], 
-        default: [] 
+    skills: {
+        type: [String],
+        default: []
     },
     role: {
         type: String,
         default: "student",
         required: true,
     },
+    placedCompanies: [
+        { type: mongoose.Schema.Types.ObjectId, ref: 'Company' }
+    ],
+    requestedCompanies: [
+        { type: mongoose.Schema.Types.ObjectId, ref: 'Company' }
+    ],
 }, {
     timestamps: true
 });

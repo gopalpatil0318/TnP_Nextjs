@@ -7,11 +7,11 @@ export interface Company extends Document {
     bond: string;
     location: string;
     criteria: {
-        cgpa: number;
+        overallCGPA: number;
         gender: string[];
         passoutYear: number;
-        liveKT: string;
-        educationGap: string;
+        anyLiveKTs: string;
+        anyGapDuringEducation: string;
         department: string[];
         tenthPercentage: number;
         twelfthPercentage: number;
@@ -33,13 +33,13 @@ const CompanySchema: Schema<Company> = new Schema({
     bond: { type: String },
     location: { type: String },
     criteria: {
-        cgpa: { type: Number },
+        overallCGPA: { type: Number },
         gender: { type: [String] },
         passoutYear: { type: Number },
-        liveKT: { type: String },
-        educationGap: { type: String },
+        anyLiveKTs: { type: String },
+        anyGapDuringEducation: { type: String },
         department: { type: [String] },
-        tenthPercentage: { type: Number },
+        tenthMarks: { type: Number },
         twelfthPercentage: { type: Number },
         diplomaPercentage: { type: Number },
         skills: { type: [String] },
