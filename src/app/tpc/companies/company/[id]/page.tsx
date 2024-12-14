@@ -155,7 +155,7 @@ export default function SingleCompanyPage() {
 
     const updatedRounds = company.rounds.map((round, index) => {
       if (round.roundNumber === currentRoundNumber + 1) {
-        // Add selected students to next round
+    
         return {
           ...round,
           selectedStudents: [...round.selectedStudents, ...selectedStudents]

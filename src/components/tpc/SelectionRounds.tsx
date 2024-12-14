@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Switch } from "@/components/ui/switch"
 import { debounce } from 'lodash'
-import Link from 'next/link'
+import { useRouter } from "next/navigation";
 import { User, FileDown } from 'lucide-react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
@@ -82,8 +82,11 @@ export function SelectionRounds({
 
   console.log(selectedStudents)
 
-  
+
   const handleCheckboxChange = (roundNumber: number, studentId: string) => {
+
+    
+  
     setSelectedStudents((prev) => {
       const newSelected = { ...prev };
       // Create a new Set for the specific round to ensure immutability
@@ -92,6 +95,8 @@ export function SelectionRounds({
       } else {
         newSelected[roundNumber] = new Set(newSelected[roundNumber]); // Clone the existing Set
       }
+
+
 
       if (newSelected[roundNumber].has(studentId)) {
         newSelected[roundNumber].delete(studentId);
@@ -146,11 +151,21 @@ export function SelectionRounds({
   }
 
   const handleAddToNextRound = (currentRound: Round) => {
-    const selectedStudentIds = selectedStudents[currentRound.roundNumber] || new Set()
-    const studentsToMove = currentRound.selectedStudents.filter(student => selectedStudentIds.has(student._id))
-    onAddToNextRound(currentRound.roundNumber, studentsToMove)
-    setSelectedStudents(prev => ({ ...prev, [currentRound.roundNumber]: new Set() }))
-  }
+    const selectedStudentIds = selectedStudents[currentRound.roundNumber] || new Set();
+    const studentsToMove = currentRound.selectedStudents.filter(student => {
+      // Check if the student is not already in the next round
+      return !rounds.some(round => 
+        round.roundNumber === currentRound.roundNumber + 1 && round.selectedStudents.some(s => s._id === student._id)
+      ) && selectedStudentIds.has(student._id); // Only add if selected and not already in the next round
+    });
+  
+    if (studentsToMove.length > 0) {
+      onAddToNextRound(currentRound.roundNumber, studentsToMove);
+      setSelectedStudents(prev => ({ ...prev, [currentRound.roundNumber]: new Set() }));
+    }
+  };
+  
+  
 
   const handlePlacementToggle = (student: Student) => {
     setCurrentStudent(student)
@@ -182,6 +197,13 @@ export function SelectionRounds({
     })
   }
 
+
+  const router = useRouter();
+
+    const handleVisitProfile = (username: string) => {
+      router.push(`/other-student-profile/${username}`);
+    };
+    
   return (
     <Card className="bg-white shadow-lg">
       <CardHeader className="border-b border-gray-200">
@@ -278,9 +300,13 @@ export function SelectionRounds({
                         <TableCell>{student.twelfthDiploma}</TableCell>
                         <TableCell>{student.twelfthDiplomaPercentage}</TableCell>
                         <TableCell>
-                          <Link href={`/student/${student._id}`}>
-                            <User className="h-5 w-5 text-[#244855] hover:text-[#E64833]" />
-                          </Link>
+
+                          <User
+                            className="h-5 w-5 text-[#244855] hover:text-[#E64833] cursor-pointer"
+                            onClick={() => handleVisitProfile(student.username)}
+                          />
+
+
                         </TableCell>
                         <TableCell>
                           <Switch
