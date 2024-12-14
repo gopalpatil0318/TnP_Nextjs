@@ -107,7 +107,7 @@ export default function SingleCompanyPage() {
     if (!company) return
 
     try {
-      await axios.post(`/api/tpc/update-round/${params.id}`, {
+      await axios.patch(`/api/tpc/update-round/${params.id}`, {
         roundNumber,
         selectedStudents: selectedStudents.map(student => student._id)
       })
