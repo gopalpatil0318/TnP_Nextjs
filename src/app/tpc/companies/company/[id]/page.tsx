@@ -10,6 +10,7 @@ import { CompanyDetails } from '@/components/tpc/CompanyDetails'
 import { EligibilityCriteria } from '@/components/tpc/EligibilityCriteria'
 import { SelectionRounds } from '@/components/tpc/SelectionRounds'
 import { CompanySkeleton } from '@/components/tpc/CompanySkeleton'
+
 interface Company {
   _id: string
   name: string
@@ -47,6 +48,8 @@ interface Student {
   overallCGPA: number
   tenthMarks: number
   twelfthDiplomaPercentage: number
+  placed?: boolean;
+  package?: number;
 }
 
 interface Round {
@@ -104,7 +107,7 @@ export default function SingleCompanyPage() {
     if (!company) return
 
     try {
-      await axios.patch(`/api/tpc/update-round/${params.id}`, {
+      await axios.post(`/api/tpc/update-round/${params.id}`, {
         roundNumber,
         selectedStudents: selectedStudents.map(student => student._id)
       })
@@ -169,6 +172,40 @@ export default function SingleCompanyPage() {
     })
   }
 
+  const handleUpdatePlacementStatus = async (studentId: string, placed: boolean, packageOffer?: number) => {
+    if (!company) return
+
+    try {
+      await axios.post(`/api/tpc/update-placement-status`, {
+        studentId,
+        companyId: company._id,
+        placed,
+        packageOffer
+      })
+
+      const updatedRounds = company.rounds.map(round => ({
+        ...round,
+        selectedStudents: round.selectedStudents.map(student => 
+          student._id === studentId ? { ...student, placed, package: packageOffer } : student
+        )
+      }))
+
+      setCompany({ ...company, rounds: updatedRounds })
+
+      toast({
+        title: "Placement Status Updated",
+        description: `Student placement status has been updated successfully.`,
+      })
+    } catch (error) {
+      console.error('Failed to update placement status:', error)
+      toast({
+        title: "Error",
+        description: "Failed to update placement status. Please try again.",
+        variant: "destructive",
+      })
+    }
+  }
+
   if (loading) {
     return <CompanySkeleton />
   }
@@ -206,6 +243,12 @@ export default function SingleCompanyPage() {
         passoutYear={company.criteria.passoutYear}
         onUpdateRound={handleUpdateRound}
         onAddToNextRound={handleAddToNextRound}
+        onUpdatePlacementStatus={handleUpdatePlacementStatus}
+        companyId={company._id}
+        companyName={company.name}
+        companyLocation={company.location}
+        companyPackage={company.salary}
+        companyBond={company.bond}
       />
     </div>
   )
