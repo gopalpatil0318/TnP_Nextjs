@@ -58,13 +58,13 @@ interface SearchResult {
   username: string
 }
 
-export function SelectionRounds({ 
-  rounds, 
-  onDelete, 
-  onSave, 
-  onSearchStudents, 
-  passoutYear, 
-  onUpdateRound, 
+export function SelectionRounds({
+  rounds,
+  onDelete,
+  onSave,
+  onSearchStudents,
+  passoutYear,
+  onUpdateRound,
   onAddToNextRound,
   onUpdatePlacementStatus,
   companyId,
@@ -80,32 +80,41 @@ export function SelectionRounds({
   const [currentStudent, setCurrentStudent] = useState<Student | null>(null)
   const [packageOffer, setPackageOffer] = useState<number>(0)
 
+  console.log(selectedStudents)
+
+  
   const handleCheckboxChange = (roundNumber: number, studentId: string) => {
-    setSelectedStudents(prev => {
-      const newSelected = { ...prev }
+    setSelectedStudents((prev) => {
+      const newSelected = { ...prev };
+      // Create a new Set for the specific round to ensure immutability
       if (!newSelected[roundNumber]) {
-        newSelected[roundNumber] = new Set()
-      }
-      if (newSelected[roundNumber].has(studentId)) {
-        newSelected[roundNumber].delete(studentId)
+        newSelected[roundNumber] = new Set();
       } else {
-        newSelected[roundNumber].add(studentId)
+        newSelected[roundNumber] = new Set(newSelected[roundNumber]); // Clone the existing Set
       }
-      return newSelected
-    })
-  }
+
+      if (newSelected[roundNumber].has(studentId)) {
+        newSelected[roundNumber].delete(studentId);
+      } else {
+        newSelected[roundNumber].add(studentId);
+      }
+      return newSelected;
+    });
+  };
 
   const handleSelectAll = (roundNumber: number, checked: boolean) => {
-    setSelectedStudents(prev => {
-      const newSelected = { ...prev }
+    setSelectedStudents((prev) => {
+      const newSelected = { ...prev };
       if (checked) {
-        newSelected[roundNumber] = new Set(rounds.find(r => r.roundNumber === roundNumber)?.selectedStudents.map(s => s._id) || [])
+        newSelected[roundNumber] = new Set(
+          rounds.find((r) => r.roundNumber === roundNumber)?.selectedStudents.map((s) => s._id) || []
+        );
       } else {
-        newSelected[roundNumber] = new Set()
+        newSelected[roundNumber] = new Set();
       }
-      return newSelected
-    })
-  }
+      return newSelected;
+    });
+  };
 
   const debouncedSearch = useCallback(
     debounce(async (query: string) => {
@@ -155,7 +164,7 @@ export function SelectionRounds({
       setPlacementDialogOpen(false)
       const updatedRounds = rounds.map(round => ({
         ...round,
-        selectedStudents: round.selectedStudents.map(s => 
+        selectedStudents: round.selectedStudents.map(s =>
           s._id === currentStudent._id ? { ...s, placed: !s.placed, package: packageOffer } : s
         )
       }))
@@ -226,8 +235,12 @@ export function SelectionRounds({
                   <TableHeader>
                     <TableRow>
                       <TableHead className="w-[50px]">
-                        <Checkbox className='ml-2'
-                          checked={selectedStudents[round.roundNumber]?.size === round.selectedStudents.length}
+                        <Checkbox
+                          className="ml-2"
+                          checked={
+                            selectedStudents[round.roundNumber]?.size === round.selectedStudents.length &&
+                            round.selectedStudents.length > 0
+                          }
                           onCheckedChange={(checked) => handleSelectAll(round.roundNumber, checked as boolean)}
                         />
                       </TableHead>
@@ -249,8 +262,12 @@ export function SelectionRounds({
                         <TableCell>
                           <Checkbox
                             checked={selectedStudents[round.roundNumber]?.has(student._id)}
-                            onCheckedChange={() => handleCheckboxChange(round.roundNumber, student._id)}
+                            onCheckedChange={() => {
+                              console.log(`Round: ${round.roundNumber}, Student ID: ${student._id}`);
+                              handleCheckboxChange(round.roundNumber, student._id);
+                            }}
                           />
+
                         </TableCell>
                         <TableCell className="font-medium">{student.firstName} {student.lastName}</TableCell>
                         <TableCell>{student.email}</TableCell>
