@@ -13,6 +13,13 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { Label } from "@/components/ui/label"
 import { generatePDF } from '@/components/tpc/PDFGenrator'
 
+interface PlacementDetails {
+  internshipPackage?: number;
+  fullTimePackage?: number;
+  positionInternship?: string;
+  positionFullTime?: string;
+}
+
 interface Student {
   _id: string
   firstName: string
@@ -20,12 +27,12 @@ interface Student {
   email: string
   department: string
   username: string
+  image:string
+  city:string
   twelfthDiploma: string
   overallCGPA: number
   tenthMarks: number
   twelfthDiplomaPercentage: number
-  placed?: boolean
-  package?: number
 }
 
 interface Round {
@@ -42,12 +49,14 @@ interface SelectionRoundsProps {
   passoutYear: number
   onUpdateRound: (updatedRound: Round) => void
   onAddToNextRound: (currentRoundNumber: number, selectedStudents: Student[]) => void
-  onUpdatePlacementStatus: (studentId: string, placed: boolean, packageOffer?: number) => Promise<void>
+  onUpdatePlacementStatus: (studentId: string, placementDetails: PlacementDetails) => Promise<void>
+  onRemovePlacementStatus: (studentId: string, companyId: string) => Promise<void>
   companyId: string
   companyName: string
   companyLocation: string
   companyPackage: number
   companyBond: string
+  placedStudents?: { student: string }[];
 }
 
 interface SearchResult {
@@ -67,36 +76,36 @@ export function SelectionRounds({
   onUpdateRound,
   onAddToNextRound,
   onUpdatePlacementStatus,
+  onRemovePlacementStatus,
   companyId,
   companyName,
   companyLocation,
   companyPackage,
-  companyBond
+  companyBond,
+  placedStudents = []
 }: SelectionRoundsProps) {
   const [selectedStudents, setSelectedStudents] = useState<{ [key: number]: Set<string> }>({})
   const [searchQuery, setSearchQuery] = useState('')
   const [searchResults, setSearchResults] = useState<SearchResult[]>([])
   const [placementDialogOpen, setPlacementDialogOpen] = useState(false)
   const [currentStudent, setCurrentStudent] = useState<Student | null>(null)
-  const [packageOffer, setPackageOffer] = useState<number>(0)
-
-  console.log(selectedStudents)
-
+  const [placementDetails, setPlacementDetails] = useState<PlacementDetails>({
+    internshipPackage: 0,
+    fullTimePackage: 0,
+    positionInternship: '',
+    positionFullTime: '',
+  })
+  const [removalDialogOpen, setRemovalDialogOpen] = useState(false);
+  const [studentToRemove, setStudentToRemove] = useState<Student | null>(null);
 
   const handleCheckboxChange = (roundNumber: number, studentId: string) => {
-
-    
-  
     setSelectedStudents((prev) => {
       const newSelected = { ...prev };
-      // Create a new Set for the specific round to ensure immutability
       if (!newSelected[roundNumber]) {
         newSelected[roundNumber] = new Set();
       } else {
-        newSelected[roundNumber] = new Set(newSelected[roundNumber]); // Clone the existing Set
+        newSelected[roundNumber] = new Set(newSelected[roundNumber]);
       }
-
-
 
       if (newSelected[roundNumber].has(studentId)) {
         newSelected[roundNumber].delete(studentId);
@@ -153,39 +162,48 @@ export function SelectionRounds({
   const handleAddToNextRound = (currentRound: Round) => {
     const selectedStudentIds = selectedStudents[currentRound.roundNumber] || new Set();
     const studentsToMove = currentRound.selectedStudents.filter(student => {
-      // Check if the student is not already in the next round
-      return !rounds.some(round => 
+      return !rounds.some(round =>
         round.roundNumber === currentRound.roundNumber + 1 && round.selectedStudents.some(s => s._id === student._id)
-      ) && selectedStudentIds.has(student._id); // Only add if selected and not already in the next round
+      ) && selectedStudentIds.has(student._id);
     });
-  
+
     if (studentsToMove.length > 0) {
       onAddToNextRound(currentRound.roundNumber, studentsToMove);
       setSelectedStudents(prev => ({ ...prev, [currentRound.roundNumber]: new Set() }));
     }
   };
-  
-  
 
-  const handlePlacementToggle = (student: Student) => {
-    setCurrentStudent(student)
-    setPackageOffer(student.package || companyPackage)
-    setPlacementDialogOpen(true)
-  }
+  const handlePlacementToggle = async (student: Student) => {
+    const isPlaced = isStudentPlaced(student._id);
+    if (isPlaced) {
+      setStudentToRemove(student);
+      setRemovalDialogOpen(true);
+    } else {
+      setCurrentStudent(student);
+      setPlacementDetails({
+        internshipPackage: 0,
+        fullTimePackage: 0,
+        positionInternship: '',
+        positionFullTime: '',
+      });
+      setPlacementDialogOpen(true);
+    }
+  };
 
   const handleConfirmPlacement = async () => {
     if (currentStudent) {
-      await onUpdatePlacementStatus(currentStudent._id, !currentStudent.placed, packageOffer)
-      setPlacementDialogOpen(false)
-      const updatedRounds = rounds.map(round => ({
-        ...round,
-        selectedStudents: round.selectedStudents.map(s =>
-          s._id === currentStudent._id ? { ...s, placed: !s.placed, package: packageOffer } : s
-        )
-      }))
-      onUpdateRound(updatedRounds[0])
+      await onUpdatePlacementStatus(currentStudent._id, placementDetails);
+      setPlacementDialogOpen(false);
     }
-  }
+  };
+
+  const handleConfirmRemoval = async () => {
+    if (studentToRemove) {
+      await onRemovePlacementStatus(studentToRemove._id, companyId);
+      setRemovalDialogOpen(false);
+      setStudentToRemove(null);
+    }
+  };
 
   const handleDownloadPDF = (currentRound: Round) => {
     generatePDF({
@@ -197,13 +215,16 @@ export function SelectionRounds({
     })
   }
 
-
   const router = useRouter();
 
-    const handleVisitProfile = (username: string) => {
-      router.push(`/other-student-profile/${username}`);
-    };
-    
+  const handleVisitProfile = (username: string) => {
+    router.push(`/other-student-profile/${username}`);
+  };
+
+  const isStudentPlaced = (studentId: string) => {
+    return placedStudents?.some(ps => ps.student === studentId) || false;
+  };
+
   return (
     <Card className="bg-white shadow-lg">
       <CardHeader className="border-b border-gray-200">
@@ -211,7 +232,7 @@ export function SelectionRounds({
       </CardHeader>
       <CardContent className="pt-6">
         <Tabs defaultValue={rounds[0]?.roundNumber.toString()}>
-          <TabsList className=" grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 mb-6">
+          <TabsList className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 mb-6">
             {rounds.map((round) => (
               <TabsTrigger
                 key={round.roundNumber}
@@ -284,12 +305,8 @@ export function SelectionRounds({
                         <TableCell>
                           <Checkbox
                             checked={selectedStudents[round.roundNumber]?.has(student._id)}
-                            onCheckedChange={() => {
-                              console.log(`Round: ${round.roundNumber}, Student ID: ${student._id}`);
-                              handleCheckboxChange(round.roundNumber, student._id);
-                            }}
+                            onCheckedChange={() => handleCheckboxChange(round.roundNumber, student._id)}
                           />
-
                         </TableCell>
                         <TableCell className="font-medium">{student.firstName} {student.lastName}</TableCell>
                         <TableCell>{student.email}</TableCell>
@@ -300,17 +317,14 @@ export function SelectionRounds({
                         <TableCell>{student.twelfthDiploma}</TableCell>
                         <TableCell>{student.twelfthDiplomaPercentage}</TableCell>
                         <TableCell>
-
                           <User
                             className="h-5 w-5 text-[#244855] hover:text-[#E64833] cursor-pointer"
                             onClick={() => handleVisitProfile(student.username)}
                           />
-
-
                         </TableCell>
                         <TableCell>
                           <Switch
-                            checked={student.placed}
+                            checked={isStudentPlaced(student._id)}
                             onCheckedChange={() => handlePlacementToggle(student)}
                           />
                         </TableCell>
@@ -364,27 +378,57 @@ export function SelectionRounds({
           <DialogHeader>
             <DialogTitle>Update Placement Status</DialogTitle>
             <DialogDescription>
-              {currentStudent?.placed
-                ? "Are you sure you want to mark this student as not placed?"
-                : "Are you sure you want to mark this student as placed?"}
+              Please enter the placement details for this student.
             </DialogDescription>
           </DialogHeader>
-          {!currentStudent?.placed && (
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
-                <Label htmlFor="package" className="text-right">
-                  Package Offer (LPA)
-                </Label>
-                <Input
-                  id="package"
-                  type="number"
-                  value={packageOffer}
-                  onChange={(e) => setPackageOffer(Number(e.target.value))}
-                  className="col-span-3"
-                />
-              </div>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="positionInternship" className="text-right">
+                Internship Position
+              </Label>
+              <Input
+                id="positionInternship"
+                value={placementDetails.positionInternship}
+                onChange={(e) => setPlacementDetails({ ...placementDetails, positionInternship: e.target.value })}
+                className="col-span-3"
+              />
             </div>
-          )}
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="positionFullTime" className="text-right">
+                Full-time Position
+              </Label>
+              <Input
+                id="positionFullTime"
+                value={placementDetails.positionFullTime}
+                onChange={(e) => setPlacementDetails({ ...placementDetails, positionFullTime: e.target.value })}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="internshipPackage" className="text-right">
+                Internship Package (LPA)
+              </Label>
+              <Input
+                id="internshipPackage"
+                type="number"
+                value={placementDetails.internshipPackage}
+                onChange={(e) => setPlacementDetails({ ...placementDetails, internshipPackage: Number(e.target.value) })}
+                className="col-span-3"
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="fullTimePackage" className="text-right">
+                Full-time Package (LPA)
+              </Label>
+              <Input
+                id="fullTimePackage"
+                type="number"
+                value={placementDetails.fullTimePackage}
+                onChange={(e) => setPlacementDetails({ ...placementDetails, fullTimePackage: Number(e.target.value) })}
+                className="col-span-3"
+              />
+            </div>
+          </div>
           <DialogFooter>
             <Button variant="outline" onClick={() => setPlacementDialogOpen(false)}>
               Cancel
@@ -393,6 +437,25 @@ export function SelectionRounds({
           </DialogFooter>
         </DialogContent>
       </Dialog>
+      <Dialog open={removalDialogOpen} onOpenChange={setRemovalDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Confirm Placement Removal</DialogTitle>
+            <DialogDescription>
+              Are you sure you want to remove the placement status for {studentToRemove?.firstName} {studentToRemove?.lastName}?
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setRemovalDialogOpen(false)}>
+              Cancel
+            </Button>
+            <Button variant="destructive" onClick={handleConfirmRemoval}>
+              Remove Placement
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Card>
   )
 }
+

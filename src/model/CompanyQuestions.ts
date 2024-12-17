@@ -25,10 +25,8 @@ const CompanyQuestionSchema: Schema<CompanyQuestion> = new Schema({
         type: String,
         required: false,
     },
-    dateAdded: {
-        type: Date,
-        default: Date.now, 
-    },
+}, {
+    timestamps: true, 
 });
 
 const CompanyQuestionModel = mongoose.models.CompanyQuestion || mongoose.model<CompanyQuestion>("CompanyQuestion", CompanyQuestionSchema);

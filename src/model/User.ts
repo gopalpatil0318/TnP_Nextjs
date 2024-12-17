@@ -60,9 +60,6 @@ export interface User extends Document {
     anyLiveKTs: number;
     anyGapDuringEducation: string;
     gapReason: string;
-
-
-
     areaOfInterest: string;
     aboutYou: string;
     projectTitle1: string;
@@ -84,7 +81,13 @@ export interface User extends Document {
     image: string;
     skills: string[];
     role: string;
-    placedCompanies: mongoose.Schema.Types.ObjectId[];
+    placedCompanies: {
+        company: mongoose.Schema.Types.ObjectId;
+        internshipPackage?: number;
+        fullTimePackage?: number;
+        positionInternship?: string;
+        positionFullTime?: string;
+    }[];
     requestedCompanies: mongoose.Schema.Types.ObjectId[];
 }
 
@@ -415,7 +418,13 @@ const UserSchema: Schema<User> = new Schema({
         required: true,
     },
     placedCompanies: [
-        { type: mongoose.Schema.Types.ObjectId, ref: 'Company' }
+        {
+            company: { type: mongoose.Schema.Types.ObjectId, ref: "Company", required: true },
+            internshipPackage: { type: Number, required: false },
+            fullTimePackage: { type: Number, required: false },
+            positionInternship: { type: String, required: false },
+            positionFullTime: { type: String, required: false },
+        },
     ],
     requestedCompanies: [
         { type: mongoose.Schema.Types.ObjectId, ref: 'Company' }

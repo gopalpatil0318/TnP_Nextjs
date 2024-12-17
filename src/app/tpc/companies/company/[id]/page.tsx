@@ -9,7 +9,15 @@ import { toast } from '@/components/ui/use-toast'
 import { CompanyDetails } from '@/components/tpc/CompanyDetails'
 import { EligibilityCriteria } from '@/components/tpc/EligibilityCriteria'
 import { SelectionRounds } from '@/components/tpc/SelectionRounds'
+import { PlacedStudents } from '@/components/tpc/PlacedStudents'
 import { CompanySkeleton } from '@/components/tpc/CompanySkeleton'
+
+interface PlacementDetails {
+  internshipPackage?: number;
+  fullTimePackage?: number;
+  positionInternship?: string;
+  positionFullTime?: string;
+}
 
 interface Company {
   _id: string
@@ -19,7 +27,7 @@ interface Company {
   bond: string
   location: string
   criteria: {
-    overalloverallCGPA: number
+    overallCGPA: number
     gender: string[]
     passoutYear: number
     anyLiveKTs: string
@@ -35,6 +43,13 @@ interface Company {
     roundName: string
     selectedStudents: Student[]
   }[]
+  placedStudents: {
+    student: string
+    internshipPackage?: number
+    fullTimePackage?: number
+    positionInternship?: string
+    positionFullTime?: string
+  }[]
 }
 
 interface Student {
@@ -44,12 +59,12 @@ interface Student {
   email: string
   department: string
   username: string
+  image: string
+  city: string
   twelfthDiploma: string
   overallCGPA: number
   tenthMarks: number
   twelfthDiplomaPercentage: number
-  placed?: boolean;
-  package?: number;
 }
 
 interface Round {
@@ -70,7 +85,12 @@ export default function SingleCompanyPage() {
         setCompany(response.data.company)
       } catch (error) {
         console.error('Failed to fetch company:', error)
-      } finally{
+        toast({
+          title: "Error",
+          description: "Failed to fetch company details. Please try again.",
+          variant: "destructive",
+        })
+      } finally {
         setLoading(false)
       }
     }
@@ -155,7 +175,6 @@ export default function SingleCompanyPage() {
 
     const updatedRounds = company.rounds.map((round, index) => {
       if (round.roundNumber === currentRoundNumber + 1) {
-    
         return {
           ...round,
           selectedStudents: [...round.selectedStudents, ...selectedStudents]
@@ -172,25 +191,22 @@ export default function SingleCompanyPage() {
     })
   }
 
-  const handleUpdatePlacementStatus = async (studentId: string, placed: boolean, packageOffer?: number) => {
+  const handleUpdatePlacementStatus = async (studentId: string, placementDetails: PlacementDetails) => {
     if (!company) return
 
     try {
       await axios.post(`/api/tpc/update-placement-status`, {
         studentId,
         companyId: company._id,
-        placed,
-        packageOffer
+        ...placementDetails
       })
 
-      const updatedRounds = company.rounds.map(round => ({
-        ...round,
-        selectedStudents: round.selectedStudents.map(student => 
-          student._id === studentId ? { ...student, placed, package: packageOffer } : student
-        )
-      }))
+      const updatedPlacedStudents = [
+        ...company.placedStudents.filter(ps => ps.student !== studentId),
+        { student: studentId, ...placementDetails }
+      ]
 
-      setCompany({ ...company, rounds: updatedRounds })
+      setCompany({ ...company, placedStudents: updatedPlacedStudents })
 
       toast({
         title: "Placement Status Updated",
@@ -201,6 +217,33 @@ export default function SingleCompanyPage() {
       toast({
         title: "Error",
         description: "Failed to update placement status. Please try again.",
+        variant: "destructive",
+      })
+    }
+  }
+
+  const handleRemovePlacementStatus = async (studentId: string, companyId: string) => {
+    if (!company) return
+
+    try {
+      await axios.post(`/api/tpc/remove-placement-status`, {
+        studentId,
+        companyId
+      })
+
+      const updatedPlacedStudents = company.placedStudents.filter(ps => ps.student !== studentId)
+
+      setCompany({ ...company, placedStudents: updatedPlacedStudents })
+
+      toast({
+        title: "Placement Status Removed",
+        description: "Student placement status has been removed successfully.",
+      })
+    } catch (error) {
+      console.error('Failed to remove placement status:', error)
+      toast({
+        title: "Error",
+        description: "Failed to remove placement status. Please try again.",
         variant: "destructive",
       })
     }
@@ -244,12 +287,35 @@ export default function SingleCompanyPage() {
         onUpdateRound={handleUpdateRound}
         onAddToNextRound={handleAddToNextRound}
         onUpdatePlacementStatus={handleUpdatePlacementStatus}
+        onRemovePlacementStatus={handleRemovePlacementStatus}
         companyId={company._id}
         companyName={company.name}
         companyLocation={company.location}
         companyPackage={company.salary}
         companyBond={company.bond}
+        placedStudents={company.placedStudents}
       />
+
+<PlacedStudents
+        companyName={company.name}
+        companyLocation={company.location}
+        placedStudents={company.placedStudents.map(ps => {
+          const student = company.rounds.flatMap(r => r.selectedStudents).find(s => s._id === ps.student);
+          return {
+            ...ps,
+            _id: ps.student,
+            firstName: student?.firstName || '',
+            lastName: student?.lastName || '',
+            email: student?.email || '',
+            department: student?.department || '',
+            username: student?.username || '',
+            image: student?.image || '/placeholder-user.jpg',
+            city: student?.city || '', // Add city information
+          };
+        })}
+      />
+
     </div>
   )
 }
+

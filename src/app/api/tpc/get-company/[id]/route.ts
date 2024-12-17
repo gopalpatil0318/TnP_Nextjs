@@ -11,7 +11,7 @@ export async function GET(request: NextRequest, { params }: { params: { id: stri
         const company = await CompanyModel.findById(id)
             .populate({
                 path: 'rounds.selectedStudents',
-                select: 'email department overallCGPA firstName lastName username twelfthDiplomaPercentage tenthMarks twelfthDiploma',
+                select: 'email department overallCGPA firstName lastName username twelfthDiplomaPercentage tenthMarks twelfthDiploma image city',
             });
 
       

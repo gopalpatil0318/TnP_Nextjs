@@ -5,7 +5,7 @@ import { GraduationCap, Users, Clock, Briefcase } from 'lucide-react'
 
 interface EligibilityCriteriaProps {
   criteria: {
-    overalloverallCGPA: number
+    overallCGPA: number
     gender: string[]
     passoutYear: number
     anyLiveKTs: string
@@ -29,7 +29,7 @@ export function EligibilityCriteria({ criteria }: EligibilityCriteriaProps) {
           <div className="space-y-4">
             <div className="flex items-center">
               <GraduationCap className="w-5 h-5 mr-2 text-[#E64833]" />
-              <span className="text-gray-700">overallCGPA: {criteria.overalloverallCGPA}</span>
+              <span className="text-gray-700">overallCGPA: {criteria.overallCGPA}</span>
             </div>
             <div className="flex items-center">
               <Users className="w-5 h-5 mr-2 text-[#E64833]" />

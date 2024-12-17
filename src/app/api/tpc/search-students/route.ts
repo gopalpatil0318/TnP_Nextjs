@@ -6,7 +6,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
     await dbConnect();
 
     try {
-        // Extract query and passoutYear from the URL search params
+       
         const url = new URL(request.url); // Get the full URL
         const query = url.searchParams.get("query");
         const passoutYear = url.searchParams.get("passoutYear");
@@ -23,7 +23,7 @@ export async function GET(request: NextRequest): Promise<NextResponse> {
         }
 
         if (passoutYear) {
-            searchFilter["passoutYear"] = parseInt(passoutYear, 10);  // Ensure it's a number
+            searchFilter["passoutYear"] = parseInt(passoutYear, 10); 
         }
 
         // Perform the search in the User model with the constructed filter

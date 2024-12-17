@@ -35,23 +35,23 @@ export const generatePDF = async ({
 }: PDFGeneratorProps) => {
   const doc = new jsPDF();
 
-  // Load image from the public folder
-  const loadImageAsBase64 = async (url: string) => {
-    const response = await fetch(url);
-    const blob = await response.blob();
-    return new Promise<string>((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = reject;
-      reader.readAsDataURL(blob);
-    });
-  };
+  
+    const loadImageAsBase64 = async (url: string) => {
+      const response = await fetch(url);
+      const blob = await response.blob();
+      return new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+    };
 
-  // Convert the image to Base64
-  const imageData = await loadImageAsBase64("/pdf.png");
+    // Convert the image to Base64
+    const imageData = await loadImageAsBase64("/pdf.png");
 
-  // Add the image to the PDF
-  doc.addImage(imageData, "PNG", 0, 2, 200, 30); // Adjust x, y, width, and height as needed
+    // Add the image to the PDF
+    doc.addImage(imageData, "PNG", 0, 2, 200, 30); // Adjust x, y, width, and height as needed
 
   
   doc.setDrawColor(36, 72, 85);
