@@ -24,17 +24,31 @@ export const generatePlacedStudentsPDF = async ({
 }: PDFGeneratorProps) => {
   const doc = new jsPDF();
 
+  
   // Helper function to load images
   const loadImageAsBase64 = async (url: string) => {
-    const response = await fetch(url);
-    const blob = await response.blob();
-    return new Promise<string>((resolve, reject) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result as string);
-      reader.onerror = reject;
-      reader.readAsDataURL(blob);
-    });
+    // Ensure HTTPS for all URLs
+    const secureUrl = url.replace(/^http:\/\//, "https://");
+    
+    try {
+      const response = await fetch(secureUrl);
+      if (!response.ok) {
+        throw new Error(`Failed to load image: ${response.statusText}`);
+      }
+  
+      const blob = await response.blob();
+      return new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = reject;
+        reader.readAsDataURL(blob);
+      });
+    } catch (error) {
+      console.error("Error loading image as Base64:", error);
+      throw error;
+    }
   };
+  
 
   // Convert the banner image to Base64
   const bannerImage = await loadImageAsBase64("/pdf.png");
@@ -94,6 +108,7 @@ export const generatePlacedStudentsPDF = async ({
 
     // Load student image
     const studentImage = await loadImageAsBase64(student.image);
+    console.log("Fetching image:", student.image);
 
     // Draw student card
     doc.setDrawColor(144, 174, 173); // #90AEAD
