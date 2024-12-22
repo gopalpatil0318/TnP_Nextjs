@@ -12,6 +12,7 @@ import { User, FileDown } from 'lucide-react'
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog"
 import { Label } from "@/components/ui/label"
 import { generatePDF } from '@/components/tpc/PDFGenrator'
+import { CSVLink } from "react-csv"
 
 interface PlacementDetails {
   internshipPackage?: number;
@@ -225,6 +226,25 @@ export function SelectionRounds({
     return placedStudents?.some(ps => ps.student === studentId) || false;
   };
 
+  const generateCSVData = (round: Round) => {
+    return [
+      ['Company Name', 'Location', 'Package', 'Bond'],
+      [companyName, companyLocation, `${companyPackage} LPA`, companyBond],
+      ['Round', round.roundNumber.toString(), 'Round Name', round.roundName],
+      ['Name', 'Email', 'Department', 'PRN Number', 'CGPA', '10th', '12th/Diploma', '12th/Diploma %'],
+      ...round.selectedStudents.map(student => [
+        `${student.firstName} ${student.lastName}`,
+        student.email,
+        student.department,
+        student.username,
+        student.overallCGPA,
+        student.tenthMarks,
+        student.twelfthDiploma,
+        student.twelfthDiplomaPercentage
+      ])
+    ]
+  }
+
   return (
     <Card className="bg-white shadow-lg">
       <CardHeader className="border-b border-gray-200">
@@ -334,6 +354,15 @@ export function SelectionRounds({
                 </Table>
               </div>
               <div className="flex justify-end space-x-4">
+                <Button variant="outline">
+                  <CSVLink
+                    data={generateCSVData(round)}
+                    filename={`${companyName}_Round_${round.roundNumber}_${round.roundName}.csv`}
+                    className="flex items-center"
+                  >
+                    <FileDown className="mr-2 h-4 w-4" /> Download CSV
+                  </CSVLink>
+                </Button>
                 <Button
                   variant="outline"
                   onClick={() => handleDownloadPDF(round)}

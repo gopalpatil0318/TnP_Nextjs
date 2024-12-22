@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { User, FileDown } from 'lucide-react'
 import { useRouter } from "next/navigation"
 import { generatePlacedStudentsPDF } from '@/components/tpc/PlacedStudentsPDFGenerator'
+import { CSVLink } from "react-csv"
 
 interface PlacedStudent {
     _id: string
@@ -24,10 +25,12 @@ interface PlacedStudent {
 interface PlacedStudentsProps {
     companyName: string
     companyLocation: string
+    companyPackage: number
+    companyBond: string
     placedStudents: PlacedStudent[]
 }
 
-export function PlacedStudents({ companyName, companyLocation, placedStudents }: PlacedStudentsProps) {
+export function PlacedStudents({ companyName, companyLocation, companyPackage, companyBond, placedStudents }: PlacedStudentsProps) {
     const router = useRouter()
 
     const handleVisitProfile = (username: string) => {
@@ -41,6 +44,21 @@ export function PlacedStudents({ companyName, companyLocation, placedStudents }:
             placedStudents
         })
     }
+
+    const csvData = [
+        ['Company Name', 'Location', 'Package', 'Bond'],
+        [companyName, companyLocation, `${companyPackage} LPA`, companyBond],
+        ['Name', 'Department', 'PRN Number', 'Full-time Position', 'Package', 'Internship Position', 'Package'],
+        ...placedStudents.map(student => [
+            `${student.firstName} ${student.lastName}`,
+            student.department,
+            student.username,
+            student.positionFullTime || '-',
+            student.fullTimePackage ? `${student.fullTimePackage} LPA` : '-',
+            student.positionInternship || '-',
+            student.internshipPackage ? `${student.internshipPackage} LPA` : '-'
+        ])
+    ]
 
     return (
         <Card className="bg-white shadow-lg mt-8">
@@ -84,7 +102,16 @@ export function PlacedStudents({ companyName, companyLocation, placedStudents }:
                         </TableBody>
                     </Table>
                 </div>
-                <div className="flex justify-end">
+                <div className="flex justify-end space-x-4">
+                    <Button variant="outline">
+                        <CSVLink
+                            data={csvData}
+                            filename={`${companyName}_Placed_Students.csv`}
+                            className="flex items-center"
+                        >
+                            <FileDown className="mr-2 h-4 w-4" /> Download Placed Students CSV
+                        </CSVLink>
+                    </Button>
                     <Button
                         variant="outline"
                         onClick={handleDownloadPDF}

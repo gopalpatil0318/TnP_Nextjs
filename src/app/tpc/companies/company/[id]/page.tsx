@@ -295,10 +295,14 @@ export default function SingleCompanyPage() {
         companyBond={company.bond}
         placedStudents={company.placedStudents}
       />
+  
 
 <PlacedStudents
         companyName={company.name}
         companyLocation={company.location}
+        companyPackage={company.salary}
+        companyBond={company.bond}
+
         placedStudents={company.placedStudents.map(ps => {
           const student = company.rounds.flatMap(r => r.selectedStudents).find(s => s._id === ps.student);
           return {
@@ -310,7 +314,7 @@ export default function SingleCompanyPage() {
             department: student?.department || '',
             username: student?.username || '',
             image: student?.image || '/placeholder-user.jpg',
-            city: student?.city || '', // Add city information
+            city: student?.city || '', 
           };
         })}
       />
