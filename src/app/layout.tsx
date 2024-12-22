@@ -1,3 +1,4 @@
+import { SpeedInsights } from '@vercel/speed-insights/next';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import './globals.css';
@@ -28,7 +29,10 @@ export default async function RootLayout({ children }: RootLayoutProps) {
       <AuthProvider>
         <body className={inter.className}>
           <Header/>
-          <main>{children}</main>
+          <main>
+          <SpeedInsights />
+          {children}
+          </main>
           <Footer/>
           <Toaster />
         </body>
