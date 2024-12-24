@@ -16,8 +16,11 @@ export async function POST(request: Request): Promise<Response> {
     await dbConnect();
 
     try {
-        const { company, questions, review } = await request.json();
-        const studentName = session.user.name || "Anonymous"; 
+
+
+
+        const { company, questions, review, studentName } = await request.json();
+
 
         if (!company || !questions || questions.length === 0) {
             return new Response(JSON.stringify({
@@ -26,15 +29,11 @@ export async function POST(request: Request): Promise<Response> {
             }), { status: 400 });
         }
 
-        
-        const currentDate = new Date();
-
         const newCompanyQuestion = new CompanyQuestionModel({
             company,
             questions,
             studentName,
             review,
-            dateAdded: currentDate, 
         });
 
         await newCompanyQuestion.save();
@@ -42,7 +41,7 @@ export async function POST(request: Request): Promise<Response> {
         return new Response(JSON.stringify({
             success: true,
             message: "Company questions added successfully",
-            companyQuestion: newCompanyQuestion
+            question: newCompanyQuestion
         }), { status: 201 });
 
     } catch (error) {
@@ -53,3 +52,4 @@ export async function POST(request: Request): Promise<Response> {
         }), { status: 500 });
     }
 }
+

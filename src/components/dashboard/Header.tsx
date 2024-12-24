@@ -29,6 +29,7 @@ const Header = () => {
     { href: "/all-students-profile", label: "All Students Profile" },
     { href: "/profile", label: "Profile" },
     { href: "/update-profile", label: "Update Profile" },
+    { href: "/company-questions", label: "company questions" },
     { href: "/contact", label: "Contact Us" },
   ];
 

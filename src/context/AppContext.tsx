@@ -50,12 +50,12 @@ export const UserProvider: React.FC<UserProviderProps> = ({ children }) => {
     };
 
     useEffect(() => {
-        if (session?.user) {
+        if (session?.user && session.user.role === 'student') {
             fetchstudentData();
         }
     }, [session]); 
 
-    console.log("context api ", studentData);
+   
 
     return (
         <UserContext.Provider value={{ studentData, setstudentData, fetchstudentData, loading, logout }}>

@@ -5,7 +5,6 @@ export interface CompanyQuestion extends Document {
     questions: string[];
     studentName: string;
     review?: string;
-    dateAdded: Date; 
 }
 
 const CompanyQuestionSchema: Schema<CompanyQuestion> = new Schema({

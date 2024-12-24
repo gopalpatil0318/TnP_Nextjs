@@ -9,7 +9,7 @@ interface QuestionCardProps {
     questions: string[]
     studentName: string
     review: string
-    dateAdded: string 
+    createdAt: string
   }
 }
 
@@ -19,7 +19,7 @@ export function QuestionCard({ question }: QuestionCardProps) {
   const displayQuestions = expanded ? question.questions : question.questions.slice(0, 5)
 
   return (
-    <Card className="overflow-hidden transition-all duration-300 hover:shadow-md border-t-4 border-t-[#244855]">
+    <Card className="overflow-hidden transition-all duration-300 hover:shadow-md border-t-4 border-t-[#244855] h-full">
       <CardHeader className="bg-[#90AEAD] p-2">
         <CardTitle className="text-lg text-[#244855] font-bold flex items-center">
           <svg className="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
@@ -28,7 +28,7 @@ export function QuestionCard({ question }: QuestionCardProps) {
           {question.company}
         </CardTitle>
       </CardHeader>
-      <CardContent className="pt-2 space-y-2">
+      <CardContent className="pt-2 space-y-2 flex-grow">
         <ul className="space-y-2">
           {displayQuestions.map((q, index) => (
             <li key={index} className="flex items-start bg-white rounded-md shadow-sm">
@@ -63,7 +63,7 @@ export function QuestionCard({ question }: QuestionCardProps) {
           <p className="text-gray-700 text-sm break-words">{question.review || "No review provided."}</p>
         </div>
       </CardContent>
-      <CardFooter className="bg-gray-50 flex justify-between items-center py-2 px-3">
+      <CardFooter className="bg-gray-50 flex justify-between items-center py-2 px-3 ">
         <div className="flex items-center space-x-2">
           <User className="h-4 w-4 text-gray-500" />
           <span className="text-xs text-gray-500">Added by:</span>
@@ -72,9 +72,10 @@ export function QuestionCard({ question }: QuestionCardProps) {
         <div className="flex items-center space-x-2">
           <Calendar className="h-4 w-4 text-gray-500" />
           <span className="text-xs text-gray-500">Date:</span>
-          <span className="font-medium text-gray-700 text-sm">{question.dateAdded}</span>
+          <span className="font-medium text-gray-700 text-sm">{new Date(question.createdAt).toLocaleDateString()}</span>
         </div>
       </CardFooter>
     </Card>
   )
 }
+

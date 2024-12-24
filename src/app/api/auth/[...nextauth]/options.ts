@@ -88,7 +88,7 @@ export const authOptions: NextAuthOptions = {
             async authorize(credentials: any): Promise<any> {
                 await dbConnect();
                 try {
-                    console.log("Gopal Bharat Patil",credentials.identifier);
+    
                     const tpc = await TPCModel.findOne({ email: credentials.identifier });
 
                     if (!tpc) {
