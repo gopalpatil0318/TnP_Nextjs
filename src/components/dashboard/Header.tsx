@@ -3,16 +3,32 @@ import React, { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useSession, signOut } from "next-auth/react";
+import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button";
-import { Menu, X } from "lucide-react";
+import { Menu, X } from 'lucide-react';
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const { data: session } = useSession();
+  const router = useRouter();
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const closeMenu = () => {
+    setIsMenuOpen(false);
+  };
+
+  const handleLinkClick = (href: string) => {
+    closeMenu();
+    router.push(href);
+  };
+
+  const handleSignOut = () => {
+    closeMenu();
+    signOut();
   };
 
   const publicLinks = [
@@ -67,7 +83,7 @@ const Header = () => {
     <header className="w-full bg-white shadow-md">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between py-4">
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center space-x-2" onClick={closeMenu}>
             <Image
               src="/rcpitlogo.png"
               alt="RCPIT Logo"
@@ -100,12 +116,12 @@ const Header = () => {
                 variant="outline"
                 size="sm"
                 className="hidden sm:inline-flex text-[#E64833] border-[#E64833]"
-                onClick={() => signOut()}
+                onClick={handleSignOut}
               >
                 Logout
               </Button>
             ) : (
-              <Link href="/sign-in">
+              <Link href="/sign-in" onClick={closeMenu}>
                 <Button
                   variant="outline"
                   size="sm"
@@ -134,33 +150,32 @@ const Header = () => {
         <div className="md:hidden">
           <nav className="flex flex-col items-center space-y-4 py-4 bg-[#FBE9D0]">
             {navLinks.map((link) => (
-              <Link
+              <button
                 key={link.href}
                 className="text-sm font-medium text-[#244855] hover:text-[#E64833] transition-colors"
-                href={link.href}
+                onClick={() => handleLinkClick(link.href)}
               >
                 {link.label}
-              </Link>
+              </button>
             ))}
             {session ? (
               <Button
                 variant="outline"
                 size="sm"
                 className="text-[#E64833] border-[#E64833]"
-                onClick={() => signOut()}
+                onClick={handleSignOut}
               >
                 Logout
               </Button>
             ) : (
-              <Link href="/sign-in">
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="text-[#E64833] border-[#E64833]"
-                >
-                  Student Login
-                </Button>
-              </Link>
+              <Button
+                variant="outline"
+                size="sm"
+                className="text-[#E64833] border-[#E64833]"
+                onClick={() => handleLinkClick("/sign-in")}
+              >
+                Student Login
+              </Button>
             )}
           </nav>
         </div>
@@ -170,3 +185,4 @@ const Header = () => {
 };
 
 export default Header;
+

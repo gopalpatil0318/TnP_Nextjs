@@ -10,7 +10,6 @@ import Footer from '@/components/dashboard/Footer';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  
   title: 'Training and Placement',
   description: 'R C Patel Training and Placement Official Website',
   icons: {
@@ -25,18 +24,18 @@ interface RootLayoutProps {
 export default async function RootLayout({ children }: RootLayoutProps) {
   return (
     <html lang="en" >
-       
+
       <AuthProvider>
         <body className={inter.className}>
-          <Header/>
+          <Header />
           <main>
-          <SpeedInsights />
-          {children}
+            <SpeedInsights />
+            {children}
           </main>
-          <Footer/>
+          <Footer />
           <Toaster />
         </body>
       </AuthProvider>
     </html>
-  );  
+  );
 }

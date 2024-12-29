@@ -17,9 +17,7 @@ export async function POST(request: Request): Promise<Response> {
 
     try {
         const { username, email, ...otherDetails } = await request.json();
-        // console.log('Username:', username);
-        // console.log('Email:', email);
-        // console.log('Other details:', otherDetails);
+        
 
         const updatedUser = await UserModel.findOneAndUpdate(
             { username, isVerified: true },
